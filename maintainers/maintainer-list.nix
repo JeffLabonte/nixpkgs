@@ -357,6 +357,22 @@
     githubId = 5892756;
     name = "Alec Snyder";
   };
+  AluisioASG = {
+    name = "Aluísio Augusto Silva Gonçalves";
+    email = "aluisio@aasg.name";
+    github = "AluisioASG";
+    githubId = 1904165;
+    keys = [{
+      longkeyid = "rsa4096/0x9FAA63E097506D9D";
+      fingerprint = "7FDB 17B3 C29B 5BA6 E5A9  8BB2 9FAA 63E0 9750 6D9D";
+    }];
+  };
+  almac = {
+    email = "alma.cemerlic@gmail.com";
+    github = "a1mac";
+    githubId = 60479013;
+    name = "Alma Cemerlic";
+  };
   alunduil = {
     email = "alunduil@gmail.com";
     github = "alunduil";
@@ -3275,6 +3291,12 @@
     githubId = 1198065;
     name = "Jeffrey David Johnson";
   };
+  jefflabonte = {
+    email = "grimsleepless@protonmail.com";
+    github = "jefflabonte";
+    githubId = 9425955;
+    name = "Jean-François Labonté";
+  };
   jensbin = {
     email = "jensbin+git@pm.me";
     github = "jensbin";
@@ -3991,6 +4013,12 @@
     githubId = 32152;
     name = "Luka Blaskovic";
   };
+  ldelelis = {
+    email = "ldelelis@est.frba.utn.edu.ar";
+    github = "ldelelis";
+    githubId = 20250323;
+    name = "Lucio Delelis";
+  };
   ldesgoui = {
     email = "ldesgoui@gmail.com";
     github = "ldesgoui";
@@ -4297,6 +4325,12 @@
   lyt = {
     email = "wheatdoge@gmail.com";
     name = "Tim Liou";
+  };
+  m1cr0man = {
+    email = "lucas+nix@m1cr0man.com";
+    github = "m1cr0man";
+    githubId = 3044438;
+    name = "Lucas Savva";
   };
   m3tti = {
     email = "mathaeus.peter.sander@gmail.com";
@@ -6229,6 +6263,12 @@
     githubId = 766350;
     name = "Richard Zetterberg";
   };
+  samdoshi = {
+    email = "sam@metal-fish.co.uk";
+    github = "samdoshi";
+    githubId = 112490;
+    name = "Sam Doshi";
+  };
   samdroid-apps = {
     email = "sam@sam.today";
     github = "samdroid-apps";
@@ -6944,6 +6984,12 @@
     github = "taku0";
     githubId = 870673;
     name = "Takuo Yonezawa";
+  };
+  talkara = {
+    email = "taito.horiuchi@relexsolutions.com";
+    github = "talkara";
+    githubId = 51232929;
+    name = "Taito Horiuchi";
   };
   talyz = {
     email = "kim.lindberger@gmail.com";
