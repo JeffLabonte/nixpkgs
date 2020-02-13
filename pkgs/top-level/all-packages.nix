@@ -2864,6 +2864,8 @@ in
 
   docbook2mdoc = callPackage ../tools/misc/docbook2mdoc { };
 
+  docbookrx = callPackage ../tools/typesetting/docbookrx { };
+
   docear = callPackage ../applications/office/docear { };
 
   dockbarx = callPackage ../applications/misc/dockbarx { };
@@ -2982,6 +2984,8 @@ in
   luckybackup = libsForQt5.callPackage ../tools/backup/luckybackup {
     ssh = openssh;
   };
+
+  kramdown-asciidoc = callPackage ../tools/typesetting/kramdown-asciidoc { };
 
   mcrcon = callPackage ../tools/networking/mcrcon {};
 
@@ -10524,6 +10528,8 @@ in
   rolespec = callPackage ../development/tools/misc/rolespec { };
 
   rr = callPackage ../development/tools/analysis/rr { };
+
+  samurai = callPackage ../development/tools/build-managers/samurai { };
 
   saleae-logic = callPackage ../development/tools/misc/saleae-logic { };
 
@@ -25947,4 +25953,5 @@ in
 
   quartus-prime-lite = callPackage ../applications/editors/quartus-prime {};
 
+  go-license-detector = callPackage ../development/tools/misc/go-license-detector { };
 }
