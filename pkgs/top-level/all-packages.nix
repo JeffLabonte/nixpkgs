@@ -203,7 +203,7 @@ in
 
   docker-ls = callPackage ../tools/misc/docker-ls { };
 
-  docker-slim = callPackage ../build-support/docker-slim { };
+  docker-slim = callPackage ../applications/virtualization/docker-slim { };
 
   docker-sync = callPackage ../tools/misc/docker-sync { };
 
@@ -1139,6 +1139,8 @@ in
 
   bdf2psf = callPackage ../tools/misc/bdf2psf { };
 
+  bdf2sfd = callPackage ../tools/misc/bdf2sfd { };
+
   bcat = callPackage ../tools/text/bcat {};
 
   bcache-tools = callPackage ../tools/filesystems/bcache-tools { };
@@ -1322,6 +1324,7 @@ in
   bs-platform = callPackage ../development/compilers/bs-platform {};
 
   c3d = callPackage ../applications/graphics/c3d {
+    stdenv = gcc8Stdenv;
     inherit (darwin.apple_sdk.frameworks) Cocoa;
   };
 
@@ -17391,11 +17394,13 @@ in
 
   culmus = callPackage ../data/fonts/culmus { };
 
-  clearlyU = callPackage ../data/fonts/clearlyU { };
+  clearlyU = callPackage ../data/fonts/clearlyU
+    { inherit (buildPackages.xorg) fonttosfnt mkfontscale; };
 
   cm_unicode = callPackage ../data/fonts/cm-unicode {};
 
-  creep = callPackage ../data/fonts/creep { };
+  creep = callPackage ../data/fonts/creep
+    { inherit (buildPackages.xorg) fonttosfnt mkfontscale; };
 
   crimson = callPackage ../data/fonts/crimson {};
 
@@ -17407,9 +17412,8 @@ in
     paths = [ dejavu_fonts.out ];
   };
 
-  dina-font = callPackage ../data/fonts/dina { };
-
-  dina-font-pcf = callPackage ../data/fonts/dina-pcf { };
+  dina-font = callPackage ../data/fonts/dina
+    { inherit (buildPackages.xorg) mkfontscale; };
 
   dns-root-data = callPackage ../data/misc/dns-root-data { };
 
@@ -17522,7 +17526,8 @@ in
 
   geolite-legacy = callPackage ../data/misc/geolite-legacy { };
 
-  gohufont = callPackage ../data/fonts/gohufont { };
+  gohufont = callPackage ../data/fonts/gohufont
+    { inherit (buildPackages.xorg) fonttosfnt mkfontscale; };
 
   gnome-user-docs = callPackage ../data/documentation/gnome-user-docs { };
 
@@ -17805,7 +17810,8 @@ in
     inherit (darwin.apple_sdk.frameworks) Security;
   };
 
-  profont = callPackage ../data/fonts/profont { };
+  profont = callPackage ../data/fonts/profont
+    { inherit (buildPackages.xorg) mkfontscale; };
 
   proggyfonts = callPackage ../data/fonts/proggyfonts { };
 
@@ -18162,6 +18168,8 @@ in
   arelle = with python3Packages; toPythonApplication arelle;
 
   argo = callPackage ../applications/networking/cluster/argo { };
+
+  argocd = callPackage ../applications/networking/cluster/argocd { };
 
   ario = callPackage ../applications/audio/ario { };
 
@@ -20808,6 +20816,8 @@ in
 
   paprefs = callPackage ../applications/audio/paprefs { };
 
+  pantalaimon = python3Packages.callPackage ../applications/networking/instant-messengers/pantalaimon { };
+
   pavucontrol = callPackage ../applications/audio/pavucontrol { };
 
   paraview = libsForQt5.callPackage ../applications/graphics/paraview { };
@@ -21604,10 +21614,12 @@ in
     systemdSupport = true;
   };
 
-  synergy = callPackage ../applications/misc/synergy {
+  synergy = libsForQt5.callPackage ../applications/misc/synergy {
     stdenv = if stdenv.cc.isClang then llvmPackages_5.stdenv else stdenv;
     inherit (darwin.apple_sdk.frameworks) ApplicationServices Carbon Cocoa CoreServices ScreenSaver;
   };
+
+  synergyWithoutGUI = synergy.override { withGUI = false; };
 
   tabbed = callPackage ../applications/window-managers/tabbed {
     # if you prefer a custom config, write the config.h in tabbed.config.h

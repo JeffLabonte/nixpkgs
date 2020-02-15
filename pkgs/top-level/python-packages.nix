@@ -1317,6 +1317,8 @@ in {
 
   pywebpush = callPackage ../development/python-modules/pywebpush { };
 
+  pywick = callPackage ../development/python-modules/pywick { };
+
   pyxml = disabledIf isPy3k (callPackage ../development/python-modules/pyxml{ });
 
   pyvcd = callPackage ../development/python-modules/pyvcd { };
@@ -2750,6 +2752,8 @@ in {
 
   hbmqtt = callPackage ../development/python-modules/hbmqtt { };
 
+  hickle = callPackage ../development/python-modules/hickle { };
+
   hiro = callPackage ../development/python-modules/hiro {};
 
   hglib = callPackage ../development/python-modules/hglib {};
@@ -3866,6 +3870,8 @@ in {
   ics = callPackage ../development/python-modules/ics { };
 
   ifaddr = callPackage ../development/python-modules/ifaddr { };
+
+  imagecorruptions = callPackage ../development/python-modules/imagecorruptions { };
 
   imageio = callPackage ../development/python-modules/imageio { };
 
@@ -5770,6 +5776,8 @@ in {
 
   xxhash = callPackage ../development/python-modules/xxhash { };
 
+  ydiff = callPackage ../development/python-modules/ydiff { };
+
   yoda = toPythonModule (pkgs.yoda.override {
     inherit python;
   });
@@ -6763,6 +6771,8 @@ in {
   zstd = callPackage ../development/python-modules/zstd {
     inherit (pkgs) zstd pkgconfig;
   };
+
+  zstandard = callPackage ../development/python-modules/zstandard { };
 
   zxcvbn = callPackage ../development/python-modules/zxcvbn { };
 
