@@ -44,6 +44,10 @@ let
 
   git-fame = callPackage ./git-fame {};
 
+  git-filter-repo = callPackage ./git-filter-repo {
+    pythonPackages = python3Packages;
+  };
+
   gita = python3Packages.callPackage ./gita {};
 
   # The full-featured Git.
@@ -193,6 +197,8 @@ let
   topGit = callPackage ./topgit { };
 
   transcrypt = callPackage ./transcrypt { };
+
+  ydiff = pkgs.python3.pkgs.toPythonApplication pkgs.python3.pkgs.ydiff;
 
 } // lib.optionalAttrs (config.allowAliases or true) (with self; {
   # aliases
