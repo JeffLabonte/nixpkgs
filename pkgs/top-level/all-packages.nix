@@ -1776,6 +1776,8 @@ in
 
   fwup = callPackage ../tools/misc/fwup { };
 
+  fx_cast_bridge = callPackage ../tools/misc/fx_cast { };
+
   fzf = callPackage ../tools/misc/fzf { };
 
   fzf-zsh = callPackage ../shells/zsh/fzf-zsh { };
@@ -6009,6 +6011,8 @@ in
 
   openmpi = callPackage ../development/libraries/openmpi { };
 
+  ucx = callPackage ../development/libraries/ucx {};
+
   openmodelica = callPackage ../applications/science/misc/openmodelica { };
 
   qarte = libsForQt5.callPackage ../applications/video/qarte { };
@@ -6727,8 +6731,6 @@ in
   privoxy = callPackage ../tools/networking/privoxy {
     w3m = w3m-batch;
   };
-
-  netalyzr = callPackage ../tools/networking/netalyzr { };
 
   swaks = callPackage ../tools/networking/swaks { };
 
@@ -9132,7 +9134,7 @@ in
   kanif = callPackage ../applications/networking/cluster/kanif { };
 
   lumo = callPackage ../development/interpreters/clojurescript/lumo {
-    nodejs = nodejs-10_x;
+    nodejs = nodejs-13_x;
   };
 
   lxappearance = callPackage ../desktops/lxde/core/lxappearance {
@@ -14397,8 +14399,6 @@ in
   };
 
   sundials = callPackage ../development/libraries/sundials { };
-
-  sundials_3 = callPackage ../development/libraries/sundials/3.x.nix { };
 
   sutils = callPackage ../tools/misc/sutils { };
 
@@ -20448,6 +20448,8 @@ in
 
   mpc-qt = libsForQt5.callPackage ../applications/video/mpc-qt { };
 
+  mps-youtube = callPackage ../applications/misc/mps-youtube { };
+
   mplayer = callPackage ../applications/video/mplayer ({
     libdvdnav = libdvdnav_4_2_1;
   } // (config.mplayer or {}));
@@ -20604,6 +20606,15 @@ in
 
   shogun = callPackage ../applications/science/machine-learning/shogun {
     stdenv = gcc8Stdenv;
+
+    # Workaround for the glibc abi version mismatch.
+    # Please note that opencv builds are by default disabled.
+    opencv = opencv3.override {
+      stdenv = gcc8Stdenv;
+      openexr = openexr.override {
+        stdenv = gcc8Stdenv;
+      };
+    };
   };
 
   sky = callPackage ../applications/networking/instant-messengers/sky {};

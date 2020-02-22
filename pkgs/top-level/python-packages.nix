@@ -1496,7 +1496,7 @@ in {
   webapp2 = callPackage ../development/python-modules/webapp2 { };
 
   wordcloud = callPackage ../development/python-modules/wordcloud { };
-  
+
   wrf-python = callPackage ../development/python-modules/wrf-python { };
 
   pyunbound = callPackage ../tools/networking/unbound/python.nix { };
@@ -1690,7 +1690,7 @@ in {
 
   asn1ate = callPackage ../development/python-modules/asn1ate { };
 
-  atlassian-python-api = callPackage ../development/python-modules/atlassian-python-api { };  
+  atlassian-python-api = callPackage ../development/python-modules/atlassian-python-api { };
 
   atomiclong = callPackage ../development/python-modules/atomiclong { };
 
@@ -1903,6 +1903,8 @@ in {
   cx_oracle = callPackage ../development/python-modules/cx_oracle {};
 
   cvxopt = callPackage ../development/python-modules/cvxopt { };
+
+  cvxpy = callPackage ../development/python-modules/cvxpy { };
 
   cycler = callPackage ../development/python-modules/cycler { };
 
@@ -4406,7 +4408,7 @@ in {
 
   nbconvert = callPackage ../development/python-modules/nbconvert { };
 
-  nbformat = if isPy3k then 
+  nbformat = if isPy3k then
     callPackage ../development/python-modules/nbformat { }
   else callPackage ../development/python-modules/nbformat/2.nix { };
 
@@ -5079,6 +5081,8 @@ in {
 
   python-simple-hipchat = callPackage ../development/python-modules/python-simple-hipchat {};
   python_simple_hipchat = self.python-simple-hipchat;
+
+  scs = callPackage ../development/python-modules/scs { scs = pkgs.scs; };
 
   python_keyczar = callPackage ../development/python-modules/python_keyczar { };
 
@@ -6490,8 +6494,6 @@ in {
   mailcap-fix = callPackage ../development/python-modules/mailcap-fix { };
 
   maildir-deduplicate = callPackage ../development/python-modules/maildir-deduplicate { };
-
-  mps-youtube = callPackage ../development/python-modules/mps-youtube { };
 
   d2to1 = callPackage ../development/python-modules/d2to1 { };
 
