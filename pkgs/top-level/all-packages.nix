@@ -6710,6 +6710,8 @@ in
 
   svtplay-dl = callPackage ../tools/misc/svtplay-dl { };
 
+  sycl-info = callPackage ../development/libraries/sycl-info { };
+
   symengine = callPackage ../development/libraries/symengine { };
 
   sysbench = callPackage ../development/tools/misc/sysbench {};
@@ -11230,6 +11232,8 @@ in
 
   dlib = callPackage ../development/libraries/dlib { };
 
+  doctest = callPackage ../development/libraries/doctest { };
+
   docopt_cpp = callPackage ../development/libraries/docopt_cpp { };
 
   dotconf = callPackage ../development/libraries/dotconf { };
@@ -13308,6 +13312,8 @@ in
   luksmeta = callPackage ../development/libraries/luksmeta {
     asciidoc = asciidoc-full;
   };
+
+  lyra = callPackage ../development/libraries/lyra { };
 
   lzo = callPackage ../development/libraries/lzo { };
 
@@ -18932,6 +18938,8 @@ in
   eterm = callPackage ../applications/misc/eterm { };
 
   eteroj.lv2 = libsForQt5.callPackage ../applications/audio/eteroj.lv2 { };
+
+  etesync-dav = callPackage ../applications/misc/etesync-dav {};
 
   etherape = callPackage ../applications/networking/sniffers/etherape { };
 
@@ -25216,6 +25224,8 @@ in
     nix-prefetch-hg
     nix-prefetch-svn
     nix-prefetch-scripts;
+
+  nix-query-tree-viewer = callPackage ../tools/nix/nix-query-tree-viewer { };
 
   nix-update-source = callPackage ../tools/package-management/nix-update-source {};
 
