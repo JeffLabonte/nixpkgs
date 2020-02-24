@@ -1772,6 +1772,8 @@ in {
 
   beaker = callPackage ../development/python-modules/beaker { };
 
+  bespon = callPackage ../development/python-modules/bespon { };
+
   betamax = callPackage ../development/python-modules/betamax {};
 
   betamax-matchers = callPackage ../development/python-modules/betamax-matchers { };
@@ -3815,6 +3817,10 @@ in {
     inherit (pkgs) pkgconfig;
   };
 
+  graphql-core = callPackage ../development/python-modules/graphql-core { };
+
+  graphql-server-core = callPackage ../development/python-modules/graphql-server-core { };
+
   grammalecte = callPackage ../development/python-modules/grammalecte { };
 
   greenlet = callPackage ../development/python-modules/greenlet { };
@@ -4786,6 +4792,8 @@ in {
   }));
 
   precis-i18n = callPackage ../development/python-modules/precis-i18n { };
+
+  promise = callPackage ../development/python-modules/promise { };
 
   prox-tv = callPackage ../development/python-modules/prox-tv {
     # We need to use blas instead of openblas on darwin,
