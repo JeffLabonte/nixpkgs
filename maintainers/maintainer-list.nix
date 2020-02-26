@@ -1085,6 +1085,12 @@
     githubId = 7716744;
     name = "Berno Strik";
   };
+  brettlyons = {
+    email = "blyons@fastmail.com";
+    github = "brettlyons";
+    githubId = 3043718;
+    name = "Brett Lyons";
+  };
   btlvr = {
     email = "btlvr@protonmail.com";
     github = "btlvr";
@@ -6795,6 +6801,12 @@
     github = "severen";
     githubId = 4061736;
     name = "Severen Redwood";
+  };
+  sstef = {
+    email = "stephane@nix.frozenid.net";
+    github = "fkstef";
+    githubId = 8668915;
+    name = "Stephane Schitter";
   };
   steell = {
     email = "steve@steellworks.com";

@@ -2647,6 +2647,8 @@ in {
 
   Fabric = callPackage ../development/python-modules/Fabric { };
 
+  fastdtw = callPackage ../development/python-modules/fastdtw { };
+
   faulthandler = if ! isPy3k
     then callPackage ../development/python-modules/faulthandler {}
     else throw "faulthandler is built into ${python.executable}";
@@ -6966,6 +6968,8 @@ in {
   ibis-framework = callPackage ../development/python-modules/ibis-framework { };
 
   qiskit = callPackage ../development/python-modules/qiskit { };
+
+  qiskit-terra = callPackage ../development/python-modules/qiskit-terra { };
 
   qasm2image = callPackage ../development/python-modules/qasm2image { };
 
