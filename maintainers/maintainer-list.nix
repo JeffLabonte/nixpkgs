@@ -1368,6 +1368,12 @@
     githubId = 25088352;
     name = "Christian Kögler";
   };
+  clkamp = {
+    email = "c@lkamp.de";
+    github = "clkamp";
+    githubId = 46303707;
+    name = "Christian Lütke-Stetzkamp";
+  };
   kampka = {
     email = "christian@kampka.net";
     github = "kampka";
@@ -1454,6 +1460,16 @@
     github = "colescott";
     githubId = 5684605;
     name = "Cole Scott";
+  };
+  cole-h = {
+    name = "Cole Helbling";
+    email = "cole.e.helbling@outlook.com";
+    github = "cole-h";
+    githubId = 28582702;
+    keys = [{
+      longkeyid = "rsa4096/0xB37E0F2371016A4C";
+      fingerprint = "68B8 0D57 B2E5 4AC3 EC1F  49B0 B37E 0F23 7101 6A4C";
+    }];
   };
   copumpkin = {
     email = "pumpkingod@gmail.com";
@@ -2607,7 +2623,7 @@
     email = "ftrvxmtrx@gmail.com";
     github = "ftrvxmtrx";
     githubId = 248148;
-    name = "Siarhei Zirukin";
+    name = "Sigrid Solveig Haflínudóttir";
   };
   fuerbringer = {
     email = "severin@fuerbringer.info";
@@ -6081,6 +6097,20 @@
     githubId = 807447;
     name = "Robert Scott";
   };
+  risson = {
+    name = "Marc Schmitt";
+    email = "marc.schmitt@risson.space";
+    github = "rissson";
+    githubId = 18313093;
+    keys = [
+      { longkeyid = "rsa4096/0xF6FD87B15C263EC9";
+        fingerprint = "8A0E 6A7C 08AB B9DE 67DE  2A13 F6FD 87B1 5C26 3EC9";
+      }
+      { longkeyid = "ed25519/0xBBB7A6801DF1E03F";
+        fingerprint = "C0A7 A9BB 115B C857 4D75  EA99 BBB7 A680 1DF1 E03F";
+      }
+    ];
+  };
   rittelle = {
     email = "rittelle@posteo.de";
     github = "rittelle";
@@ -8119,6 +8149,17 @@
     github = "masaeedu";
     githubId = 3674056;
     name = "Asad Saeeduddin";
+  };
+  ngerstle = {
+    name  = "Nicholas Gerstle";
+    email = "ngerstle@gmail.com";
+    github = "ngerstle";
+  };
+  xavierzwirtz = {
+    email = "me@xavierzwirtz.com";
+    github = "xavierzwirtz";
+    githubId = 474343;
+    name = "Xavier Zwirtz";
   };
 }
 

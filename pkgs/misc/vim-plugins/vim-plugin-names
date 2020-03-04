@@ -4,7 +4,6 @@ airblade/vim-rooter
 ajh17/Spacegray.vim
 aklt/plantuml-syntax
 albfan/nerdtree-git-plugin
-alok/notational-fzf-vim
 altercation/vim-colors-solarized
 alvan/vim-closetag
 alx741/vim-hindent
@@ -136,6 +135,7 @@ hsitz/VimOrganizer
 ianks/vim-tsx
 icymind/NeoSolarized
 idris-hackers/idris-vim
+Inazuma110/deoplete-greek
 inkarkat/vim-SyntaxRange
 int3/vim-extradite
 itchyny/calendar.vim
@@ -204,6 +204,7 @@ kien/rainbow_parentheses.vim
 konfekt/fastfold
 kristijanhusak/defx-git
 kristijanhusak/defx-icons
+kristijanhusak/deoplete-phpactor
 kristijanhusak/vim-hybrid-material
 kshenoy/vim-signature
 lambdalisue/vim-gista
@@ -398,6 +399,7 @@ scrooloose/nerdcommenter
 scrooloose/nerdtree
 scrooloose/syntastic
 sebastianmarkow/deoplete-rust
+SevereOverfl0w/deoplete-github
 sheerun/vim-polyglot
 Shougo/context_filetype.vim
 Shougo/defx.nvim
