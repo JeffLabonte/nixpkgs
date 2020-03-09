@@ -3488,6 +3488,8 @@ in
   fuse-7z-ng = callPackage ../tools/filesystems/fuse-7z-ng { };
 
   fuse-overlayfs = callPackage ../tools/filesystems/fuse-overlayfs {};
+  
+  fusee-interfacee-tk = callPackage ../applications/misc/fusee-interfacee-tk { };
 
   fusee-launcher = callPackage ../development/tools/fusee-launcher { };
 
@@ -10355,6 +10357,8 @@ in
 
   kubicorn = callPackage ../development/tools/kubicorn {  };
 
+  kubie = callPackage ../development/tools/kubie { };
+
   kustomize = callPackage ../development/tools/kustomize { };
 
   ktlint = callPackage ../development/tools/ktlint { };
@@ -10802,6 +10806,7 @@ in
 
   gdb = callPackage ../development/tools/misc/gdb {
     guile = null;
+    readline = readline80;
   };
 
   jhiccup = callPackage ../development/tools/java/jhiccup { };
@@ -15408,6 +15413,8 @@ in
     theme-snow = callPackage ../servers/icingaweb2/theme-snow { };
     theme-spring = callPackage ../servers/icingaweb2/theme-spring { };
   };
+
+  imgproxy = callPackage ../servers/imgproxy { };
 
   ircdHybrid = callPackage ../servers/irc/ircd-hybrid { };
 
@@ -25491,6 +25498,8 @@ in
 
   rmount = callPackage ../tools/filesystems/rmount {};
 
+  romdirfs = callPackage ../tools/filesystems/romdirfs {};
+
   rss-glx = callPackage ../misc/screensavers/rss-glx { };
 
   run-scaled = callPackage ../tools/X11/run-scaled { };
@@ -26143,4 +26152,6 @@ in
   quartus-prime-lite = callPackage ../applications/editors/quartus-prime {};
 
   go-license-detector = callPackage ../development/tools/misc/go-license-detector { };
+
+  fluxboxlauncher = callPackage ../applications/misc/fluxboxlauncher {};
 }
