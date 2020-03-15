@@ -10,6 +10,7 @@
 , languagetool
 , Cocoa, CoreFoundation, CoreServices
 , buildVimPluginFrom2Nix
+, nodePackages
 
 # coc-go dependency
 , go
@@ -64,10 +65,7 @@ self: super: {
       name = "LanguageClient-neovim-bin";
       src = LanguageClient-neovim-src;
 
-  # Delete this on next update; see #79975 for details
-  legacyCargoFetcher = true;
-
-      cargoSha256 = "1w8g7pxwnjqp9zi47h4lz2mcg5daldsk5z72h8cjj750wng8a82c";
+      cargoSha256 = "0w66fcrlaxf6zgkrfpgfybfbm759fzimnr3pjq6sm14frar7lhr6";
       buildInputs = stdenv.lib.optionals stdenv.isDarwin [ CoreServices ];
 
       # FIXME: Use impure version of CoreFoundation because of missing symbols.
@@ -139,6 +137,12 @@ self: super: {
       rev = "984779f2f825626aa9d441746d8b4ee079137c65";
       sha256 = "0w7qnhi7wikr789h3w5p59l8wd81czpvbzbdanf8klf9ap4ma3yg";
     };
+  };
+
+  coc-prettier = buildVimPluginFrom2Nix {
+    pname = "coc-prettier";
+    version = nodePackages.coc-prettier.version;
+    src = "${nodePackages.coc-prettier}/lib/node_modules/coc-prettier";
   };
 
   command-t = super.command-t.overrideAttrs(old: {
