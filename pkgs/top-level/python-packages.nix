@@ -4619,7 +4619,7 @@ in {
 
   offtrac = callPackage ../development/python-modules/offtrac { };
 
-  openpyxl = if isPy3k then
+  openpyxl = if pythonAtLeast "3.6" then
     callPackage ../development/python-modules/openpyxl { }
   else
     callPackage ../development/python-modules/openpyxl/2.nix { };
@@ -6245,6 +6245,8 @@ in {
 
   wsgiproxy2 = callPackage ../development/python-modules/wsgiproxy2 { };
 
+  wsgitools = callPackage ../development/python-modules/wsgitools { };
+
   wurlitzer = callPackage ../development/python-modules/wurlitzer { };
 
   xcaplib = callPackage ../development/python-modules/xcaplib { };
@@ -7093,6 +7095,8 @@ in {
   pyatv = callPackage ../development/python-modules/pyatv { };
 
   pybotvac = callPackage ../development/python-modules/pybotvac { };
+
+  pymetno = callPackage ../development/python-modules/pymetno { };
 
   pytado = callPackage ../development/python-modules/pytado { };
 
