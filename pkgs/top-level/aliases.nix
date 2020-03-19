@@ -212,6 +212,7 @@ mapAliases ({
   krename-qt5 = krename; # added 2017-02-18
   keymon = throw "keymon has been removed from nixpkgs, as it's abandoned and archived."; # 2019-12-10
   kvm = qemu_kvm; # added 2018-04-25
+  latinmodern-math = lmmath;
   letsencrypt = certbot; # added 2016-05-16
   libaudit = audit; # added 2018-04-25
   libcanberra_gtk2 = libcanberra-gtk2; # added 2018-02-25
@@ -480,6 +481,7 @@ mapAliases ({
   telnet = inetutils; # added 2018-05-15
   terraform-provider-ibm = terraform-providers.ibm; # added 2018-09-28
   terraform-provider-libvirt = terraform-providers.libvirt; # added 2018-09-28
+  terraform-provider-lxd = terraform-providers.lxd; # added 2020-03-16
   terraform-provider-nixos = terraform-providers.nixos; # added 2018-09-28
   tesseract_4 = tesseract4; # added 2018-12-19
   testdisk-photorec = throw "This package was a duplicate, please use testdisk or testdisk-qt instead"; # added 2019-10-13

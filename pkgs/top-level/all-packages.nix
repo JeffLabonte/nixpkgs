@@ -563,7 +563,9 @@ in
 
   acme-client = callPackage ../tools/networking/acme-client { inherit (darwin) apple_sdk; };
 
-  amass = callPackage ../tools/networking/amass { };
+  amass = callPackage ../tools/networking/amass {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
 
   afew = callPackage ../applications/networking/mailreaders/afew { };
 
@@ -13109,6 +13111,8 @@ in
 
   libsigsegv = callPackage ../development/libraries/libsigsegv { };
 
+  libslirp = callPackage ../development/libraries/libslirp { };
+
   libsndfile = callPackage ../development/libraries/libsndfile {
     inherit (darwin.apple_sdk.frameworks) Carbon AudioToolbox;
   };
@@ -17766,8 +17770,6 @@ in
 
   kochi-substitute-naga10 = callPackage ../data/fonts/kochi-substitute-naga10 {};
 
-  latinmodern-math = callPackage ../data/fonts/lm-math {};
-
   lato = callPackage ../data/fonts/lato {};
 
   league-of-moveable-type = callPackage ../data/fonts/league-of-moveable-type {};
@@ -17802,7 +17804,7 @@ in
 
   libre-franklin = callPackage ../data/fonts/libre-franklin { };
 
-  lmmath = callPackage ../data/fonts/lmodern/lmmath.nix {};
+  lmmath = callPackage ../data/fonts/lmmath {};
 
   lmodern = callPackage ../data/fonts/lmodern { };
 
