@@ -18424,6 +18424,8 @@ in
   };
   awesome = awesome-4-0;
 
+  awesome-appmenu = callPackage ../applications/misc/awesome-appmenu { };
+
   awesomebump = libsForQt5.callPackage ../applications/graphics/awesomebump { };
 
   inherit (gnome3) baobab;
