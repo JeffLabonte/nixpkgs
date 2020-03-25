@@ -1925,6 +1925,12 @@
     githubId = 126339;
     name = "Domen Kozar";
   };
+  dominikh = {
+    email = "dominik@honnef.co";
+    github = "dominikh";
+    githubId = 39825;
+    name = "Dominik Honnef";
+  };
   doronbehar = {
     email = "me@doronbehar.com";
     github = "doronbehar";
@@ -3768,6 +3774,12 @@
     github = "kampfschlaefer";
     name = "Arnold Krille";
   };
+  karantan = {
+    name = "Gasper Vozel";
+    email = "karantan@gmail.com";
+    github = "karantan";
+    githubId = 7062631;
+  };
   karolchmist = {
     email = "info+nix@chmist.com";
     name = "karolchmist";
@@ -3935,6 +3947,11 @@
     github = "kolaente";
     githubId = 13721712;
     name = "Konrad Langenberg";
+  };
+  kolbycrouch = {
+    email = "kjc.devel@gmail.com";
+    github = "kolbycrouch";
+    name = "Kolby Crouch";
   };
   konimex = {
     email = "herdiansyah@netc.eu";
@@ -4834,6 +4851,12 @@
     github = "mikoim";
     githubId = 3958340;
     name = "Eshin Kunishima";
+  };
+  mikesperber = {
+    email = "sperber@deinprogramm.de";
+    github = "mikesperber";
+    githubId = 1387206;
+    name = "Mike Sperber";
   };
   mildlyincompetent = {
     email = "nix@kch.dev";
@@ -5943,6 +5966,12 @@
     githubId = 37715;
     name = "Brian McKenna";
   };
+  puzzlewolf = {
+    email = "nixos@nora.pink";
+    github = "puzzlewolf";
+    githubId = 23097564;
+    name = "Nora Widdecke";
+  };
   pxc = {
     email = "patrick.callahan@latitudeengineering.com";
     name = "Patrick Callahan";
@@ -6212,6 +6241,12 @@
     github = "rkoe";
     githubId = 2507744;
     name = "Roland Koebler";
+  };
+  rkrzr = {
+    email = "ops+nixpkgs@channable.com";
+    github = "rkrzr";
+    githubId = 82817;
+    name = "Robert Kreuzer";
   };
   rlupton20 = {
     email = "richard.lupton@gmail.com";
@@ -7288,6 +7323,12 @@
     github = "thefenriswolf";
     githubId = 8547242;
     name = "Stefan Rohrbacher";
+  };
+  "thelegy" = {
+    email = "mail+nixos@0jb.de";
+    github = "thelegy";
+    githubId = 3105057;
+    name = "Jan Beinke";
   };
   thesola10 = {
     email = "thesola10@bobile.fr";
