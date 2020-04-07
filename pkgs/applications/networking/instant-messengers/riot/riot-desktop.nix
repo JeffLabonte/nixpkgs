@@ -1,17 +1,20 @@
-{ pkgs, stdenv, fetchFromGitHub, makeWrapper, makeDesktopItem, electron_7, riot-web, mkYarnPackage }:
-
+{ stdenv, fetchFromGitHub
+, makeWrapper, makeDesktopItem, mkYarnPackage
+, electron_7, riot-web, gtk3
+, wrapGAppsHook, glib
+}:
 # Notes for maintainers:
 # * versions of `riot-web` and `riot-desktop` should be kept in sync.
 # * the Yarn dependency expression must be updated with `./update-riot-desktop.sh <git release tag>`
 
 let
   executableName = "riot-desktop";
-  version = "1.5.13";
+  version = "1.5.15";
   riot-web-src = fetchFromGitHub {
     owner = "vector-im";
     repo = "riot-web";
     rev = "v${version}";
-    sha256 = "1p2bdqq8yziv3l7kjkwqvi27a8djav7rk3lsipl7dvdjk1926941";
+    sha256 = "08yk5is6n9ci1jml0b94a3swdybx01k5klbl30i1b76biyn75m77";
   };
   electron = electron_7;
 
@@ -24,7 +27,14 @@ in mkYarnPackage rec {
   packageJSON = ./riot-desktop-package.json;
   yarnNix = ./riot-desktop-yarndeps.nix;
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ wrapGAppsHook ];
+
+  extraBuildInputs = [
+    glib
+    gtk3
+  ];
+
+  dontWrapGApps = true;
 
   installPhase = ''
     # resources
@@ -44,10 +54,13 @@ in mkYarnPackage rec {
     # desktop item
     mkdir -p "$out/share"
     ln -s "${desktopItem}/share/applications" "$out/share/applications"
+  '';
 
+  postFixup = ''
     # executable wrapper
     makeWrapper '${electron}/bin/electron' "$out/bin/${executableName}" \
-      --add-flags "$out/share/riot/electron"
+      --add-flags "$out/share/riot/electron" \
+      "''${gappsWrapperArgs[@]}"
   '';
 
   # Do not attempt generating a tarball for riot-web again.
@@ -70,7 +83,7 @@ in mkYarnPackage rec {
     comment = meta.description;
     categories = "Network;InstantMessaging;Chat;";
     extraEntries = ''
-      StartupWMClass="riot"
+      StartupWMClass=riot
     '';
   };
 

@@ -3344,9 +3344,9 @@ let
     };
     patches = [
       (fetchpatch {
-        url = "https://patch-diff.githubusercontent.com/raw/andk/cpanpm/pull/133.diff";
+        url = "https://github.com/andk/cpanpm/commit/10da44f1757aff6971e3bc4ed38ab115e738c740.diff";
         name = "patch-YAML-modules-default-for-LoadBlessed-was-changed-to-false";
-        sha256 = "0i8648cwshzzd0b34gyfn68s1vs85d8336ggk2kl99awah1ydsfr";
+        sha256 = "0sr2nxkr1cwavpvpxsqcsryfd5fjv4fkxfihd03jzavv5awj79hp";
       })
     ];
     propagatedBuildInputs = [ ArchiveZip CPANChecksums CPANPerlReleases Expect FileHomeDir LWP LogLog4perl ModuleBuild TermReadKey YAML YAMLLibYAML YAMLSyck ];
@@ -4996,6 +4996,16 @@ let
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
       maintainers = [ maintainers.sgo ];
     };
+  };
+
+  DBDCSV = buildPerlPackage {
+    pname = "DBD-CSV";
+    version = "0.54";
+    src = fetchurl {
+      url = mirror://cpan/authors/id/H/HM/HMBRAND/DBD-CSV-0.54.tgz;
+      sha256 = "bc597cd7195e5a023e2b3413d8dc614602b9b3f279f436027881796464d4f0be";
+    };
+    propagatedBuildInputs = [ DBI TextCSV_XS SQLStatement ModuleRuntime ParamsUtil ];
   };
 
   DBDMock = buildPerlModule {
@@ -11137,6 +11147,15 @@ let
     };
   };
 
+  MathBaseConvert = buildPerlPackage {
+    pname = "Math-Base-Convert";
+    version = "0.11";
+    src = fetchurl {
+      url = mirror://cpan/authors/id/M/MI/MIKER/Math-Base-Convert-0.11.tar.gz;
+      sha256 = "8c0971355f24c93b79e77ad54a4570090a1a598fcb9b86f5c17eba42f38b40e0";
+    };
+  };
+
   MathLibm = buildPerlPackage {
     pname = "Math-Libm";
     version = "1.00";
@@ -16620,6 +16639,17 @@ let
     propagatedBuildInputs = [ ClassAccessor ListMoreUtils RegexpCommon SQLTokenizer ];
   };
 
+  SQLStatement = buildPerlPackage {
+    pname = "SQL-Statement";
+    version = "1.412";
+    src = fetchurl {
+      url = mirror://cpan/authors/id/R/RE/REHSACK/SQL-Statement-1.412.tar.gz;
+      sha256 = "65c870883379c11b53f19ead10aaac241ccc86a90bbab77f6376fe750720e5c8";
+    };
+    buildInputs = [ TestDeep ];
+    propagatedBuildInputs = [ Clone ModuleRuntime ParamsUtil TextSoundex MathBaseConvert ];
+  };
+
   SQLTokenizer = buildPerlPackage {
     pname = "SQL-Tokenizer";
     version = "0.24";
@@ -17358,11 +17388,11 @@ let
 
   SysVirt = buildPerlModule rec {
     pname = "Sys-Virt";
-    version = "5.4.0";
+    version = "6.1.0";
     src = assert version == pkgs.libvirt.version; pkgs.fetchgit {
       url = git://libvirt.org/libvirt-perl.git;
       rev = "v${version}";
-      sha256 = "0csg10mydcif2l0qf16nlphq6ih5378nk6dk1vznf5bspws2ch7a";
+      sha256 = "00w4fmki7ff7i9bi39w2w15mvv38b5ifwk3zib90ny536r3n63sb";
     };
     nativeBuildInputs = [ pkgs.pkgconfig ];
     buildInputs = [ pkgs.libvirt CPANChanges TestPod TestPodCoverage XMLXPath ];
