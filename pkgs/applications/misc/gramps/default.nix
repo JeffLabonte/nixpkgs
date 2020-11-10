@@ -13,14 +13,13 @@ in buildPythonApplication rec {
   pname = "gramps";
 
   nativeBuildInputs = [ wrapGAppsHook gettext ];
-  buildInputs = [ intltool gtk3 gobject-introspection pango gnome3.gexiv2 ] 
+  buildInputs = [ intltool gtk3 gobject-introspection pango gnome3.gexiv2 ]
     # Map support
     ++ stdenv.lib.optional enableOSM osm-gps-map
     # Graphviz support
     ++ stdenv.lib.optional enableGraphviz graphviz
     # Ghostscript support
     ++ stdenv.lib.optional enableGhostscript ghostscript
-    
   ;
 
   src = fetchFromGitHub {
@@ -58,8 +57,7 @@ in buildPythonApplication rec {
 
   meta = with stdenv.lib; {
     description = "Genealogy software";
-    homepage = https://gramps-project.org;
+    homepage = "https://gramps-project.org";
     license = licenses.gpl2;
-    maintainers = with maintainers; [ joncojonathan ];
   };
 }

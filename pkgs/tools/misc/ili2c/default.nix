@@ -1,8 +1,9 @@
-{ stdenv, fetchFromGitHub, jdk, ant, makeWrapper, jre }:
+{ stdenv, fetchFromGitHub, jdk8, ant, makeWrapper, jre8 }:
 
+let jdk = jdk8; jre = jre8; in
 stdenv.mkDerivation rec {
   pname = "ili2c";
-  version = "5.0.0";
+  version = "5.0.8";
 
   nativeBuildInputs = [ ant jdk makeWrapper ];
 
@@ -10,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "claeis";
     repo = pname;
     rev = "${pname}-${version}";
-    sha256 = "0xps2343d5gdr2aj8j3l4cjq4k9zbxxlhnp8sjlhxh1wdczxlwx6";
+    sha256 = "1yhsyh940kb33y2n6xl7zhf0f6q0nrxbyg6c4g5n2imllpn54sgi";
   };
 
   buildPhase = "ant jar";

@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "dHKqKNeGJiDTyiu+w7ED31R9cxnBLpWn96qfn23uSxk=";
+    sha256 = "06abxrnrz7xayykrabn135rpsm6z0fqw7gibrb9j09l6swlalwkl";
   };
 
   nativeBuildInputs = [
@@ -113,7 +113,7 @@ stdenv.mkDerivation rec {
     })
     # https://bugzilla.gnome.org/show_bug.cgi?id=795576
     (fetchurl {
-      url = https://bugzilla.gnome.org/attachment.cgi?id=371427;
+      url = "https://bugzilla.gnome.org/attachment.cgi?id=371427";
       sha256 = "187flswvzymjfxwfrrhizb1cvs780zm39aa3i2vwa5fbllr7kcpf";
     })
   ];
@@ -130,9 +130,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Projects/Tracker;
+    homepage = "https://wiki.gnome.org/Projects/Tracker";
     description = "Desktop-neutral user information store, search tool and indexer";
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
   };

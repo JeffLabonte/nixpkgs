@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchurl, cmake, phonon, pkgconfig, vlc
+{ stdenv, lib, fetchurl, cmake, phonon, pkgconfig, libvlc
 , extra-cmake-modules, qttools, qtbase, qtx11extras
 , debug ? false
 }:
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   version = "0.11.1";
 
   meta = with stdenv.lib; {
-    homepage = https://phonon.kde.org/;
+    homepage = "https://phonon.kde.org/";
     description = "GStreamer backend for Phonon";
     platforms = platforms.linux;
     license = with licenses; [ bsd3 lgpl2Plus ];
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     phonon
-    vlc
+    libvlc
     qtbase
     qtx11extras
   ];

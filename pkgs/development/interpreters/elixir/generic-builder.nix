@@ -1,4 +1,4 @@
-{ pkgs, stdenv, fetchFromGitHub, erlang, rebar, makeWrapper,
+{ pkgs, stdenv, fetchFromGitHub, erlang, makeWrapper,
   coreutils, curl, bash, debugInfo ? false }:
 
 { baseName ? "elixir"
@@ -20,7 +20,7 @@ in
 
     inherit src version;
 
-    buildInputs = [ erlang rebar makeWrapper ];
+    buildInputs = [ erlang makeWrapper ];
 
     LANG = "C.UTF-8";
     LC_TYPE = "C.UTF-8";
@@ -32,10 +32,6 @@ in
     buildFlags = optional debugInfo "ERL_COMPILER_OPTIONS=debug_info";
 
     preBuild = ''
-      # The build process uses ./rebar. Link it to the nixpkgs rebar
-      rm -vf rebar
-      ln -s ${rebar}/bin/rebar rebar
-
       patchShebangs lib/elixir/generate_app.escript || true
 
       substituteInPlace Makefile \
@@ -60,7 +56,7 @@ in
 
     pos = builtins.unsafeGetAttrPos "sha256" args;
     meta = with stdenv.lib; {
-      homepage = https://elixir-lang.org/;
+      homepage = "https://elixir-lang.org/";
       description = "A functional, meta-programming aware language built on top of the Erlang VM";
 
       longDescription = ''
@@ -73,6 +69,6 @@ in
 
       license = licenses.epl10;
       platforms = platforms.unix;
-      maintainers = with maintainers; [ the-kenny havvy couchemar ankhers filalex77 ];
+      maintainers = with maintainers; [ havvy couchemar ankhers filalex77 ];
     };
   })

@@ -23,9 +23,9 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    description = "Genetic variant annotation and effect prediction toolbox.";
+    description = "Genetic variant annotation and effect prediction toolbox";
     license = licenses.lgpl3;
-    homepage = http://snpeff.sourceforge.net/;
+    homepage = "http://snpeff.sourceforge.net/";
     maintainers = with maintainers; [ jbedo ];
     platforms = platforms.all;
   };

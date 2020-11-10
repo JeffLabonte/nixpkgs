@@ -10,6 +10,12 @@
 # This file
 /.github/CODEOWNERS @edolstra
 
+# GitHub actions
+/.github/workflows @Mic92 @zowoq
+
+# EditorConfig
+/.editorconfig @Mic92 @zowoq
+
 # Libraries
 /lib                        @edolstra @nbp @infinisil
 /lib/systems                @nbp @ericson2314 @matthewbauer
@@ -55,8 +61,12 @@
 # NixOS integration test driver
 /nixos/lib/test-driver  @tfc
 
-# New NixOS modules
-/nixos/modules/module-list.nix @Infinisil
+# Updaters
+## update.nix
+/maintainers/scripts/update.nix   @jtojnar
+/maintainers/scripts/update.py    @jtojnar
+## common-updater-scripts
+/pkgs/common-updater/scripts/update-source-version    @jtojnar
 
 # Python-related code and docs
 /maintainers/scripts/update-python-libraries	@FRidh
@@ -67,15 +77,15 @@
 
 # Haskell
 /pkgs/development/compilers/ghc                       @cdepillabout
-/pkgs/development/haskell-modules		      @cdepillabout @infinisil
+/pkgs/development/haskell-modules		      @cdepillabout
 /pkgs/development/haskell-modules/default.nix	      @cdepillabout
 /pkgs/development/haskell-modules/generic-builder.nix @cdepillabout
 /pkgs/development/haskell-modules/hoogle.nix	      @cdepillabout
 
 # Perl
-/pkgs/development/interpreters/perl @volth
-/pkgs/top-level/perl-packages.nix   @volth
-/pkgs/development/perl-modules      @volth
+/pkgs/development/interpreters/perl @volth @stigtsp
+/pkgs/top-level/perl-packages.nix   @volth @stigtsp
+/pkgs/development/perl-modules      @volth @stigtsp
 
 # R
 /pkgs/applications/science/math/R   @peti
@@ -86,8 +96,8 @@
 /pkgs/development/ruby-modules      @alyssais
 
 # Rust
-/pkgs/development/compilers/rust @Mic92 @LnL7
-/pkgs/build-support/rust @andir
+/pkgs/development/compilers/rust @Mic92 @LnL7 @zowoq
+/pkgs/build-support/rust @andir @zowoq
 
 # Darwin-related
 /pkgs/stdenv/darwin         @NixOS/darwin-maintainers
@@ -166,6 +176,10 @@
 /pkgs/applications/editors/emacs       @adisbladis
 /pkgs/top-level/emacs-packages.nix     @adisbladis
 
+# Neovim
+/pkgs/applications/editors/neovim      @jonringer
+/pkgs/applications/editors/neovim      @teto
+
 # VimPlugins
 /pkgs/misc/vim-plugins         @jonringer @softinio
 
@@ -177,8 +191,31 @@
 /nixos/modules/services/monitoring/prometheus/exporters.xml  @WilliButz
 /nixos/tests/prometheus-exporters.nix                        @WilliButz
 
-# PHP
-/doc/languages-frameworks/php.section.md @etu
-/pkgs/development/interpreters/php       @etu
-/pkgs/top-level/php-packages.nix         @etu
-/pkgs/build-support/build-pecl.nix       @etu
+# PHP interpreter, packages, extensions, tests and documentation
+/doc/languages-frameworks/php.section.md @NixOS/php
+/nixos/tests/php                         @NixOS/php
+/pkgs/build-support/build-pecl.nix       @NixOS/php
+/pkgs/development/interpreters/php       @NixOS/php
+/pkgs/development/php-packages           @NixOS/php
+/pkgs/top-level/php-packages.nix         @NixOS/php
+
+# Podman, CRI-O modules and related
+/nixos/modules/virtualisation/containers.nix @NixOS/podman @zowoq
+/nixos/modules/virtualisation/cri-o.nix      @NixOS/podman @zowoq
+/nixos/modules/virtualisation/podman.nix     @NixOS/podman @zowoq
+/nixos/tests/cri-o.nix                       @NixOS/podman @zowoq
+/nixos/tests/podman.nix                      @NixOS/podman @zowoq
+
+# Docker tools
+/pkgs/build-support/docker                   @roberth @utdemir
+/nixos/tests/docker-tools-overlay.nix        @roberth
+/nixos/tests/docker-tools.nix                @roberth
+/doc/builders/images/dockertools.xml         @roberth
+
+# Blockchains
+/pkgs/applications/blockchains  @mmahut
+
+# Go
+/pkgs/development/compilers/go @kalbasit @Mic92 @zowoq
+/pkgs/development/go-modules   @kalbasit @Mic92 @zowoq
+/pkgs/development/go-packages  @kalbasit @Mic92 @zowoq

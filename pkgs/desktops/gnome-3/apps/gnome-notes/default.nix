@@ -23,7 +23,7 @@
 }:
 
 let
-  version = "3.36.0";
+  version = "3.36.3";
 in
 stdenv.mkDerivation {
   pname = "gnome-notes";
@@ -31,7 +31,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "mirror://gnome/sources/bijiben/${stdenv.lib.versions.majorMinor version}/bijiben-${version}.tar.xz";
-    sha256 = "1pz53hdd888si7vfy6d9h8cwarsdm4wwn7ni7f3az9638h3ilmfv";
+    sha256 = "1midnphyg038s94ahhzv0pvbzzzn62ccky28c9nazxqvw4hvdsbh";
   };
 
   doCheck = true;
@@ -81,9 +81,9 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Note editor designed to remain simple to use";
-    homepage = https://wiki.gnome.org/Apps/Notes;
+    homepage = "https://wiki.gnome.org/Apps/Notes";
     license = licenses.gpl3;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     platforms = platforms.linux;
   };
 }

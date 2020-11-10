@@ -19,8 +19,8 @@ buildGoPackage rec {
   buildInputs = [ libvirt ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/dhiltgen/docker-machine-kvm;
-    description = "KVM driver for docker-machine.";
+    homepage = "https://github.com/dhiltgen/docker-machine-kvm";
+    description = "KVM driver for docker-machine";
     license = licenses.asl20;
     maintainers = with maintainers; [ offline ];
     platforms = platforms.unix;

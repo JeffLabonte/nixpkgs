@@ -46,7 +46,7 @@ in
 
 stdenv.mkDerivation rec {
   pname = "racket";
-  version = "7.6"; # always change at once with ./minimal.nix
+  version = "7.9"; # always change at once with ./minimal.nix
 
   src = (stdenv.lib.makeOverridable ({ name, sha256 }:
     fetchurl {
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
     }
   )) {
     name = "${pname}-${version}";
-    sha256 = "0yagy7qrnz96gwafnj3whh2vs54788k1ci3vkm100h68gsw638b8";
+    sha256 = "18pz6gjzqy6a62xkcmjanhr7kgxpvpmc0blrk4igz8ldcybz44if";
   };
 
   FONTCONFIG_FILE = fontsConf;
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     unset AR
-    for f in src/lt/configure src/cs/c/configure src/racket/src/string.c; do
+    for f in src/lt/configure src/cs/c/configure src/bc/src/string.c; do
       substituteInPlace "$f" --replace /usr/bin/uname ${coreutils}/bin/uname
     done
     mkdir src/build
@@ -102,7 +102,7 @@ stdenv.mkDerivation rec {
       libraries support applications from web servers and databases to
       GUIs and charts.
     '';
-    homepage = https://racket-lang.org/;
+    homepage = "https://racket-lang.org/";
     license = with licenses; [ asl20 /* or */ mit ];
     maintainers = with maintainers; [ kkallio henrytill vrthra ];
     platforms = [ "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];

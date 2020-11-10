@@ -1,8 +1,10 @@
-{ stdenv, lib, fetchurl, autoPatchelfHook, dpkg, wrapGAppsHook
+{ stdenv, lib, fetchurl, autoPatchelfHook, dpkg, wrapGAppsHook, nixosTests
 , gnome2, gtk3, atk, at-spi2-atk, cairo, pango, gdk-pixbuf, glib, freetype, fontconfig
 , dbus, libX11, xorg, libXi, libXcursor, libXdamage, libXrandr, libXcomposite
 , libXext, libXfixes, libXrender, libXtst, libXScrnSaver, nss, nspr, alsaLib
-, cups, expat, systemd, libnotify, libuuid, at-spi2-core, libappindicator-gtk3
+, cups, expat, libuuid, at-spi2-core, libappindicator-gtk3
+# Runtime dependencies:
+, systemd, libnotify, libdbusmenu, libpulseaudio
 # Unfortunately this also overwrites the UI language (not just the spell
 # checking language!):
 , hunspellDicts, spellcheckerLanguage ? null # E.g. "de_DE"
@@ -23,7 +25,7 @@ let
       else "");
 in stdenv.mkDerivation rec {
   pname = "signal-desktop";
-  version = "1.32.3"; # Please backport all updates to the stable channel.
+  version = "1.37.3"; # Please backport all updates to the stable channel.
   # All releases have a limited lifetime and "expire" 90 days after the release.
   # When releases "expire" the application becomes unusable until an update is
   # applied. The expiration date for the current release can be extracted with:
@@ -33,7 +35,7 @@ in stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://updates.signal.org/desktop/apt/pool/main/s/signal-desktop/signal-desktop_${version}_amd64.deb";
-    sha256 = "1aqk0hdgdxjznj0nbh2glvyzdq2af8xgiw3qb4k7wpjd0my28r2l";
+    sha256 = "0gyg67qhrqqn1676m7ki8h9akhn29fh1sxmj0kw5j7dx4cyc4mid";
   };
 
   nativeBuildInputs = [
@@ -79,8 +81,9 @@ in stdenv.mkDerivation rec {
   ];
 
   runtimeDependencies = [
-    systemd.lib
+    (lib.getLib systemd)
     libnotify
+    libdbusmenu
   ];
 
   unpackPhase = "dpkg-deb -x $src .";
@@ -119,7 +122,11 @@ in stdenv.mkDerivation rec {
       --replace /opt/Signal/signal-desktop $out/bin/signal-desktop
 
     autoPatchelf --no-recurse -- $out/lib/Signal/
+    patchelf --add-needed ${libpulseaudio}/lib/libpulse.so $out/lib/Signal/resources/app.asar.unpacked/node_modules/ringrtc/build/linux/libringrtc.node
   '';
+
+  # Tests if the application launches and waits for "Link your phone to Signal Desktop":
+  passthru.tests.application-launch = nixosTests.signal-desktop;
 
   meta = {
     description = "Private, simple, and secure messenger";

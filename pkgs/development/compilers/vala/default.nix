@@ -94,7 +94,7 @@ let
 
     meta = with stdenv.lib; {
       description = "Compiler for GObject type system";
-      homepage = https://wiki.gnome.org/Projects/Vala;
+      homepage = "https://wiki.gnome.org/Projects/Vala";
       license = licenses.lgpl21Plus;
       platforms = platforms.unix;
       maintainers = with maintainers; [ antono jtojnar lethalman peterhoeg worldofpeace ];
@@ -123,8 +123,8 @@ in rec {
   };
 
   vala_0_48 = generic {
-    version = "0.48.1";
-    sha256 = "61c5TAqQj/Y2I9F54J+h6dazjTHH61l9MCFInyl+cdQ=";
+    version = "0.48.7";
+    sha256 = "0lswkb7gj0chas9n3l3dbrm9l71hs77adhvm2v600id2ipi37pi8";
   };
 
   vala = vala_0_48;

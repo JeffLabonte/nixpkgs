@@ -1,31 +1,35 @@
-{ stdenv, fetchFromGitHub, rustPlatform }:
+{ stdenv
+, fetchFromGitHub
+, rustPlatform
+, installShellFiles
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "lsd";
-  version = "0.16.0";
+  version = "0.18.0";
 
   src = fetchFromGitHub {
     owner = "Peltoche";
     repo = pname;
     rev = version;
-    sha256 = "0fh5rz6slyjzz03bpjcl9gplk36vm7qcc0i0gvhsikwvw0cf3hym";
+    sha256 = "006fy87jrb77cpa6bywchcvq1p74vlpy151q1j4nsj8npbr02krj";
   };
 
-  cargoSha256 = "1z7sg9b7qsjw1hhc7dkvxz8xgf4k8jddr7gbnjr4d2569g97jf3f";
+  cargoSha256 = "0mrvcca9y0vylcrbfxxba45v05qxd8z91vb4in88px60xah0dy3q";
 
-  preFixup = ''
-    install -Dm644 -t $out/share/zsh/site-functions/ target/release/build/lsd-*/out/_lsd
-    install -Dm644 -t $out/share/fish/vendor_completions.d/ target/release/build/lsd-*/out/lsd.fish
-    install -Dm644 -t $out/share/bash-completion/completions/ target/release/build/lsd-*/out/lsd.bash
+  nativeBuildInputs = [ installShellFiles ];
+  postInstall = ''
+    installShellCompletion $releaseDir/build/lsd-*/out/{_lsd,lsd.{bash,fish}}
   '';
 
-  # Some tests fail, but Travis ensures a proper build
-  doCheck = false;
+  checkFlags = stdenv.lib.optionals stdenv.isDarwin [
+    "--skip meta::filetype::test::test_socket_type"
+  ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/Peltoche/lsd;
+    homepage = "https://github.com/Peltoche/lsd";
     description = "The next gen ls command";
     license = licenses.asl20;
-    maintainers = [ maintainers.marsam ];
+    maintainers = with maintainers; [ filalex77 marsam zowoq ];
   };
 }

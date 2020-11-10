@@ -6,6 +6,7 @@
 , libxslt, tcl, tk, makeWrapper, libiconv
 , svnSupport, subversionClient, perlLibs, smtpPerlLibs
 , perlSupport ? true
+, nlsSupport ? true
 , guiSupport
 , withManual ? true
 , pythonSupport ? true
@@ -21,7 +22,7 @@ assert sendEmailSupport -> perlSupport;
 assert svnSupport -> perlSupport;
 
 let
-  version = "2.25.1";
+  version = "2.29.0";
   svn = subversionClient.override { perlBindings = perlSupport; };
 
   gitwebPerlLibs = with perlPackages; [ CGI HTMLParser CGIFast FCGI FCGIProcManager HTMLTagCloud ];
@@ -33,10 +34,10 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://www.kernel.org/pub/software/scm/git/git-${version}.tar.xz";
-    sha256 = "09lzwa183nblr6l8ib35g2xrjf9wm9yhk3szfvyzkwivdv69c9r2";
+    sha256 = "KEMtmVJXxGJv4PsgkfWI327tmOlXFBnnLIO8Izcua4k=";
   };
 
-  outputs = [ "out" ];
+  outputs = [ "out" ] ++ stdenv.lib.optional withManual "doc";
 
   hardeningDisable = [ "format" ];
 
@@ -80,6 +81,8 @@ stdenv.mkDerivation {
   configureFlags = stdenv.lib.optionals (stdenv.buildPlatform != stdenv.hostPlatform) [
     "ac_cv_fread_reads_directories=yes"
     "ac_cv_snprintf_returns_bogus=no"
+    "ac_cv_iconv_omits_bom=no"
+    "ac_cv_prog_CURL_CONFIG=${curl.dev}/bin/curl-config"
   ];
 
   preBuild = ''
@@ -96,6 +99,7 @@ stdenv.mkDerivation {
   ++ (if stdenv.isDarwin then ["NO_APPLE_COMMON_CRYPTO=1"] else ["sysconfdir=/etc"])
   ++ stdenv.lib.optionals stdenv.hostPlatform.isMusl ["NO_SYS_POLL_H=1" "NO_GETTEXT=YesPlease"]
   ++ stdenv.lib.optional withpcre2 "USE_LIBPCRE2=1"
+  ++ stdenv.lib.optional (!nlsSupport) "NO_GETTEXT=1"
   # git-gui refuses to start with the version of tk distributed with
   # macOS Catalina. We can prevent git from building the .app bundle
   # by specifying an invalid tk framework. The postInstall step will
@@ -151,12 +155,6 @@ stdenv.mkDerivation {
       ln -s $out/share/git/contrib/completion/git-completion.bash $out/share/bash-completion/completions/git
       mkdir -p $out/etc/bash_completion.d
       ln -s $out/share/git/contrib/completion/git-prompt.sh $out/etc/bash_completion.d/
-      mkdir -p $out/share/zsh/site-functions
-      ln -s $out/share/git/contrib/completion/git-completion.zsh $out/share/zsh/site-functions/_git
-
-      # Patch the zsh completion script so it can find the Bash completion script.
-      sed -i -e "/locations=(/a \${"\t\t"}'$out/share/git/contrib/completion/git-completion.bash'" \
-        $out/share/git/contrib/completion/git-completion.zsh
 
       # grep is a runtime dependency, need to patch so that it's found
       substituteInPlace $out/libexec/git-core/git-sh-setup \
@@ -189,7 +187,7 @@ stdenv.mkDerivation {
       ln -s $out/libexec/git-core/git-http-backend $out/bin/git-http-backend
     '' + stdenv.lib.optionalString perlSupport ''
       # wrap perl commands
-      makeWrapper "$out/share/git/contrib/credential/netrc/git-credential-netrc" $out/bin/git-credential-netrc \
+      makeWrapper "$out/share/git/contrib/credential/netrc/git-credential-netrc.perl" $out/bin/git-credential-netrc \
                   --set PERL5LIB   "$out/${perlPackages.perl.libPrefix}:${perlPackages.makePerlPath perlLibs}"
       wrapProgram $out/libexec/git-core/git-cvsimport \
                   --set GITPERLLIB "$out/${perlPackages.perl.libPrefix}:${perlPackages.makePerlPath perlLibs}"
@@ -232,7 +230,7 @@ stdenv.mkDerivation {
       '')
 
    + stdenv.lib.optionalString withManual ''# Install man pages and Info manual
-       make -j $NIX_BUILD_CORES -l $NIX_BUILD_CORES PERL_PATH="${buildPackages.perl}/bin/perl" cmd-list.made install install-info \
+       make -j $NIX_BUILD_CORES -l $NIX_BUILD_CORES PERL_PATH="${buildPackages.perl}/bin/perl" cmd-list.made install install-html install-info \
          -C Documentation ''
 
    + (if guiSupport then ''
@@ -284,13 +282,14 @@ stdenv.mkDerivation {
         mv t/{,skip-}$test.sh || true
       else
         sed -i t/$test.sh \
-          -e "/^ *test_expect_.*$pattern/,/^ *' *\$/{s/^/#/}"
+          -e "/^\s*test_expect_.*$pattern/,/^\s*' *\$/{s/^/: #/}"
       fi
     }
 
     # Shared permissions are forbidden in sandbox builds.
     disable_test t0001-init shared
     disable_test t1301-shared-repo
+    disable_test t5324-split-commit-graph 'split commit-graph respects core.sharedrepository'
 
     # Our patched gettext never fallbacks
     disable_test t0201-gettext-fallbacks
@@ -330,9 +329,10 @@ stdenv.mkDerivation {
 
 
   meta = {
-    homepage = https://git-scm.com/;
+    homepage = "https://git-scm.com/";
     description = "Distributed version control system";
     license = stdenv.lib.licenses.gpl2;
+    changelog = "https://raw.githubusercontent.com/git/git/${version}/Documentation/RelNotes/${version}.txt";
 
     longDescription = ''
       Git, a popular distributed version control system designed to
@@ -340,6 +340,6 @@ stdenv.mkDerivation {
     '';
 
     platforms = stdenv.lib.platforms.all;
-    maintainers = with stdenv.lib.maintainers; [ peti the-kenny wmertens globin ];
+    maintainers = with stdenv.lib.maintainers; [ primeos peti wmertens globin ];
   };
 }

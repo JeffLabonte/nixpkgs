@@ -7,7 +7,7 @@ with stdenv;
 
 let
   majorVersion = "0";
-  minorVersion = "219";
+  minorVersion = "226";
 
   desktopItem = makeDesktopItem {
     name = "MAME";
@@ -26,7 +26,7 @@ in mkDerivation {
     owner = "mamedev";
     repo = "mame";
     rev = "mame${majorVersion}${minorVersion}";
-    sha256 = "048ar1j2vsrvqqc3spy9qcch2lbxn0ycd9lv4ig5wfnvjkdjdvgr";
+    sha256 = "0pnsvz4vkjkqb1ac5wzwz31vx0iknyg5ffly90nhl13kcr656jrj";
   };
 
   hardeningDisable = [ "fortify" ];
@@ -51,7 +51,9 @@ in mkDerivation {
   # by default MAME assumes that paths with stock resources
   # are relative and that you run MAME changing to
   # install directory, so we add absolute paths here
-  patches = [ ./emuopts.patch ];
+  patches = [
+    ./emuopts.patch
+  ];
 
   postPatch = ''
     substituteInPlace src/emu/emuopts.cpp \
@@ -77,7 +79,7 @@ in mkDerivation {
 
   meta = with lib; {
     description = "Is a multi-purpose emulation framework";
-    homepage = https://www.mamedev.org/;
+    homepage = "https://www.mamedev.org/";
     license = with licenses; [ bsd3 gpl2Plus ];
     platforms = platforms.unix;
     # makefile needs fixes for install target

@@ -7,7 +7,7 @@
 
 stdenv.mkDerivation rec {
   pname = "dbeaver-ce";
-  version = "7.0.1";
+  version = "7.2.4";
 
   desktopItem = makeDesktopItem {
     name = "dbeaver";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     desktopName = "dbeaver";
     comment = "SQL Integrated Development Environment";
     genericName = "SQL Integrated Development Environment";
-    categories = "Application;Development;";
+    categories = "Development;";
   };
 
   buildInputs = [
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://dbeaver.io/files/${version}/dbeaver-ce-${version}-linux.gtk.x86_64.tar.gz";
-    sha256 = "1kq0ingzfl6q2yz3y5nj9k35y9f1izg1idgbgvpz784gn7937m64";
+    sha256 = "sha256-RsXLznTz/U23e77xzyINi8HVuGqR4TrPaf+w++zPOH4=";
   };
 
   installPhase = ''

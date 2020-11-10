@@ -22,8 +22,8 @@ in stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    description = "A design system for interactive fiction.";
-    homepage = http://inform7.com/;
+    description = "A design system for interactive fiction";
+    homepage = "http://inform7.com/";
     license = licenses.artistic2;
     maintainers = with maintainers; [ mbbx6spp ];
     platforms = platforms.unix;

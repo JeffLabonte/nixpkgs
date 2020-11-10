@@ -1,15 +1,15 @@
 { lib, buildPythonPackage, fetchPypi
 , Babel, requests, requests_oauthlib, six, click, markdown, pyyaml
-, pytestrunner, coverage, flake8, mock, pytest, pytestcov, tox
+, pytestrunner, coverage, flake8, mock, pytest, pytestcov, tox, gntp, sleekxmpp
 }:
 
 buildPythonPackage rec {
   pname = "apprise";
-  version = "0.8.4";
+  version = "0.8.9";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "15kwnvs2ka6sg1gq65bbf9lk0jp104br813y6wvrbwipiz8kkjn1";
+    sha256 = "024db00c6a80dbc8c9038b2de211c9fd32963046612882f3f54ad78930f3e0f7";
   };
 
   nativeBuildInputs = [ Babel ];
@@ -19,7 +19,7 @@ buildPythonPackage rec {
   ];
 
   checkInputs = [
-    pytestrunner coverage flake8 mock pytest pytestcov tox
+    pytestrunner coverage flake8 mock pytest pytestcov tox gntp sleekxmpp
   ];
 
   meta = with lib; {

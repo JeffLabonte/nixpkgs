@@ -14,7 +14,7 @@
 
 let
   apparmor-series = "2.13";
-  apparmor-patchver = "4";
+  apparmor-patchver = "5";
   apparmor-version = apparmor-series + "." + apparmor-patchver;
 
   apparmor-meta = component: with stdenv.lib; {
@@ -27,10 +27,12 @@ let
 
   apparmor-sources = fetchurl {
     url = "https://launchpad.net/apparmor/${apparmor-series}/${apparmor-version}/+download/apparmor-${apparmor-version}.tar.gz";
-    sha256 = "03nislxccnbxld89giak2s8xa4mdbwscfxbdwhmw5qpvgz08dgwh";
+    sha256 = "05x7r99k00r97v1cq2f711lv6yqzhbl8zp1i1c7kxra4v0a2lzk3";
   };
 
   prePatchCommon = ''
+    chmod a+x ./common/list_capabilities.sh ./common/list_af_names.sh
+    patchShebangs ./common/list_capabilities.sh ./common/list_af_names.sh
     substituteInPlace ./common/Make.rules --replace "/usr/bin/pod2man" "${buildPackages.perl}/bin/pod2man"
     substituteInPlace ./common/Make.rules --replace "/usr/bin/pod2html" "${buildPackages.perl}/bin/pod2html"
     substituteInPlace ./common/Make.rules --replace "/usr/include/linux/capability.h" "${linuxHeaders}/include/linux/capability.h"
@@ -39,12 +41,12 @@ let
 
   patches = stdenv.lib.optionals stdenv.hostPlatform.isMusl [
     (fetchpatch {
-      url = "https://git.alpinelinux.org/cgit/aports/plain/testing/apparmor/0003-Added-missing-typedef-definitions-on-parser.patch?id=74b8427cc21f04e32030d047ae92caa618105b53";
+      url = "https://git.alpinelinux.org/aports/plain/testing/apparmor/0003-Added-missing-typedef-definitions-on-parser.patch?id=74b8427cc21f04e32030d047ae92caa618105b53";
       name = "0003-Added-missing-typedef-definitions-on-parser.patch";
       sha256 = "0yyaqz8jlmn1bm37arggprqz0njb4lhjni2d9c8qfqj0kll0bam0";
     })
     (fetchpatch {
-      url = "https://git.alpinelinux.org/cgit/aports/plain/testing/apparmor/0007-Do-not-build-install-vim-file-with-utils-package.patch?id=74b8427cc21f04e32030d047ae92caa618105b53";
+      url = "https://git.alpinelinux.org/aports/plain/testing/apparmor/0007-Do-not-build-install-vim-file-with-utils-package.patch?id=74b8427cc21f04e32030d047ae92caa618105b53";
       name = "0007-Do-not-build-install-vim-file-with-utils-package.patch";
       sha256 = "1m4dx901biqgnr4w4wz8a2z9r9dxyw7wv6m6mqglqwf2lxinqmp4";
     })
@@ -119,7 +121,11 @@ let
       libapparmor.python
     ];
 
-    prePatch = prePatchCommon;
+    prePatch = prePatchCommon + ''
+      substituteInPlace ./utils/apparmor/easyprof.py --replace "/sbin/apparmor_parser" "${apparmor-parser}/bin/apparmor_parser"
+      substituteInPlace ./utils/apparmor/aa.py --replace "/sbin/apparmor_parser" "${apparmor-parser}/bin/apparmor_parser"
+      substituteInPlace ./utils/logprof.conf --replace "/sbin/apparmor_parser" "${apparmor-parser}/bin/apparmor_parser"
+    '';
     inherit patches;
     postPatch = "cd ./utils";
     makeFlags = [ "LANGS=" ];

@@ -13,8 +13,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ libmnl ];
 
   meta = with stdenv.lib; {
-    homepage = http://www.netfilter.org/projects/libnetfilter_acct/;
-    description = "Userspace library providing interface to extended accounting infrastructure.";
+    homepage = "http://www.netfilter.org/projects/libnetfilter_acct/";
+    description = "Userspace library providing interface to extended accounting infrastructure";
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

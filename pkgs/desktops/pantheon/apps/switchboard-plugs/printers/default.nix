@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, nix-update-script
 , fetchpatch
 , pantheon
 , meson
@@ -15,17 +16,17 @@
 
 stdenv.mkDerivation rec {
   pname = "switchboard-plug-printers";
-  version = "2.1.8";
+  version = "2.1.9";
 
   src = fetchFromGitHub {
     owner = "elementary";
     repo = pname;
     rev = version;
-    sha256 = "0nnzwpfxkvgsw3g329926c3m7vci6vyb60qib7b9mpgicmsqnkvz";
+    sha256 = "sha256-tnAJyyPN/Xy1pmlgBpgO2Eb5CeHrRltjQTHmuTPBt8s=";
   };
 
   passthru = {
-    updateScript = pantheon.updateScript {
+    updateScript = nix-update-script {
       attrPath = "pantheon.${pname}";
     };
   };
@@ -47,7 +48,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Switchboard Printers Plug";
-    homepage = https://github.com/elementary/switchboard-plug-printers;
+    homepage = "https://github.com/elementary/switchboard-plug-printers";
     license = licenses.lgpl3Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

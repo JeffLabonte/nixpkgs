@@ -68,11 +68,11 @@
 
 stdenv.mkDerivation rec {
   pname = "gnome-control-center";
-  version = "3.36.0";
+  version = "3.36.4";
 
   src = fetchurl {
     url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "0gdadbkynldxqffdlw760039ci1vv9wsi5i0mdq4q9dblmb79q1b";
+    sha256 = "0m7pxjgymc7aqqz0vcmlq91nxnwzd1v7v1gdhrfam49krxmk80mc";
   };
 
   nativeBuildInputs = [
@@ -178,7 +178,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Utilities to configure the GNOME desktop";
     license = licenses.gpl2Plus;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     platforms = platforms.linux;
   };
 }

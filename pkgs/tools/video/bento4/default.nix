@@ -3,13 +3,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "bento4";
-  version = "1.5.1-629";
+  version = "1.6.0-637";
 
   src = fetchFromGitHub {
     owner = "axiomatic-systems";
     repo = "Bento4";
     rev = "v${version}";
-    sha256 = "1614idy0r7qrkiaq4kz3gh1b1bpx592aqvi574kxnjrxc34kpmb3";
+    sha256 = "0iwqi71nj0iczffvpxmz0prvmmnyiqypfwvzivkh38wl0br82bkp";
   };
 
   patches = [ ./libap4.patch ];
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Full-featured MP4 format and MPEG DASH library and tools";
-    homepage = http://bento4.com;
+    homepage = "http://bento4.com";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ makefu ];
     broken = stdenv.isAarch64;

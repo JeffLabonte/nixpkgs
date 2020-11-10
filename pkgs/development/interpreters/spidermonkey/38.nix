@@ -62,10 +62,11 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Mozilla's JavaScript engine written in C/C++";
-    homepage = https://developer.mozilla.org/en/SpiderMonkey;
+    homepage = "https://developer.mozilla.org/en/SpiderMonkey";
     # TODO: MPL/GPL/LGPL tri-license.
 
     maintainers = [ maintainers.abbradar ];
     platforms = platforms.unix;
+    knownVulnerabilities = [ "SpiderMonkey 38 is outdated and contains known security vulnerabilities." ]; # as per https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Releases/38
   };
 }

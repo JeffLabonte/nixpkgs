@@ -43,6 +43,7 @@
 , sqlite
 , enableGtk2Plugins ? false
 , gtk2 ? null
+, enableGLES ? true
 , gst-plugins-base
 , gst-plugins-bad
 , woff2
@@ -50,7 +51,6 @@
 , libseccomp
 , xdg-dbus-proxy
 , substituteAll
-, gnome3
 , glib
 }:
 
@@ -62,13 +62,13 @@ with stdenv.lib;
 
 stdenv.mkDerivation rec {
   pname = "webkitgtk";
-  version = "2.28.0";
+  version = "2.28.4";
 
   outputs = [ "out" "dev" ];
 
   src = fetchurl {
     url = "https://webkitgtk.org/releases/${pname}-${version}.tar.xz";
-    sha256 = "12qfs9w93c5kiyi14ynm4rf4ad3c213dvzmdrc9c3ab2iwbks7rn";
+    sha256 = "0r4lkk21pny2g4mmsw0ds14m5hhjys1l47gvy59dfgihr7l546c2";
   };
 
   patches = optionals stdenv.isLinux [
@@ -168,7 +168,7 @@ stdenv.mkDerivation rec {
     "-DUSE_ACCELERATE=0"
     "-DUSE_SYSTEM_MALLOC=ON"
   ] ++ optional (!enableGtk2Plugins) "-DENABLE_PLUGIN_PROCESS_GTK2=OFF"
-    ++ optional stdenv.isLinux "-DENABLE_GLES2=ON";
+    ++ optional (stdenv.isLinux && enableGLES) "-DENABLE_GLES2=ON";
 
   postPatch = ''
     patchShebangs .
@@ -176,10 +176,9 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Web content rendering engine, GTK port";
-    homepage = https://webkitgtk.org/;
+    homepage = "https://webkitgtk.org/";
     license = licenses.bsd2;
     platforms = platforms.linux;
-    hydraPlatforms = [];
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
   };
 }

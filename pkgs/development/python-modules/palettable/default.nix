@@ -10,16 +10,15 @@ buildPythonPackage rec {
   };
 
   checkInputs = [ pytest ];
- 
+
   checkPhase = ''
-    pytest 
+    pytest
   '';
 
   meta = with stdenv.lib; {
     description = "A library of color palettes";
-    homepage = https://jiffyclub.github.io/palettable/;
+    homepage = "https://jiffyclub.github.io/palettable/";
     license = licenses.mit;
     maintainers = with maintainers; [ psyanticy ];
   };
 }
-

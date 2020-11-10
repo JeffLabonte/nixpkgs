@@ -16,18 +16,19 @@
 , wrapGAppsHook
 , gobject-introspection
 , glib-networking
+, librest
 , python3
 }:
 
 stdenv.mkDerivation rec {
-  version = "1.0.4";
+  version = "1.2.1";
   pname = "cawbird";
 
   src = fetchFromGitHub {
     owner = "IBBoard";
     repo = "cawbird";
     rev = "v${version}";
-    sha256 = "sha256:1gqi7bn08b9cjpb0mgs6bk1a2npdfhn56ckps95nck0jyqzfbnir";
+    sha256 = "11s8x48syy5wjj23ab4bn5jxhi7l5sx7aw6q2ggk99v042hxh3h2";
   };
 
   nativeBuildInputs = [
@@ -50,6 +51,7 @@ stdenv.mkDerivation rec {
     dconf
     gspell
     glib-networking
+    librest
   ] ++ (with gst_all_1; [
     gstreamer
     gst-plugins-base

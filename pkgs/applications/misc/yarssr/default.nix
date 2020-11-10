@@ -55,8 +55,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/tsyrogit/zxcvbn-c;
-    description = "A fork of Yarssr (a RSS reader for the GNOME Tray) from http://yarssr.sf.net with various fixes.";
+    homepage = "https://github.com/tsyrogit/zxcvbn-c";
+    description = "A fork of Yarssr (a RSS reader for the GNOME Tray) from http://yarssr.sf.net with various fixes";
     license = licenses.gpl1;
     platforms = platforms.linux;
     maintainers = with maintainers; [ xurei ];

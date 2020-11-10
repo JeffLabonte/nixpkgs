@@ -25,8 +25,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    description = "A shebang for running inside nix-shell.";
-    homepage    = https://github.com/bennofs/nix-script;
+    description = "A shebang for running inside nix-shell";
+    homepage    = "https://github.com/bennofs/nix-script";
     license     = licenses.bsd3;
     maintainers = with maintainers; [ bennofs rnhmjoj ];
     platforms   = haskellPackages.ghc.meta.platforms;

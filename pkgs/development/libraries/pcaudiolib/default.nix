@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "rhdunn";
     repo = "pcaudiolib";
-    rev = "${version}";
+    rev = version;
     sha256 = "0c55hlqqh0m7bcb3nlgv1s4a22s5bgczr1cakjh3767rjb10khi0";
   };
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Provides a C API to different audio devices";
-    homepage = https://github.com/rhdunn/pcaudiolib;
+    homepage = "https://github.com/rhdunn/pcaudiolib";
     license = licenses.gpl3;
     maintainers = with maintainers; [ aske ];
     platforms = platforms.linux;

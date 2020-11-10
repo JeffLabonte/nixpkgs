@@ -4,7 +4,7 @@
 , python
 , fetchFromGitHub
 , fetchpatch
-, qt5
+, qtbase
 , boost
 , assimp
 , gym
@@ -33,14 +33,14 @@ buildPythonPackage rec {
 
   nativeBuildInputs = [
     pkgconfig
-    qt5.qtbase # needs the `moc` tool
+    qtbase # needs the `moc` tool
     which
   ];
 
   buildInputs = [
     bullet-roboschool
     assimp
-    qt5.qtbase
+    qtbase
     boost
   ];
 
@@ -70,7 +70,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Open-source software for robot simulation, integrated with OpenAI Gym";
-    homepage = https://github.com/openai/roboschool;
+    homepage = "https://github.com/openai/roboschool";
     license = licenses.mit;
     maintainers = with maintainers; [ timokau ];
   };

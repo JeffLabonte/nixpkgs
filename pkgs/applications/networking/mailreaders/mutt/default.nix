@@ -27,11 +27,11 @@ with stdenv.lib;
 
 stdenv.mkDerivation rec {
   pname = "mutt";
-  version = "1.13.5";
+  version = "2.0.0";
 
   src = fetchurl {
     url = "http://ftp.mutt.org/pub/mutt/${pname}-${version}.tar.gz";
-    sha256 = "0lx65a44b03rbvcrz0y9syrik67fx3hvblxyyvz5l9bb7rdipmvc";
+    sha256 = "1bxf8976mrl3vbn3s5i32i1lf908yag5rsf84n76dllmly61794k";
   };
 
   patches = optional smimeSupport (fetchpatch {
@@ -88,9 +88,9 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A small but very powerful text-based mail client";
-    homepage = http://www.mutt.org;
+    homepage = "http://www.mutt.org";
     license = licenses.gpl2Plus;
     platforms = platforms.unix;
-    maintainers = with maintainers; [ the-kenny rnhmjoj ];
+    maintainers = with maintainers; [ rnhmjoj ];
   };
 }

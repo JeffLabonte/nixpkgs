@@ -9,16 +9,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "findomain";
-  version = "1.4.5";
+  version = "2.1.4";
 
   src = fetchFromGitHub {
     owner = "Edu4rdSHL";
     repo = pname;
     rev = version;
-    sha256 = "1p4ddyqg1v27hf19n1ksmfvj5s6z2c8i13syb0anhlyzqy576hwb";
+    sha256 = "0g0kw1b18kk9jhvw88hcxc04ccj8k22fdzky7l2dv3r37vndd91w";
   };
 
-  cargoSha256 = "0mdcj4almwziq1ph3imfdx41a96xq19sbjm7wsm9lxlzhvv256br";
+  cargoSha256 = "0cmp4w86qnzd2b2w4s3w019857pxysgikkl1g7ldkiylrsm5vlpn";
 
   nativeBuildInputs = [ installShellFiles perl ];
   buildInputs = lib.optional stdenv.isDarwin Security;
@@ -32,6 +32,5 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/Edu4rdSHL/findomain";
     license = licenses.gpl3;
     maintainers = with maintainers; [ filalex77 ];
-    platforms = platforms.all;
   };
 }

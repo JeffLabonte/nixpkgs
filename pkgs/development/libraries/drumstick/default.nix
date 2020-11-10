@@ -1,5 +1,5 @@
 { stdenv, fetchurl, alsaLib, cmake, docbook_xsl, docbook_xml_dtd_45, doxygen
-, fluidsynth, pkgconfig, qt5
+, fluidsynth, pkgconfig, qtbase, qtsvg
 }:
 
 stdenv.mkDerivation rec {
@@ -22,13 +22,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake pkgconfig docbook_xsl docbook_xml_dtd_45 docbook_xml_dtd_45 ];
   buildInputs = [
-    alsaLib doxygen fluidsynth qt5.qtbase qt5.qtsvg
+    alsaLib doxygen fluidsynth qtbase qtsvg
   ];
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [ solson ];
     description = "MIDI libraries for Qt5/C++";
-    homepage = http://drumstick.sourceforge.net/;
+    homepage = "http://drumstick.sourceforge.net/";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
   };

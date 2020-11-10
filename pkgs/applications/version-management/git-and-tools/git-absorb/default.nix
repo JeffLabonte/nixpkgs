@@ -1,19 +1,29 @@
-{ stdenv, fetchFromGitHub, rustPlatform, libiconv, Security }:
+{ stdenv, fetchFromGitHub, rustPlatform, installShellFiles, libiconv, Security }:
 
 rustPlatform.buildRustPackage rec {
   pname = "git-absorb";
-  version = "0.5.0";
+  version = "0.6.6";
 
   src = fetchFromGitHub {
     owner  = "tummychow";
     repo   = pname;
     rev    = "refs/tags/${version}";
-    sha256 = "0lggv3knh6iglkh8x2zqvqcs3dlwfsdiclg7pmdrycny72la4k2j";
+    sha256 = "04v10bn24acify34vh5ayymsr1flcyb05f3az9k1s2m6nlxy5gb9";
   };
+
+  nativeBuildInputs = [ installShellFiles ];
 
   buildInputs = stdenv.lib.optionals stdenv.isDarwin [ libiconv Security ];
 
-  cargoSha256 = "13gikjswbb0kkpvb5zhj88qq5l667624gkfb7hd3zygh4qyhsy05";
+  cargoSha256 = "0h0vlz4qd8i9bf1mgjr618zbdwfp6bmy7ql9a1xzjmfdpkl3cgk9";
+
+  postInstall = ''
+    installManPage Documentation/git-absorb.1
+    for shell in bash zsh fish; do
+      $out/bin/git-absorb --gen-completions $shell > git-absorb.$shell
+      installShellCompletion git-absorb.$shell
+    done
+  '';
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/tummychow/git-absorb";

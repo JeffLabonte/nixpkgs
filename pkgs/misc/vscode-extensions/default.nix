@@ -1,4 +1,4 @@
-{ stdenv, callPackage, vscode-utils, llvmPackages_8 }:
+{ stdenv, callPackage, vscode-utils, llvmPackages_8, llvmPackages_latest }:
 
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
@@ -10,6 +10,7 @@ in
 # So an extension's attribute name should be of the form:
 # "${mktplcRef.publisher}.${mktplcRef.name}".
 #
+stdenv.lib.mapAttrs (_n: stdenv.lib.recurseIntoAttrs)
 {
 
   alanz.vscode-hie-server = buildVscodeMarketplaceExtension {
@@ -48,6 +49,26 @@ in
     };
   };
 
+  dhall.dhall-lang = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "dhall-lang";
+      publisher = "dhall";
+      version = "0.0.4";
+      sha256 = "0sa04srhqmngmw71slnrapi2xay0arj42j4gkan8i11n7bfi1xpf";
+    };
+    meta = { license = stdenv.lib.licenses.mit; };
+  };
+
+  dhall.vscode-dhall-lsp-server = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "vscode-dhall-lsp-server";
+      publisher = "dhall";
+      version = "0.0.4";
+      sha256 = "1zin7s827bpf9yvzpxpr5n6mv0b5rhh3civsqzmj52mdq365d2js";
+    };
+    meta = { license = stdenv.lib.licenses.mit; };
+  };
+
   formulahendry.auto-close-tag = buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "auto-close-tag";
@@ -57,6 +78,18 @@ in
     };
     meta = {
       license = stdenv.lib.licenses.mit;
+    };
+  };
+
+  haskell.haskell = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "haskell";
+      publisher = "haskell";
+      version = "1.1.0";
+      sha256 = "1wg06lyk0qn9jd6gi007sg7v0z9z8gwq7x2449d4ihs9n3w5l0gb";
+    };
+    meta = with stdenv.lib; {
+      license = licenses.mit;
     };
   };
 
@@ -76,8 +109,8 @@ in
     mktplcRef = {
       name = "language-haskell";
       publisher = "justusadam";
-      version = "2.6.0"; # see the note above
-      sha256 = "1891pg4x5qkh151pylvn93c4plqw6vgasa4g40jbma5xzq8pygr4";
+      version = "3.2.1";
+      sha256 = "0lxp8xz17ciy93nj4lzxqvz71vw1zdyamrnh2n792yair8890rr6";
     };
     meta = {
       license = stdenv.lib.licenses.bsd3;
@@ -140,6 +173,8 @@ in
     };
   };
 
+  matklad.rust-analyzer = callPackage ./rust-analyzer {};
+
   scala-lang.scala = buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "scala";
@@ -156,8 +191,8 @@ in
     mktplcRef = {
       name = "metals";
       publisher = "scalameta";
-      version = "1.6.3";
-      sha256 = "1mc3awybzd2ql1b86inirhsw3j2c7cs0b0nvbjp38jjpq674bmj7";
+      version = "1.9.4";
+      sha256 = "029s1al1f3qk4pa3539rs045g9jwkhbmdg7wj7biqc6shcria4ca";
     };
     meta = {
       license = stdenv.lib.licenses.asl20;
@@ -176,6 +211,12 @@ in
     };
   };
 
+  vadimcn.vscode-lldb = callPackage ./vscode-lldb {
+    lldb = llvmPackages_latest.lldb;
+  };
+
+  ms-vsliveshare.vsliveshare = callPackage ./ms-vsliveshare-vsliveshare {};
+
   vscodevim.vim = buildVscodeMarketplaceExtension {
     mktplcRef = {
       name = "vim";
@@ -185,6 +226,19 @@ in
     };
     meta = {
       license = stdenv.lib.licenses.mit;
+    };
+  };
+
+  xaver.clang-format = buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "clang-format";
+      publisher = "xaver";
+      version = "1.9.0";
+      sha256 = "abd0ef9176eff864f278c548c944032b8f4d8ec97d9ac6e7383d60c92e258c2f";
+    };
+    meta = with stdenv.lib; {
+      license = licenses.mit;
+      maintainers = [ maintainers.zeratax ];
     };
   };
 

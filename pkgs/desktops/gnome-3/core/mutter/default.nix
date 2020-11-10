@@ -1,19 +1,18 @@
 { fetchurl
 , fetchpatch
 , substituteAll
+, runCommand
 , stdenv
 , pkgconfig
 , gnome3
 , gettext
 , gobject-introspection
-, upower
 , cairo
 , pango
-, cogl
 , json-glib
 , libstartup_notification
 , zenity
-, libcanberra-gtk3
+, libcanberra
 , ninja
 , xkeyboard_config
 , libxkbfile
@@ -24,7 +23,6 @@
 , glib
 , gtk3
 , gnome-desktop
-, geocode-glib
 , pipewire
 , libgudev
 , libwacom
@@ -42,16 +40,27 @@
 , wayland-protocols
 }:
 
-stdenv.mkDerivation rec {
+let self = stdenv.mkDerivation rec {
   pname = "mutter";
-  version = "3.36.0";
+  version = "3.36.5";
 
   outputs = [ "out" "dev" "man" ];
 
   src = fetchurl {
     url = "mirror://gnome/sources/mutter/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "18lvj158w6gwc6xpvn699v8ykh1r5szry7sqascl6f1i8g628v2x";
+    sha256 = "1py7sqrpvg2qvswxclshysx7hd9jk65i6cwqsagd6rg6rnjhblp0";
   };
+
+  patches = [
+    # Drop inheritable cap_sys_nice, to prevent the ambient set from leaking
+    # from mutter/gnome-shell, see https://github.com/NixOS/nixpkgs/issues/71381
+    ./drop-inheritable.patch
+
+    (substituteAll {
+      src = ./fix-paths.patch;
+      inherit zenity;
+    })
+  ];
 
   mesonFlags = [
     "-Degl_device=true"
@@ -85,16 +94,14 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     cairo
-    cogl
     egl-wayland
-    geocode-glib
     glib
     gnome-desktop
     gnome-settings-daemon
     gobject-introspection
     gsettings-desktop-schemas
     gtk3
-    libcanberra-gtk3
+    libcanberra
     libgudev
     libinput
     libstartup_notification
@@ -104,30 +111,9 @@ stdenv.mkDerivation rec {
     pango
     pipewire
     sysprof
-    upower
     xkeyboard_config
     xwayland
-    zenity
-    zenity
     wayland-protocols
-  ];
-
-  patches = [
-    # Drop inheritable cap_sys_nice, to prevent the ambient set from leaking
-    # from mutter/gnome-shell, see https://github.com/NixOS/nixpkgs/issues/71381
-    ./drop-inheritable.patch
-
-    (substituteAll {
-      src = ./fix-paths.patch;
-      inherit zenity;
-    })
-
-    # Fix crash when opening submenus from «always on visible workspace» windows
-    # https://gitlab.gnome.org/GNOME/mutter/issues/1083
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/mutter/commit/7e32cc05ce2e5b3931ddcf46ce9ead603a0de39e.patch";
-      sha256 = "5ZzOMizucfrSnHNYjHIUObLHCvAIjrE6fY/CxLp4c7k=";
-    })
   ];
 
   postPatch = ''
@@ -139,6 +125,18 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    libdir = "${self}/lib/mutter-6";
+
+    tests = {
+      libdirExists = runCommand "mutter-libdir-exists" {} ''
+        if [[ ! -d ${self.libdir} ]]; then
+          echo "passthru.libdir should contain a directory, “${self.libdir}” is not one."
+          exit 1
+        fi
+        touch $out
+      '';
+    };
+
     updateScript = gnome3.updateScript {
       packageName = pname;
       attrPath = "gnome3.${pname}";
@@ -149,7 +147,8 @@ stdenv.mkDerivation rec {
     description = "A window manager for GNOME";
     homepage = "https://gitlab.gnome.org/GNOME/mutter";
     license = licenses.gpl2;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     platforms = platforms.linux;
   };
-}
+};
+in self

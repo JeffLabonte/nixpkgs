@@ -1,6 +1,6 @@
 { stdenv, fetchFromGitHub, qt4, qmake4Hook, libpulseaudio }:
 let
-  version = "1.1.8";
+  version = "1.1.9";
 in
 stdenv.mkDerivation {
   pname = "multimon-ng";
@@ -10,7 +10,7 @@ stdenv.mkDerivation {
     owner = "EliasOenal";
     repo = "multimon-ng";
     rev = version;
-    sha256 = "1973xfyvzl1viz19zr83cgqlx5laxbjrca35rqabn6dlb6xb5xk8";
+    sha256 = "01716cfhxfzsab9zjply9giaa4nn4b7rm3p3vizrwi7n253yiwm2";
   };
 
   buildInputs = [ qt4 libpulseaudio ];
@@ -36,9 +36,8 @@ stdenv.mkDerivation {
       AFSK2400 AFSK2400_2 AFSK2400_3 HAPN4800 FSK9600 DTMF ZVEI1 ZVEI2
       ZVEI3 DZVEI PZVEI EEA EIA CCIR MORSE CW
     '';
-    homepage = https://github.com/EliasOenal/multimon-ng;
+    homepage = "https://github.com/EliasOenal/multimon-ng";
     license = licenses.gpl2;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ the-kenny ];
   };
 }

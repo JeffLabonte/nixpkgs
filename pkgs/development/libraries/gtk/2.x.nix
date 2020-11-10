@@ -12,11 +12,15 @@ assert cupsSupport -> cups != null;
 
 with stdenv.lib;
 
+let
+  pname = "gtk+";
+  version = "2.24.32"; # remove passthru on next update
+in
 stdenv.mkDerivation rec {
-  name = "gtk+-2.24.32";
+  name = "${pname}-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/2.24/${name}.tar.xz";
+    url = "mirror://gnome/sources/gtk+/2.24/${pname}-${version}.tar.xz";
     sha256 = "b6c8a93ddda5eabe3bfee1eb39636c9a03d2a56c7b62828b359bf197943c582e";
   };
 
@@ -37,7 +41,7 @@ stdenv.mkDerivation rec {
     ./patches/gtk2-theme-paths.patch
   ] ++ optionals stdenv.isDarwin [
     (fetchpatch {
-      url = https://bug557780.bugzilla-attachments.gnome.org/attachment.cgi?id=306776;
+      url = "https://bug557780.bugzilla-attachments.gnome.org/attachment.cgi?id=306776";
       sha256 = "0sp8f1r5c4j2nlnbqgv7s7nxa4cfwigvm033hvhb1ld652pjag4r";
     })
     ./patches/2.0-darwin-x11.patch
@@ -71,6 +75,8 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    # passthru to prevent rebuild but allow pname and version
+    inherit pname version;
     gtkExeEnvPostBuild = ''
       rm $out/lib/gtk-2.0/2.10.0/immodules.cache
       $out/bin/gtk-query-immodules-2.0 $out/lib/gtk-2.0/2.10.0/immodules/*.so > $out/lib/gtk-2.0/2.10.0/immodules.cache
@@ -80,7 +86,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A multi-platform toolkit for creating graphical user interfaces";
-    homepage    = https://www.gtk.org/;
+    homepage    = "https://www.gtk.org/";
     license     = licenses.lgpl2Plus;
     maintainers = with maintainers; [ lovek323 raskin ];
     platforms   = platforms.all;

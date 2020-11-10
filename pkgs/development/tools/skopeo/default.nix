@@ -1,58 +1,56 @@
-{ stdenv, lib, buildGoPackage, fetchFromGitHub, runCommand
-, gpgme, libgpgerror, lvm2, btrfs-progs, pkgconfig, libselinux
-, go-md2man }:
+{ stdenv
+, buildGoModule
+, fetchFromGitHub
+, gpgme
+, lvm2
+, btrfs-progs
+, pkg-config
+, go-md2man
+, installShellFiles
+, makeWrapper
+, fuse-overlayfs
+}:
 
-with stdenv.lib;
-
-let
-  version = "0.1.41";
+buildGoModule rec {
+  pname = "skopeo";
+  version = "1.2.0";
 
   src = fetchFromGitHub {
     rev = "v${version}";
     owner = "containers";
     repo = "skopeo";
-    sha256 = "0aqw17irj2wn4a8g9hzfm5z5azqq33z6r1dbg1gyn2c8qxy1vfxs";
+    sha256 = "1v7k3ki10i6082r7zswblyirx6zck674y6bw3plssw4p1l2611rd";
   };
 
-  defaultPolicyFile = runCommand "skopeo-default-policy.json" {} "cp ${src}/default-policy.json $out";
+  outputs = [ "out" "man" ];
 
-  goPackagePath = "github.com/containers/skopeo";
+  vendorSha256 = null;
 
-in
-buildGoPackage {
-  pname = "skopeo";
-  inherit version;
-  inherit src goPackagePath;
+  doCheck = false;
 
-  outputs = [ "bin" "man" "out" ];
+  nativeBuildInputs = [ pkg-config go-md2man installShellFiles makeWrapper ];
 
-  excludedPackages = "integration";
+  buildInputs = [ gpgme ]
+  ++ stdenv.lib.optionals stdenv.isLinux [ lvm2 btrfs-progs ];
 
-  nativeBuildInputs = [ pkgconfig (lib.getBin go-md2man) ];
-  buildInputs = [ gpgme ] ++ lib.optionals stdenv.isLinux [ libgpgerror lvm2 btrfs-progs libselinux ];
-
-  buildFlagsArray = ''
-    -ldflags=
-    -X github.com/containers/skopeo/vendor/github.com/containers/image/v5/signature.systemDefaultPolicyPath=${defaultPolicyFile}
-    -X github.com/containers/skopeo/vendor/github.com/containers/image/v5/internal/tmpdir.unixTempDirForBigFiles=/tmp
+  buildPhase = ''
+    patchShebangs .
+    make bin/skopeo docs
   '';
 
-  preBuild = ''
-    export CGO_CFLAGS="$CFLAGS"
-    export CGO_LDFLAGS="$LDFLAGS"
+  installPhase = ''
+    install -Dm755 bin/skopeo -t $out/bin
+    installManPage docs/*.[1-9]
+    installShellCompletion --bash completions/bash/skopeo
+  '' + stdenv.lib.optionalString stdenv.isLinux ''
+    wrapProgram $out/bin/skopeo \
+      --prefix PATH : ${stdenv.lib.makeBinPath [ fuse-overlayfs ]}
   '';
 
-  postBuild = ''
-    # depends on buildGoPackage not changing …
-    pushd ./go/src/${goPackagePath}
-    make install-docs MANINSTALLDIR="$man/share/man"
-    popd
-  '';
-
-  meta = {
+  meta = with stdenv.lib; {
     description = "A command line utility for various operations on container images and image repositories";
     homepage = "https://github.com/containers/skopeo";
-    maintainers = with stdenv.lib.maintainers; [ vdemeester lewo ];
-    license = stdenv.lib.licenses.asl20;
+    maintainers = with maintainers; [ lewo ] ++ teams.podman.members;
+    license = licenses.asl20;
   };
 }

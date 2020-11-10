@@ -27,7 +27,7 @@
   # platform). Static libs are always built.
   enableShared ? !stdenv.targetPlatform.isWindows && !stdenv.targetPlatform.useiOSPrebuilt
 
-, # Whetherto build terminfo.
+, # Whether to build terminfo.
   enableTerminfo ? !stdenv.targetPlatform.isWindows
 
 , # What flavour to build. An empty string indicates no
@@ -59,8 +59,15 @@ let
     endif
     DYNAMIC_GHC_PROGRAMS = ${if enableShared then "YES" else "NO"}
     INTEGER_LIBRARY = ${if enableIntegerSimple then "integer-simple" else "integer-gmp"}
-  '' + stdenv.lib.optionalString (targetPlatform != hostPlatform) ''
-    Stage1Only = ${if targetPlatform.system == hostPlatform.system then "NO" else "YES"}
+  ''
+    # We only need to build stage1 on most cross-compilation because
+    # we will be running the compiler on the native system. In some
+    # situations, like native Musl compilation, we need the compiler
+    # to actually link to our new Libc. The iOS simulator is a special
+    # exception because we can’t actually run simulators binaries
+    # ourselves.
+  + stdenv.lib.optionalString (targetPlatform != hostPlatform) ''
+    Stage1Only = ${if (targetPlatform.system == hostPlatform.system && !targetPlatform.isiOS) then "NO" else "YES"}
     CrossCompilePrefix = ${targetPrefix}
     HADDOCK_DOCS = NO
     BUILD_SPHINX_HTML = NO
@@ -84,7 +91,9 @@ let
 
   targetCC = builtins.head toolsForTarget;
 
-  useLdGold = targetPlatform.isLinux && !(targetPlatform.useLLVM or false);
+  # ld.gold is disabled for musl libc due to https://sourceware.org/bugzilla/show_bug.cgi?id=23856
+  # see #84670 and #49071 for more background.
+  useLdGold = targetPlatform.isLinux && !(targetPlatform.useLLVM or false) && !targetPlatform.isMusl;
 
 in
 stdenv.mkDerivation (rec {
@@ -183,7 +192,7 @@ stdenv.mkDerivation (rec {
     "--disable-large-address-space"
   ];
 
-  # Make sure we never relax`$PATH` and hooks support for compatability.
+  # Make sure we never relax`$PATH` and hooks support for compatibility.
   strictDeps = true;
 
   # Don’t add -liconv to LDFLAGS automatically so that GHC will add it itself.
@@ -244,9 +253,10 @@ stdenv.mkDerivation (rec {
   };
 
   meta = {
-    homepage = http://haskell.org/ghc;
+    homepage = "http://haskell.org/ghc";
     description = "The Glasgow Haskell Compiler";
     maintainers = with stdenv.lib.maintainers; [ marcweber andres peti ];
+    timeout = 24 * 3600;
     inherit (ghc.meta) license platforms;
   };
 

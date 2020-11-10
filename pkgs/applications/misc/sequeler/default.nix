@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub
+{ stdenv, fetchFromGitHub, nix-update-script
 , vala, meson, ninja, pkgconfig, pantheon, gettext, wrapGAppsHook, python3, desktop-file-utils
 , gtk3, glib, libgee, libgda, gtksourceview, libxml2, libsecret, libssh2 }:
 
@@ -11,13 +11,13 @@ let
 
 in stdenv.mkDerivation rec {
   pname = "sequeler";
-  version = "0.7.4";
+  version = "0.8.0";
 
   src = fetchFromGitHub {
     owner = "Alecaddd";
     repo = pname;
     rev = "v${version}";
-    sha256 = "0ki8dganj6hmvg5qwdlc3y0a4pdmx7454np790yf5wnqb6ixb6gv";
+    sha256 = "090plqnby2wxzr1waq5kz89w3269j363mgxwfz9g7qg55lddaahz";
   };
 
   nativeBuildInputs = [ meson ninja pkgconfig vala gettext wrapGAppsHook python3 desktop-file-utils ];
@@ -30,7 +30,7 @@ in stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    updateScript = pantheon.updateScript {
+    updateScript = nix-update-script {
       attrPath = pname;
     };
   };

@@ -11,8 +11,8 @@ let
   archive_fmt = if system == "x86_64-darwin" then "zip" else "tar.gz";
 
   sha256 = {
-    x86_64-linux = "1w7vry3lvjf847qbjqc4xv6hcyspki366k8wmyfvzyw6c9m7yzwm";
-    x86_64-darwin = "13wg015qsh4qayamd9jppk2abqpnakx2mhf41z3nyb3zfng62pza";
+    x86_64-linux = "0qims8qypx6aackw1b47pb7hkf0lffh94c69bm5rld2swzczcfnj";
+    x86_64-darwin = "1i96qhynjl1ihycq25xjakqlyvszindg5g8kgyhd6ab0q0zhmxqy";
   }.${system};
 
   sourceRoot = {
@@ -27,12 +27,12 @@ in
 
     # Please backport all compatible updates to the stable release.
     # This is important for the extension ecosystem.
-    version = "1.43.2";
+    version = "1.51.0";
     pname = "vscodium";
 
     executableName = "codium";
     longName = "VSCodium";
-    shortName = "Codium";
+    shortName = "vscodium";
 
     src = fetchurl {
       url = "https://github.com/VSCodium/vscodium/releases/download/${version}/VSCodium-${plat}-${version}.${archive_fmt}";
@@ -51,10 +51,10 @@ in
         and code refactoring. It is also customizable, so users can change the
         editor's theme, keyboard shortcuts, and preferences
       '';
-      homepage = https://github.com/VSCodium/vscodium;
-      downloadPage = https://github.com/VSCodium/vscodium/releases;
+      homepage = "https://github.com/VSCodium/vscodium";
+      downloadPage = "https://github.com/VSCodium/vscodium/releases";
       license = licenses.mit;
-      maintainers = with maintainers; [ synthetica ];
+      maintainers = with maintainers; [ synthetica turion ];
       platforms = [ "x86_64-linux" "x86_64-darwin" ];
     };
   }

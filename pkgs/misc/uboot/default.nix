@@ -1,15 +1,27 @@
-{ stdenv, lib, fetchurl, fetchpatch, fetchFromGitHub, bc, bison, dtc, flex
-, openssl, swig, meson-tools, armTrustedFirmwareAllwinner
-, armTrustedFirmwareRK3328, armTrustedFirmwareRK3399
+{ stdenv
+, lib
+, fetchurl
+, fetchpatch
+, fetchFromGitHub
+, bc
+, bison
+, dtc
+, flex
+, openssl
+, swig
+, meson-tools
+, armTrustedFirmwareAllwinner
+, armTrustedFirmwareRK3328
+, armTrustedFirmwareRK3399
 , armTrustedFirmwareS905
 , buildPackages
 }:
 
 let
-  defaultVersion = "2020.01";
+  defaultVersion = "2020.10";
   defaultSrc = fetchurl {
     url = "ftp://ftp.denx.de/pub/u-boot/u-boot-${defaultVersion}.tar.bz2";
-    sha256 = "1w9ml4jl15q6ixpdqzspxjnl7d3rgxd7f99ms1xv5c8869h3qida";
+    sha256 = "08m6f1bh4pdcqbxf983qdb66ccd5vak5cbzc114yf3jwq2yinj0d";
   };
   buildUBoot = {
     version ? null
@@ -80,7 +92,7 @@ let
     dontStrip = true;
 
     meta = with lib; {
-      homepage = http://www.denx.de/wiki/U-Boot/;
+      homepage = "http://www.denx.de/wiki/U-Boot/";
       description = "Boot loader for embedded systems";
       license = licenses.gpl2;
       maintainers = with maintainers; [ dezgeg samueldr lopsided98 ];
@@ -164,7 +176,7 @@ in {
   ubootNovena = buildUBoot {
     defconfig = "novena_defconfig";
     extraMeta.platforms = ["armv7l-linux"];
-    filesToInstall = ["u-boot.bin" "SPL"];
+    filesToInstall = ["u-boot-dtb.img" "SPL"];
   };
 
   # Flashing instructions:
@@ -259,6 +271,13 @@ in {
     filesToInstall = ["u-boot-sunxi-with-spl.bin"];
   };
 
+  ubootPinebookPro = buildUBoot {
+    defconfig = "pinebook-pro-rk3399_defconfig";
+    extraMeta.platforms = ["aarch64-linux"];
+    BL31 = "${armTrustedFirmwareRK3399}/bl31.elf";
+    filesToInstall = [ "u-boot.itb" "idbloader.img"];
+  };
+
   ubootQemuAarch64 = buildUBoot {
     defconfig = "qemu_arm64_defconfig";
     extraMeta.platforms = ["aarch64-linux"];
@@ -336,6 +355,13 @@ in {
     extraMeta.platforms = ["aarch64-linux"];
     BL31="${armTrustedFirmwareRK3399}/bl31.elf";
     filesToInstall = [ "u-boot.itb" "idbloader.img"];
+  };
+
+  ubootROCPCRK3399 = buildUBoot {
+    defconfig = "roc-pc-rk3399_defconfig";
+    extraMeta.platforms = ["aarch64-linux"];
+    filesToInstall = [ "spl/u-boot-spl.bin" "u-boot.itb" "idbloader.img"];
+    BL31 = "${armTrustedFirmwareRK3399}/bl31.elf";
   };
 
   ubootSheevaplug = buildUBoot {

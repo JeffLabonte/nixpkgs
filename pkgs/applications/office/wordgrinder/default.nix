@@ -16,6 +16,7 @@ stdenv.mkDerivation rec {
     "PREFIX=$(out)"
     "LUA_INCLUDE=${lua52Packages.lua}/include"
     "LUA_LIB=${lua52Packages.lua}/lib/liblua.so"
+    "OBJDIR=$TMP/wg-build"
   ];
 
   preBuild = stdenv.lib.optionalString stdenv.isLinux ''
@@ -51,7 +52,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Text-based word processor";
-    homepage = https://cowlark.com/wordgrinder;
+    homepage = "https://cowlark.com/wordgrinder";
     license = licenses.mit;
     maintainers = with maintainers; [ matthiasbeyer ];
     platforms = with stdenv.lib.platforms; linux ++ darwin;

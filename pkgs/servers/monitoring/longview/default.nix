@@ -58,8 +58,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.linode.com/longview;
-    description = "Longview collects all of your system-level metrics and sends them to Linode";
+    homepage = "https://www.linode.com/longview";
+    description = "Collects all of your system-level metrics and sends them to Linode";
     license = licenses.gpl2Plus;
     maintainers = [ maintainers.rvl ];
     inherit version;

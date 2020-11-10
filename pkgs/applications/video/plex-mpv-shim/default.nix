@@ -2,20 +2,20 @@
 
 buildPythonApplication rec {
   pname = "plex-mpv-shim";
-  version = "1.7.14";
+  version = "1.9.0";
 
   src = fetchFromGitHub {
     owner = "iwalton3";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1rjifqvs59w2aacfird02myqfd34qadhacj9zpy5xjz25x410zza";
+    sha256 = "06i6pp4jg0f9h6ash60fj1l5mbsdw3zyx7c6anbsrn86802i7paa";
   };
 
   propagatedBuildInputs = [ mpv requests python-mpv-jsonipc ];
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/iwalton3/plex-mpv-shim";
-    description = "Allows casting of videos to MPV via the Plex mobile and web app.";
+    description = "Allows casting of videos to MPV via the Plex mobile and web app";
     license = licenses.mit;
   };
 }

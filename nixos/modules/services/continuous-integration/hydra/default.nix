@@ -37,7 +37,35 @@ let
 
   haveLocalDB = cfg.dbi == localDB;
 
-  inherit (config.system) stateVersion;
+  hydra-package =
+  let
+    makeWrapperArgs = concatStringsSep " " (mapAttrsToList (key: value: "--set \"${key}\" \"${value}\"") hydraEnv);
+  in pkgs.buildEnv rec {
+    name = "hydra-env";
+    buildInputs = [ pkgs.makeWrapper ];
+    paths = [ cfg.package ];
+
+    postBuild = ''
+      if [ -L "$out/bin" ]; then
+          unlink "$out/bin"
+      fi
+      mkdir -p "$out/bin"
+
+      for path in ${concatStringsSep " " paths}; do
+        if [ -d "$path/bin" ]; then
+          cd "$path/bin"
+          for prg in *; do
+            if [ -f "$prg" ]; then
+              rm -f "$out/bin/$prg"
+              if [ -x "$prg" ]; then
+                makeWrapper "$path/bin/$prg" "$out/bin/$prg" ${makeWrapperArgs}
+              fi
+            fi
+          done
+        fi
+      done
+   '';
+  };
 
 in
 
@@ -66,7 +94,8 @@ in
 
       package = mkOption {
         type = types.package;
-        defaultText = "pkgs.hydra";
+        default = pkgs.hydra-unstable;
+        defaultText = "pkgs.hydra-unstable";
         description = "The Hydra package.";
       };
 
@@ -195,34 +224,6 @@ in
 
   config = mkIf cfg.enable {
 
-    warnings = optional (cfg.package.migration or false) ''
-      You're currently deploying an older version of Hydra which is needed to
-      make some required database changes[1]. As soon as this is done, it's recommended
-      to run `hydra-backfill-ids` and set `services.hydra.package` to either `pkgs.hydra-unstable`
-      or `pkgs.hydra-flakes` after that.
-
-      [1] https://github.com/NixOS/hydra/pull/711
-    '';
-
-    services.hydra.package = with pkgs;
-      mkDefault (
-        if pkgs ? hydra
-          then throw ''
-            The Hydra package doesn't exist anymore in `nixpkgs`! It probably exists
-            due to an overlay. To upgrade Hydra, you need to take two steps as some
-            bigger changes in the database schema were implemented recently[1]. You first
-            need to deploy `pkgs.hydra-migration`, run `hydra-backfill-ids` on the server
-            and then deploy either `pkgs.hydra-unstable` or `pkgs.hydra-flakes`.
-
-            If you want to use `pkgs.hydra` from your overlay, please set `services.hydra.package`
-            explicitly to `pkgs.hydra` and make sure you know what you're doing.
-
-            [1] https://github.com/NixOS/hydra/pull/711
-          ''
-        else if versionOlder stateVersion "20.03" then hydra-migration
-        else hydra-unstable
-      );
-
     users.groups.hydra = {
       gid = config.ids.gids.hydra;
     };
@@ -266,7 +267,7 @@ in
         use-substitutes = ${if cfg.useSubstitutes then "1" else "0"}
       '';
 
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [ hydra-package ];
 
     environment.variables = hydraEnv;
 
@@ -327,7 +328,7 @@ in
           chown hydra.hydra ${cfg.gcRootsDir}
           chmod 2775 ${cfg.gcRootsDir}
         '';
-        serviceConfig.ExecStart = "${cfg.package}/bin/hydra-init";
+        serviceConfig.ExecStart = "${hydra-package}/bin/hydra-init";
         serviceConfig.PermissionsStartOnly = true;
         serviceConfig.User = "hydra";
         serviceConfig.Type = "oneshot";
@@ -342,7 +343,7 @@ in
         restartTriggers = [ hydraConf ];
         serviceConfig =
           { ExecStart =
-              "@${cfg.package}/bin/hydra-server hydra-server -f -h '${cfg.listenHost}' "
+              "@${hydra-package}/bin/hydra-server hydra-server -f -h '${cfg.listenHost}' "
               + "-p ${toString cfg.port} --max_spare_servers 5 --max_servers 25 "
               + "--max_requests 100 ${optionalString cfg.debugServer "-d"}";
             User = "hydra-www";
@@ -355,15 +356,15 @@ in
       { wantedBy = [ "multi-user.target" ];
         requires = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
-        path = [ cfg.package pkgs.nettools pkgs.openssh pkgs.bzip2 config.nix.package ];
+        path = [ hydra-package pkgs.nettools pkgs.openssh pkgs.bzip2 config.nix.package ];
         restartTriggers = [ hydraConf ];
         environment = env // {
           PGPASSFILE = "${baseDir}/pgpass-queue-runner"; # grrr
           IN_SYSTEMD = "1"; # to get log severity levels
         };
         serviceConfig =
-          { ExecStart = "@${cfg.package}/bin/hydra-queue-runner hydra-queue-runner -v";
-            ExecStopPost = "${cfg.package}/bin/hydra-queue-runner --unlock";
+          { ExecStart = "@${hydra-package}/bin/hydra-queue-runner hydra-queue-runner -v";
+            ExecStopPost = "${hydra-package}/bin/hydra-queue-runner --unlock";
             User = "hydra-queue-runner";
             Restart = "always";
 
@@ -377,11 +378,11 @@ in
       { wantedBy = [ "multi-user.target" ];
         requires = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
-        path = with pkgs; [ cfg.package nettools jq ];
+        path = with pkgs; [ hydra-package nettools jq ];
         restartTriggers = [ hydraConf ];
         environment = env;
         serviceConfig =
-          { ExecStart = "@${cfg.package}/bin/hydra-evaluator hydra-evaluator";
+          { ExecStart = "@${hydra-package}/bin/hydra-evaluator hydra-evaluator";
             User = "hydra";
             Restart = "always";
             WorkingDirectory = baseDir;
@@ -393,7 +394,7 @@ in
         after = [ "hydra-init.service" ];
         environment = env;
         serviceConfig =
-          { ExecStart = "@${cfg.package}/bin/hydra-update-gc-roots hydra-update-gc-roots";
+          { ExecStart = "@${hydra-package}/bin/hydra-update-gc-roots hydra-update-gc-roots";
             User = "hydra";
           };
         startAt = "2,14:15";
@@ -404,7 +405,7 @@ in
         after = [ "hydra-init.service" ];
         environment = env;
         serviceConfig =
-          { ExecStart = "@${cfg.package}/bin/hydra-send-stats hydra-send-stats";
+          { ExecStart = "@${hydra-package}/bin/hydra-send-stats hydra-send-stats";
             User = "hydra";
           };
       };
@@ -418,7 +419,7 @@ in
           PGPASSFILE = "${baseDir}/pgpass-queue-runner";
         };
         serviceConfig =
-          { ExecStart = "@${cfg.package}/bin/hydra-notify hydra-notify";
+          { ExecStart = "@${hydra-package}/bin/hydra-notify hydra-notify";
             # FIXME: run this under a less privileged user?
             User = "hydra-queue-runner";
             Restart = "always";

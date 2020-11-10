@@ -6,15 +6,16 @@
 , mock
 , isPy3k
 , pythonOlder
+, poetry
 }:
 
 buildPythonPackage rec {
   pname = "rsa";
-  version = "4.0";
+  version = "4.6";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "1a836406405730121ae9823e19c6e806c62bbad73f890574fff50efa4122c487";
+    sha256 = "109ea5a66744dd859bf16fe904b8d8b627adafb9408753161e766a92e7d681fa";
   };
 
   checkInputs = [ unittest2 mock ];
@@ -24,8 +25,11 @@ buildPythonPackage rec {
     substituteInPlace setup.py --replace "open('README.md')" "open('README.md',encoding='utf-8')"
   '';
 
+  # No tests in archive
+  doCheck = false;
+
   meta = with stdenv.lib; {
-    homepage = https://stuvel.eu/rsa;
+    homepage = "https://stuvel.eu/rsa";
     license = licenses.asl20;
     description = "A pure-Python RSA implementation";
   };

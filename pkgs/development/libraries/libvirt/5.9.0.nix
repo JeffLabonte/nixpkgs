@@ -4,7 +4,7 @@
 , iproute, iptables, readline, lvm2, utillinux, systemd, libpciaccess, gettext
 , libtasn1, ebtables, libgcrypt, yajl, pmutils, libcap_ng, libapparmor
 , dnsmasq, libnl, libpcap, libxslt, xhtml1, numad, numactl, perlPackages
-, curl, libiconv, gmp, zfs, parted, bridge-utils, dmidecode, glib
+, curl, libiconv, gmp, zfs, parted, bridge-utils, dmidecode, glib, rpcsvc-proto, libtirpc
 , enableXen ? false, xen ? null
 , enableIscsi ? false, openiscsi
 , enableCeph ? false, ceph
@@ -27,13 +27,13 @@ in stdenv.mkDerivation rec {
       }
     else
       fetchgit {
-        url = git://libvirt.org/libvirt.git;
+        url = "git://libvirt.org/libvirt.git";
         rev = "v${version}";
         sha256 = "0smm77ag8bg24xkbhl4akqikjrsq2pd3wk31nj0hk1avqnl00gmk";
         fetchSubmodules = true;
       };
 
-  nativeBuildInputs = [ makeWrapper pkgconfig ];
+  nativeBuildInputs = [ makeWrapper pkgconfig rpcsvc-proto ];
   buildInputs = [
     libxml2 gnutls perl python2 readline gettext libtasn1 libgcrypt yajl
     libxslt xhtml1 perlPackages.XMLXPath curl libpcap glib
@@ -41,7 +41,7 @@ in stdenv.mkDerivation rec {
     libtool autoconf automake
   ] ++ optionals stdenv.isLinux [
     libpciaccess lvm2 utillinux systemd libnl numad zfs
-    libapparmor libcap_ng numactl attr parted
+    libapparmor libcap_ng numactl attr parted libtirpc
   ] ++ optionals (enableXen && stdenv.isLinux && stdenv.isx86_64) [
     xen
   ] ++ optionals enableIscsi [
@@ -76,6 +76,7 @@ in stdenv.mkDerivation rec {
     "QEMU_BRIDGE_HELPER=/run/wrappers/bin/qemu-bridge-helper"
     "QEMU_PR_HELPER=/run/libvirt/nix-helpers/qemu-pr-helper"
     "EBTABLES_PATH=${ebtables}/bin/ebtables-legacy"
+    "CFLAGS=-I${libtirpc.dev}/include/tirpc"
     "--with-attr"
     "--with-apparmor"
     "--with-secdriver-apparmor"
@@ -123,8 +124,8 @@ in stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = "-fno-stack-protector";
 
   meta = {
-    homepage = http://libvirt.org/;
-    repositories.git = git://libvirt.org/libvirt.git;
+    homepage = "http://libvirt.org/";
+    repositories.git = "git://libvirt.org/libvirt.git";
     description = ''
       A toolkit to interact with the virtualization capabilities of recent
       versions of Linux (and other OSes)

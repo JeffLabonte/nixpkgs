@@ -3,7 +3,7 @@
 stdenvNoCC.mkDerivation rec {
   pname = "bibata-cursors-translucent";
   version = "unstable-2019-09-13";
-  
+
   src = fetchFromGitHub {
     owner = "Silicasandwhich";
     repo = "Bibata_Cursor_Translucent";
@@ -33,7 +33,7 @@ stdenvNoCC.mkDerivation rec {
 
   meta = with stdenvNoCC.lib; {
     description = "Translucent Varient of the Material Based Cursor";
-    homepage = https://github.com/Silicasandwhich/Bibata_Cursor_Translucent;
+    homepage = "https://github.com/Silicasandwhich/Bibata_Cursor_Translucent";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ dtzWill ];

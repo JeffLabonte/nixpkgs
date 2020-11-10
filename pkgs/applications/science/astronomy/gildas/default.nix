@@ -7,8 +7,8 @@ let
 in
 
 stdenv.mkDerivation rec {
-  srcVersion = "feb20a";
-  version = "20200201_a";
+  srcVersion = "sep20a";
+  version = "20200901_a";
   pname = "gildas";
 
   src = fetchurl {
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     # source code of the previous release to a different directory
     urls = [ "http://www.iram.fr/~gildas/dist/gildas-src-${srcVersion}.tar.xz"
       "http://www.iram.fr/~gildas/dist/archive/gildas/gildas-src-${srcVersion}.tar.xz" ];
-    sha256 = "05f34kpi3pfgf4dsyka7mkcln26yzb2mixnnc306krq0isjm7m26";
+    sha256 = "9faa0b3e674b5ffe5b1aee88027d7401a46ae28cd0b306595300547605d6222a";
   };
 
   nativeBuildInputs = [ pkgconfig groff perl getopt gfortran which ];
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
       extensible. GILDAS is written in Fortran-90, with a
       few parts in C/C++ (mainly keyboard interaction,
       plotting, widgets).'';
-    homepage = http://www.iram.fr/IRAMFR/GILDAS/gildas.html;
+    homepage = "http://www.iram.fr/IRAMFR/GILDAS/gildas.html";
     license = stdenv.lib.licenses.free;
     maintainers = [ stdenv.lib.maintainers.bzizou stdenv.lib.maintainers.smaret ];
     platforms = stdenv.lib.platforms.all;

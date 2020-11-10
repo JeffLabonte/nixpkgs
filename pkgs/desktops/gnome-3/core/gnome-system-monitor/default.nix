@@ -4,11 +4,11 @@
 
 stdenv.mkDerivation rec {
   pname = "gnome-system-monitor";
-  version = "3.36.0";
+  version = "3.36.1";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-system-monitor/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "1gipjaw708lv1zj1c9g09x4h4226kawam2kzdhdd6zjkzfghp9s0";
+    sha256 = "18dwwwmw4m2kzvfmxyaxmnm66d1plwvh6c6naznb0xac1ymlfsw6";
   };
 
   doCheck = true;
@@ -35,9 +35,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/SystemMonitor;
+    homepage = "https://wiki.gnome.org/Apps/SystemMonitor";
     description = "System Monitor shows you what programs are running and how much processor time, memory, and disk space are being used";
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

@@ -4,6 +4,7 @@
 , fetchurl
 , fetchFromGitHub
 , fetchNuGet
+, glib
 , pkgconfig
 , mono
 , fsharp
@@ -326,14 +327,13 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
   Boogie = buildDotnetPackage rec {
     baseName = "Boogie";
-    version = "2019-06-20";
-    name = "${baseName}-unstable-${version}";
+    version = "2.4.1";
 
     src = fetchFromGitHub {
       owner = "boogie-org";
       repo = "boogie";
-      rev = "2e8fae4dc1724d8f9e7b1f877116e56b0773337e";
-      sha256 = "01wjps3yfx8q0qy0zrmmfd1ixjxi2dhkn1wfazb5qm2slav39dp2";
+      rev = "v${version}";
+      sha256 = "13f6ifkh6gpy4bvx5zhgwmk3wd5rfxzl9wxwfhcj1c90fdrhwh1b";
     };
 
     # emulate `nuget restore Source/Boogie.sln`
@@ -378,7 +378,23 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     };
   };
 
-  Dafny = buildDotnetPackage rec {
+  Dafny = let
+    z3 = pkgs.z3.overrideAttrs (oldAttrs: rec {
+      version = "4.8.4";
+      name = "z3-${version}";
+
+      src = fetchFromGitHub {
+        owner = "Z3Prover";
+        repo = "z3";
+        rev = "z3-${version}";
+        sha256 = "014igqm5vwswz0yhz0cdxsj3a6dh7i79hvhgc3jmmmz3z0xm1gyn";
+      };
+    });
+    self' = pkgs.dotnetPackages.override ({
+      pkgs = pkgs // { inherit z3; };
+    });
+    Boogie = assert self'.Boogie.version == "2.4.1"; self'.Boogie;
+  in buildDotnetPackage rec {
     baseName = "Dafny";
     version = "2.3.0";
 
@@ -395,7 +411,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     '';
 
     preBuild = ''
-      ln -s ${pkgs.z3} Binaries/z3
+      ln -s ${z3} Binaries/z3
     '';
 
     buildInputs = [ Boogie ];
@@ -544,6 +560,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     buildInputs = [
       fsharp
+      glib
       dotnetPackages.FSharpCompilerService
       dotnetPackages.NewtonsoftJson
       dotnetPackages.NDeskOptions
@@ -558,7 +575,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
         FSharp.Compiler.Service project. It is intended to be used as a backend
         service for rich editing or 'intellisense' features for editors.
         '';
-      homepage = https://github.com/fsharp/FSharp.AutoComplete;
+      homepage = "https://github.com/fsharp/FSharp.AutoComplete";
       license = stdenv.lib.licenses.asl20;
       maintainers = with stdenv.lib.maintainers; [ obadz ];
       platforms = with stdenv.lib.platforms; linux;
@@ -607,13 +624,13 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     fileProvidedTypes = fetchurl {
       name = "ProvidedTypes.fs";
-      url = https://raw.githubusercontent.com/fsprojects/FSharp.TypeProviders.StarterPack/877014bfa6244ac382642e113d7cd6c9bc27bc6d/src/ProvidedTypes.fs;
+      url = "https://raw.githubusercontent.com/fsprojects/FSharp.TypeProviders.StarterPack/877014bfa6244ac382642e113d7cd6c9bc27bc6d/src/ProvidedTypes.fs";
       sha256 = "1lb056v1xld1rfx6a8p8i2jz8i6qa2r2823n5izsf1qg1qgf2980";
     };
 
     fileDebugProvidedTypes = fetchurl {
       name = "DebugProvidedTypes.fs";
-      url = https://raw.githubusercontent.com/fsprojects/FSharp.TypeProviders.StarterPack/877014bfa6244ac382642e113d7cd6c9bc27bc6d/src/DebugProvidedTypes.fs;
+      url = "https://raw.githubusercontent.com/fsprojects/FSharp.TypeProviders.StarterPack/877014bfa6244ac382642e113d7cd6c9bc27bc6d/src/DebugProvidedTypes.fs";
       sha256 = "1whyrf2jv6fs7kgysn2086v15ggjsd54g1xfs398mp46m0nxp91f";
     };
 
@@ -709,7 +726,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     meta = with stdenv.lib; {
       description = "A tool to help visualize git revisions and branches";
-      homepage = https://github.com/crc8/GitVersionTree;
+      homepage = "https://github.com/crc8/GitVersionTree";
       license = licenses.gpl2;
       maintainers = with maintainers; [ obadz ];
       platforms = platforms.all;
@@ -733,7 +750,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     meta = {
       description = "Math.NET Numerics is an opensource numerical library for .Net, Silverlight and Mono";
-      homepage = https://numerics.mathdotnet.com/;
+      homepage = "https://numerics.mathdotnet.com/";
       license = stdenv.lib.licenses.mit;
       maintainers = with stdenv.lib.maintainers; [ obadz ];
       platforms = with stdenv.lib.platforms; linux;
@@ -763,7 +780,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     meta = {
       description = "A generic framework for creating extensible applications";
-      homepage = https://www.mono-project.com/Mono.Addins;
+      homepage = "https://www.mono-project.com/Mono.Addins";
       longDescription = ''
         A generic framework for creating extensible applications,
         and for creating libraries which extend those applications.
@@ -854,7 +871,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     meta = {
       description = "A callback-based program option parser for C#";
-      homepage = http://www.ndesk.org/Options;
+      homepage = "http://www.ndesk.org/Options";
       license = stdenv.lib.licenses.mit;
       maintainers = with stdenv.lib.maintainers; [ obadz ];
       platforms = with stdenv.lib.platforms; linux;
@@ -949,7 +966,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     meta = {
       description = "A declarative CLI argument/XML configuration parser for F# applications";
-      homepage = https://nessos.github.io/UnionArgParser/;
+      homepage = "https://nessos.github.io/UnionArgParser/";
       license = stdenv.lib.licenses.mit;
       maintainers = with stdenv.lib.maintainers; [ obadz ];
       platforms = with stdenv.lib.platforms; linux;

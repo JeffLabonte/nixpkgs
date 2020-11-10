@@ -23,11 +23,11 @@
 
 buildPythonPackage rec {
   pname = "thinc";
-  version = "7.4.0";
+  version = "7.4.2";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "1f2qpjb8nfdklqp3vf6m36bklydlnr8y8v207p8d2gmapzhrngjj";
+    sha256 = "772f1a27b9b31e51003d1d2a7476cc49cc81044dd87088112237f93bd2091f0b";
   };
 
   buildInputs = lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
@@ -58,13 +58,23 @@ buildPythonPackage rec {
   # Cannot find cython modules.
   doCheck = false;
 
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace "blis>=0.4.0,<0.5.0" "blis>=0.4.0,<1.0" \
+      --replace "catalogue>=0.0.7,<1.1.0" "catalogue>=0.0.7,<3.0" \
+      --replace "plac>=0.9.6,<1.2.0" "plac>=0.9.6,<2.0" \
+      --replace "srsly>=0.0.6,<1.1.0" "srsly>=0.0.6,<3.0"
+  '';
+
   checkPhase = ''
     pytest thinc/tests
   '';
 
+  pythonImportsCheck = [ "thinc" ];
+
   meta = with stdenv.lib; {
     description = "Practical Machine Learning for NLP in Python";
-    homepage = https://github.com/explosion/thinc;
+    homepage = "https://github.com/explosion/thinc";
     license = licenses.mit;
     maintainers = with maintainers; [ aborsu danieldk sdll ];
     };

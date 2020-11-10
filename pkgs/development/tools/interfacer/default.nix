@@ -22,8 +22,8 @@ buildGoPackage rec {
   goDeps = ./deps.nix;
 
   meta = with lib; {
-    description = "A linter that suggests interface types.";
-    homepage = https://github.com/mvdan/interfacer;
+    description = "A linter that suggests interface types";
+    homepage = "https://github.com/mvdan/interfacer";
     license = licenses.bsd3;
     maintainers = with maintainers; [ kalbasit ];
     platforms = platforms.linux ++ platforms.darwin;

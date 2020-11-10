@@ -20,11 +20,11 @@ let
 in
 (if withQt then mkDerivation else stdenv.mkDerivation) rec {
   pname = "gnuplot";
-  version = "5.2.8";
+  version = "5.4.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/gnuplot/${pname}-${version}.tar.gz";
-    sha256 = "0dxc52d17mpyb2xm24da1nvhlacryv0irwa0q5l1cjj0rx67d9k0";
+    sha256 = "0iwwliq5a6qcawbpxk4d7l17fpkq9xxcz05kwblx37rr7bq84h7b";
   };
 
   nativeBuildInputs = [ makeWrapper pkgconfig texinfo ] ++ lib.optional withQt qttools;
@@ -63,7 +63,7 @@ in
   enableParallelBuilding = true;
 
   meta = with lib; {
-    homepage = http://www.gnuplot.info/;
+    homepage = "http://www.gnuplot.info/";
     description = "A portable command-line driven graphing utility for many platforms";
     platforms = platforms.linux ++ platforms.darwin;
     license = {
@@ -73,7 +73,7 @@ in
       # be distributed as patches to the released version.  Permission to
       # distribute binaries produced by compiling modified sources is granted,
       # provided you: ...
-      url = https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright;
+      url = "https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright";
     };
     maintainers = with maintainers; [ lovek323 ];
   };

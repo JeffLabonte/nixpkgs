@@ -14,7 +14,7 @@ stdenv.mkDerivation {
   enableParallelBuilding = true;
 
   src = fetchurl {
-    url = mirror://sourceforge/partimage/partimage-0.6.9.tar.bz2;
+    url = "mirror://sourceforge/partimage/partimage-0.6.9.tar.bz2";
     sha256 = "0db6xiphk6xnlpbxraiy31c5xzj0ql6k4rfkmqzh665yyj0nqfkm";
   };
 
@@ -31,11 +31,15 @@ stdenv.mkDerivation {
         + "partimage-0.6.9-openssl-1.1-compatibility.patch?id=3fe8e9910002b6523d995512a646b063565d0447";
       sha256 = "1hs0krxrncxq1w36bhad02yk8yx71zcfs35cw87c82sl2sfwasjg";
     })
+    (fetchpatch {
+      url = "https://sources.debian.org/data/main/p/partimage/0.6.9-8/debian/patches/04-fix-FTBFS-glic-2.28.patch";
+      sha256 = "0xid5636g58sxbhxnjmfjdy7y8rf3c77zmmpfbbqv4lv9jd2gmxm";
+    })
   ];
 
   meta = {
     description = "Opensource disk backup software";
-    homepage = http://www.partimage.org;
+    homepage = "http://www.partimage.org";
     license = stdenv.lib.licenses.gpl2;
     maintainers = [stdenv.lib.maintainers.marcweber];
     platforms = stdenv.lib.platforms.linux;

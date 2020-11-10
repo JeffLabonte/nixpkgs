@@ -8,11 +8,11 @@
 
 buildPythonPackage rec {
   pname = "prompt_toolkit";
-  version = "3.0.4";
+  version = "3.0.6";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "10wpsbl1mmnvm8q63zs40633kbq93bidx4vz1p2q92w8ijqb3rpb";
+    sha256 = "7630ab85a23302839a0f26b31cc24f518e6155dea1ed395ea61b42c45941b6a6";
   };
   checkPhase = ''
     py.test -k 'not test_pathcompleter_can_expanduser'
@@ -29,7 +29,7 @@ buildPythonPackage rec {
       with it should run fine on both Unix and Windows systems. Also ships
       with a nice interactive Python shell (called ptpython) built on top.
     '';
-    homepage = https://github.com/jonathanslenders/python-prompt-toolkit;
+    homepage = "https://github.com/jonathanslenders/python-prompt-toolkit";
     license = lib.licenses.bsd3;
   };
 }

@@ -3,11 +3,11 @@
 
 stdenv.mkDerivation rec {
   pname = "gnome-shell-extensions";
-  version = "3.36.0";
+  version = "3.36.3";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-shell-extensions/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "1rmi6ccqfdisvmmzaiqr2r031r0f3h8qxgw5qwq62x859nbrzcmm";
+    sha256 = "1cg3dqvvxg8zrdqs2rci8sds2hxjahbhm87f0xpy8b3gq56lqrrb";
   };
 
   passthru = {
@@ -56,9 +56,9 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Projects/GnomeShell/Extensions;
+    homepage = "https://wiki.gnome.org/Projects/GnomeShell/Extensions";
     description = "Modify and extend GNOME Shell functionality and behavior";
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

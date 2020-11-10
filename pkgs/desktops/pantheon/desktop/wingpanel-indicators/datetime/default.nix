@@ -1,5 +1,6 @@
 { stdenv
-, fetchFromGitHub 
+, fetchFromGitHub
+, nix-update-script
 , pantheon
 , pkgconfig
 , meson
@@ -19,17 +20,17 @@
 
 stdenv.mkDerivation rec {
   pname = "wingpanel-indicator-datetime";
-  version = "2.2.2";
+  version = "2.2.5";
 
   src = fetchFromGitHub {
     owner = "elementary";
     repo = pname;
     rev = version;
-    sha256 = "0a0pqrpmrdd5pch30lizr9righlc7165z7krmnaxrzd0fvfkbr2h";
+    sha256 = "sha256-rZzZIh4bwZfwQFDbfPDKQtfLMJQ2IdykH1yiV6ckqnw=";
   };
 
   passthru = {
-    updateScript = pantheon.updateScript {
+    updateScript = nix-update-script {
       attrPath = "pantheon.${pname}";
     };
   };
@@ -60,7 +61,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Date & Time Indicator for Wingpanel";
-    homepage = https://github.com/elementary/wingpanel-indicator-datetime;
+    homepage = "https://github.com/elementary/wingpanel-indicator-datetime";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

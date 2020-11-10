@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, nix-update-script
 , pantheon
 , pkgconfig
 , meson
@@ -19,7 +20,7 @@
 
 stdenv.mkDerivation rec {
   pname = "elementary-videos";
-  version = "2.7.0";
+  version = "2.7.2";
 
   repoName = "videos";
 
@@ -27,11 +28,11 @@ stdenv.mkDerivation rec {
     owner = "elementary";
     repo = repoName;
     rev = version;
-    sha256 = "1b6dqqmxa83fwlh9r0v918ikxd3mnwk0j5xssw1wk5l7q72s43w7";
+    sha256 = "sha256-MSyhCXsziQ0MD4lGp9X/9odidjT/L+2Aihwd1qCGvB0=";
   };
 
   passthru = {
-    updateScript = pantheon.updateScript {
+    updateScript = nix-update-script {
       attrPath = "pantheon.${pname}";
     };
   };
@@ -68,7 +69,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Video player and library app designed for elementary OS";
-    homepage = https://github.com/elementary/videos;
+    homepage = "https://github.com/elementary/videos";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

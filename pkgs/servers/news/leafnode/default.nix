@@ -29,8 +29,8 @@ stdenv.mkDerivation {
   buildInputs = [ pcre];
 
   meta = {
-    homepage = http://leafnode.sourceforge.net/;
-    description = "Leafnode implements a store & forward NNTP proxy";
+    homepage = "http://leafnode.sourceforge.net/";
+    description = "Implementation of a store & forward NNTP proxy";
     license = stdenv.lib.licenses.mit;
     platforms = stdenv.lib.platforms.unix;
   };

@@ -8,8 +8,8 @@ let
       sha256 = "18wqcqi3gyqd40nspih99gq7ylfs20b35f4dcrspffagwkfp2l4z";
     };
     "1.6" = {
-      flinkVersion = "1.9.0";
-      sha256 = "1dzfcmqz5j4b545wq2q3xb2xkbhqllr04s3av1afv54y61l5y952";
+      flinkVersion = "1.11.1";
+      sha256 = "0338bg2sb427c1rrf2cmsz63sz0yk6gclpli2lskq0mpx72wxpl0";
     };
   };
 in
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ jre ];
 
   installPhase = ''
-    rm bin/*.bat
+    rm bin/*.bat || true
 
     mkdir -p $out/bin $out/opt/flink
     mv * $out/opt/flink/
@@ -44,11 +44,11 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A distributed stream processing framework";
-    homepage = https://flink.apache.org;
-    downloadPage = https://flink.apache.org/downloads.html;
+    homepage = "https://flink.apache.org";
+    downloadPage = "https://flink.apache.org/downloads.html";
     license = licenses.asl20;
     platforms = platforms.all;
     maintainers = with maintainers; [ mbode ];
-    repositories.git = git://git.apache.org/flink.git;
+    repositories.git = "git://git.apache.org/flink.git";
   };
 }

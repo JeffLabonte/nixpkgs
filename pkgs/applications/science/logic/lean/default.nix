@@ -1,22 +1,31 @@
-{ stdenv, fetchFromGitHub, cmake, gmp }:
+{ stdenv, fetchFromGitHub, cmake, gmp, coreutils }:
 
 stdenv.mkDerivation rec {
   pname = "lean";
-  version = "3.7.2";
+  version = "3.21.0";
 
   src = fetchFromGitHub {
     owner  = "leanprover-community";
     repo   = "lean";
     rev    = "v${version}";
-    sha256 = "0d9lz0mbxyaaykkvk2p8w2hcif9cx0ksihgh7qhxf417bz6msgc1";
+    sha256 = "1c7f2x6hdamjkr50761gcb5mg8hhlc75k1mf18vn1k9zsy1gxlgz";
   };
 
   nativeBuildInputs = [ cmake ];
   buildInputs = [ gmp ];
   enableParallelBuilding = true;
 
-  preConfigure = ''
-    cd src
+  cmakeDir = "../src";
+
+  # Running the tests is required to build the *.olean files for the core
+  # library.
+  doCheck = true;
+
+  postPatch = "patchShebangs .";
+
+  postInstall = stdenv.lib.optionalString stdenv.isDarwin ''
+    substituteInPlace $out/bin/leanpkg \
+      --replace "greadlink" "${coreutils}/bin/readlink"
   '';
 
   meta = with stdenv.lib; {

@@ -27,7 +27,7 @@
   # platform). Static libs are always built.
   enableShared ? !stdenv.targetPlatform.isWindows && !stdenv.targetPlatform.useiOSPrebuilt
 
-, # Whetherto build terminfo.
+, # Whether to build terminfo.
   enableTerminfo ? !stdenv.targetPlatform.isWindows
 
 , # What flavour to build. An empty string indicates no
@@ -52,19 +52,28 @@ let
     (targetPlatform != hostPlatform)
     "${targetPlatform.config}-";
 
-  buildMK = ''
+  buildMK = dontStrip: ''
     BuildFlavour = ${ghcFlavour}
     ifneq \"\$(BuildFlavour)\" \"\"
     include mk/flavours/\$(BuildFlavour).mk
     endif
     DYNAMIC_GHC_PROGRAMS = ${if enableShared then "YES" else "NO"}
     INTEGER_LIBRARY = ${if enableIntegerSimple then "integer-simple" else "integer-gmp"}
-  '' + stdenv.lib.optionalString (targetPlatform != hostPlatform) ''
-    Stage1Only = ${if targetPlatform.system == hostPlatform.system then "NO" else "YES"}
+  ''
+    # We only need to build stage1 on most cross-compilation because
+    # we will be running the compiler on the native system. In some
+    # situations, like native Musl compilation, we need the compiler
+    # to actually link to our new Libc. The iOS simulator is a special
+    # exception because we can’t actually run simulators binaries
+    # ourselves.
+  + stdenv.lib.optionalString (targetPlatform != hostPlatform) ''
+    Stage1Only = ${if (targetPlatform.system == hostPlatform.system && !targetPlatform.isiOS) then "NO" else "YES"}
     CrossCompilePrefix = ${targetPrefix}
     HADDOCK_DOCS = NO
     BUILD_SPHINX_HTML = NO
     BUILD_SPHINX_PDF = NO
+  '' + stdenv.lib.optionalString dontStrip ''
+    STRIP_CMD = :
   '' + stdenv.lib.optionalString enableRelocatedStaticLibs ''
     GhcLibHcOpts += -fPIC
     GhcRtsHcOpts += -fPIC
@@ -73,7 +82,7 @@ let
   '';
 
   # Splicer will pull out correct variations
-  libDeps = platform: stdenv.lib.optional enableTerminfo [ ncurses ]
+  libDeps = platform: stdenv.lib.optional enableTerminfo ncurses
     ++ [libffi]
     ++ stdenv.lib.optional (!enableIntegerSimple) gmp
     ++ stdenv.lib.optional (platform.libc != "glibc" && !targetPlatform.isWindows) libiconv;
@@ -84,7 +93,9 @@ let
 
   targetCC = builtins.head toolsForTarget;
 
-  useLdGold = targetPlatform.isLinux && !(targetPlatform.useLLVM or false);
+  # ld.gold is disabled for musl libc due to https://sourceware.org/bugzilla/show_bug.cgi?id=23856
+  # see #84670 and #49071 for more background.
+  useLdGold = targetPlatform.isLinux && !(targetPlatform.useLLVM or false) && !targetPlatform.isMusl;
 
 in
 stdenv.mkDerivation (rec {
@@ -92,7 +103,7 @@ stdenv.mkDerivation (rec {
   name = "${targetPrefix}ghc-${version}";
 
   src = fetchurl {
-    url = "https://downloads.haskell.org/ghc/8.8.2/ghc-${version}-src.tar.xz";
+    url = "https://downloads.haskell.org/ghc/${version}/ghc-${version}-src.tar.xz";
     sha256 = "02qa6wgjpxgakg7hv4zfdlrx9k7zxa5i02wnr6y9fsv8j16sbkh1";
   };
 
@@ -120,7 +131,7 @@ stdenv.mkDerivation (rec {
     export READELF="${targetCC.bintools.bintools}/bin/${targetCC.bintools.targetPrefix}readelf"
     export STRIP="${targetCC.bintools.bintools}/bin/${targetCC.bintools.targetPrefix}strip"
 
-    echo -n "${buildMK}" > mk/build.mk
+    echo -n "${buildMK dontStrip}" > mk/build.mk
     sed -i -e 's|-isysroot /Developer/SDKs/MacOSX10.5.sdk||' configure
   '' + stdenv.lib.optionalString (!stdenv.isDarwin) ''
     export NIX_LDFLAGS+=" -rpath $out/lib/ghc-${version}"
@@ -158,10 +169,10 @@ stdenv.mkDerivation (rec {
     "--with-system-libffi"
     "--with-ffi-includes=${targetPackages.libffi.dev}/include"
     "--with-ffi-libraries=${targetPackages.libffi.out}/lib"
-  ] ++ stdenv.lib.optional (targetPlatform == hostPlatform && !enableIntegerSimple) [
+  ] ++ stdenv.lib.optionals (targetPlatform == hostPlatform && !enableIntegerSimple) [
     "--with-gmp-includes=${targetPackages.gmp.dev}/include"
     "--with-gmp-libraries=${targetPackages.gmp.out}/lib"
-  ] ++ stdenv.lib.optional (targetPlatform == hostPlatform && hostPlatform.libc != "glibc" && !targetPlatform.isWindows) [
+  ] ++ stdenv.lib.optionals (targetPlatform == hostPlatform && hostPlatform.libc != "glibc" && !targetPlatform.isWindows) [
     "--with-iconv-includes=${libiconv}/include"
     "--with-iconv-libraries=${libiconv}/lib"
   ] ++ stdenv.lib.optionals (targetPlatform != hostPlatform) [
@@ -174,7 +185,7 @@ stdenv.mkDerivation (rec {
     "--disable-large-address-space"
   ];
 
-  # Make sure we never relax`$PATH` and hooks support for compatability.
+  # Make sure we never relax`$PATH` and hooks support for compatibility.
   strictDeps = true;
 
   # Don’t add -liconv to LDFLAGS automatically so that GHC will add it itself.
@@ -227,14 +238,16 @@ stdenv.mkDerivation (rec {
   };
 
   meta = {
-    homepage = http://haskell.org/ghc;
+    homepage = "http://haskell.org/ghc";
     description = "The Glasgow Haskell Compiler";
     maintainers = with stdenv.lib.maintainers; [ marcweber andres peti ];
+    timeout = 24 * 3600;
     inherit (ghc.meta) license platforms;
   };
 
-} // stdenv.lib.optionalAttrs targetPlatform.useAndroidPrebuilt {
-  dontStrip = true;
+  dontStrip = (targetPlatform.useAndroidPrebuilt || targetPlatform.isWasm);
+
+} // stdenv.lib.optionalAttrs targetPlatform.useAndroidPrebuilt{
   dontPatchELF = true;
   noAuditTmpdir = true;
 })

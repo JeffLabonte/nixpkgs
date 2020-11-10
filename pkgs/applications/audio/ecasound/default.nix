@@ -25,8 +25,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ alsaLib audiofile libjack2 liblo liboil libsamplerate libsndfile lilv lv2 ];
 
   meta = {
-    description = "Ecasound is a software package designed for multitrack audio processing";
+    description = "Software package designed for multitrack audio processing";
     license = with stdenv.lib.licenses;  [ gpl2 lgpl21 ];
-    homepage = http://nosignal.fi/ecasound/;
+    homepage = "http://nosignal.fi/ecasound/";
   };
 }

@@ -26,8 +26,8 @@ let
     # };
 
     meta = with lib; {
-      description = "A kramdown extension for converting Markdown documents to AsciiDoc.";
-      homepage = https://asciidoctor.org/;
+      description = "A kramdown extension for converting Markdown documents to AsciiDoc";
+      homepage = "https://asciidoctor.org/";
       license = licenses.mit;
       maintainers = with maintainers; [ ];
       platforms = platforms.unix;

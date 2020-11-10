@@ -47,13 +47,13 @@ let
 
 in buildPythonPackage rec {
   pname = "Theano";
-  version = "1.0.4";
+  version = "1.0.5";
 
   disabled = isPyPy || pythonOlder "2.6" || (isPy3k && pythonOlder "3.3");
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "35c9bbef56b61ffa299265a42a4e8f8cb5a07b2997dabaef0f8830b397086913";
+    sha256 = "129f43ww2a6badfdr6b88kzjzz2b0wk0dwkvwb55z6dsagfkk53f";
   };
 
   postPatch = ''
@@ -68,7 +68,9 @@ in buildPythonPackage rec {
       --replace 'StrParam(default_dnn_base_path)' 'StrParam('\'''${cudnn}'\''')'
   '';
 
-  preCheck = ''
+  # needs to be postFixup so it runs before pythonImportsCheck even when
+  # doCheck = false (meaning preCheck would be disabled)
+  postFixup = ''
     mkdir -p check-phase
     export HOME=$(pwd)/check-phase
   '';
@@ -81,8 +83,10 @@ in buildPythonPackage rec {
   checkInputs = [ nose ];
   propagatedBuildInputs = [ numpy numpy.blas scipy six libgpuarray_ ];
 
+  pythonImportsCheck = [ "theano" ];
+
   meta = with stdenv.lib; {
-    homepage = http://deeplearning.net/software/theano/;
+    homepage = "http://deeplearning.net/software/theano/";
     description = "A Python library for large-scale array computation";
     license = licenses.bsd3;
     maintainers = with maintainers; [ maintainers.bcdarwin ];

@@ -14,10 +14,10 @@ buildDunePackage rec {
   buildInputs = lib.optionals doCheck [ mdx.bin qtest ];
   propagatedBuildInputs = [ result ];
 
-  doCheck = lib.versionAtLeast ocaml.version "4.04";
+  doCheck = lib.versionAtLeast ocaml.version "4.07";
 
   meta = {
-    homepage = https://github.com/c-cube/sequence;
+    homepage = "https://github.com/c-cube/sequence";
     description = "Simple sequence (iterator) datatype and combinators";
     longDescription = ''
       Simple sequence datatype, intended to transfer a finite number of

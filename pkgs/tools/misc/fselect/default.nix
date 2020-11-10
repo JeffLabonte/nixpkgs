@@ -2,16 +2,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "fselect";
-  version = "0.6.9";
+  version = "0.7.1";
 
   src = fetchFromGitHub {
     owner = "jhspetersson";
     repo = "fselect";
     rev = version;
-    sha256 = "0cgzvzdsy8vbiapgk1l5dp48c3kq0xmx53yfi486mx8nwvz3ksc0";
+    sha256 = "1q7y5agsi6wjb1dnyvdhm4qmdhpv30cx5a8m1blks8is9z2bblz0";
   };
 
-  cargoSha256 = "0mjd9nmaggsszf0kx68yrvy3fqbn35v34c7q3584fv50ipqn6drb";
+  cargoSha256 = "0r2zj0dvf6h4ph3b75z2rdlqwzkdjrjj2iad4dbf9nsr63giwd9n";
 
   nativeBuildInputs = [ installShellFiles ];
 
@@ -24,6 +24,5 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/jhspetersson/fselect";
     license = with licenses; [ asl20 mit ];
     maintainers = with maintainers; [ filalex77 ];
-    platforms = platforms.all;
   };
 }

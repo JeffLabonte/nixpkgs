@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
   installPhase =
     ''
       # install otb fonts
-      install -m 644 -D unifont.otb "$otb/share/fonts/unifont.otb"
-      mkfontdir "$otb/share/fonts"
+      install -m 644 -D unifont.otb "$out/share/fonts/unifont.otb"
+      mkfontdir "$out/share/fonts"
 
       # install pcf and ttf fonts
       install -m 644 -D ${pcf} $out/share/fonts/unifont.pcf.gz
@@ -41,14 +41,12 @@ stdenv.mkDerivation rec {
       mkfontscale
     '';
 
-  outputs = [ "out" "otb" ];
-
   meta = with stdenv.lib; {
     description = "Unicode font for Base Multilingual Plane";
-    homepage = http://unifoundry.com/unifont.html;
+    homepage = "http://unifoundry.com/unifont.html";
 
     # Basically GPL2+ with font exception.
-    license = http://unifoundry.com/LICENSE.txt;
+    license = "http://unifoundry.com/LICENSE.txt";
     maintainers = [ maintainers.rycee maintainers.vrthra ];
     platforms = platforms.all;
   };

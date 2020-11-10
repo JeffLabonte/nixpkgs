@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
                  ];
 
   meta = with stdenv.lib; {
-    description = "CsoundQt is a frontend for Csound with editor, integrated help, widgets and other features.";
-    homepage = https://csoundqt.github.io/;
+    description = "CsoundQt is a frontend for Csound with editor, integrated help, widgets and other features";
+    homepage = "https://csoundqt.github.io/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ hlolli ];

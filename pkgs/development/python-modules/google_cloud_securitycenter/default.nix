@@ -10,11 +10,11 @@
 
 buildPythonPackage rec {
   pname = "google-cloud-securitycenter";
-  version = "0.3.0";
+  version = "0.6.0";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "6a0a878db990d657b88ac34942b0a66df24da4643aa181274e602ac337de5d0c";
+    sha256 = "14ebad262cd01c9a3998561684617be2e97ad5d27dab1918c14b964f97e1f8f7";
   };
 
   checkInputs = [ pytest mock ];
@@ -26,7 +26,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Cloud Security Command Center API API client library";
-    homepage = https://github.com/GoogleCloudPlatform/google-cloud-python;
+    homepage = "https://github.com/GoogleCloudPlatform/google-cloud-python";
     license = licenses.asl20;
     maintainers = [ maintainers.costrouc ];
   };

@@ -6,13 +6,13 @@
 
 stdenv.mkDerivation rec {
   pname = "bdsync";
-  version = "0.11.1";
+  version = "0.11.2";
 
   src = fetchFromGitHub {
-    owner = "TargetHolding";
+    owner = "rolffokkens";
     repo = pname;
     rev = "v${version}";
-    sha256 = "11grdyc6fgw93jvj965awsycqw5qbzsdys7n8farqnmya8qv8gac";
+    sha256 = "0kx422cp1bxr62i1mi7dzrpwmys1kdp865rcymdp4knb5rr5864k";
   };
 
   nativeBuildInputs = [ pandoc which ];
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Fast block device synchronizing tool";
-    homepage = https://github.com/TargetHolding/bdsync;
+    homepage = "https://github.com/TargetHolding/bdsync";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ jluttine ];

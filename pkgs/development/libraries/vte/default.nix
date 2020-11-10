@@ -24,13 +24,13 @@
 
 stdenv.mkDerivation rec {
   pname = "vte";
-  version = "0.60.0";
+  version = "0.60.2";
 
   outputs = [ "out" "dev" ];
 
   src = fetchurl {
     url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "06rs356lpyq60r3szhms152f7kj5jnki6a49b2w7ai0bnig9blbj";
+    sha256 = "19ccbw0yca78h5qcnm8claj4fg1pj68nj1fsjqqfpzhj7w72i81m";
   };
 
   passthru = {
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://www.gnome.org/;
+    homepage = "https://www.gnome.org/";
     description = "A library implementing a terminal emulator widget for GTK";
     longDescription = ''
       VTE is a library (libvte) implementing a terminal emulator widget for
@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
       the system's terminfo database.
     '';
     license = licenses.lgpl2;
-    maintainers = with maintainers; [ astsmtl antono lethalman ] ++ gnome3.maintainers;
+    maintainers = with maintainers; [ astsmtl antono lethalman ] ++ teams.gnome.members;
     platforms = platforms.unix;
   };
 }

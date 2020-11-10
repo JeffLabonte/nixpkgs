@@ -13,7 +13,6 @@ stdenv.mkDerivation {
   buildInputs = [ chez chez-srfi chez-mit ];
 
   buildPhase = ''
-    export CHEZSCHEMELIBDIRS=${chez-srfi}/lib/csv9.5-site:${chez-mit}/lib/csv9.5-site
     make PREFIX=$out CHEZ=${chez}/bin/scheme
   '';
 
@@ -25,7 +24,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "This is a port of the ‘MIT Scmutils’ library to Chez Scheme";
-    homepage = https://github.com/fedeinthemix/chez-scmutils/;
+    homepage = "https://github.com/fedeinthemix/chez-scmutils/";
     maintainers = [ stdenv.lib.maintainers.jitwit ];
     license = stdenv.lib.licenses.gpl3;
   };

@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, nix-update-script
 , pantheon
 , wrapGAppsHook
 , pkgconfig
@@ -20,17 +21,17 @@
 
 stdenv.mkDerivation rec {
   pname = "wingpanel";
-  version = "unstable-2020-04-04";
+  version = "2.3.2";
 
   src = fetchFromGitHub {
     owner = "elementary";
     repo = pname;
-    rev = "366f0f6ffa59f7ee2583d000dd334cb764f9a2b8";
-    sha256 = "172r1k8m1saq80q6g2hxy4ajks8liaw9pl6lixasrzi2hsnrx53h";
+    rev = version;
+    sha256 = "sha256-mXi600gufUK81Uks9p4+al0tCI7H9KpizZGyoomp42s=";
   };
 
   passthru = {
-    updateScript = pantheon.updateScript {
+    updateScript = nix-update-script {
       attrPath = "pantheon.${pname}";
     };
   };
@@ -65,13 +66,20 @@ stdenv.mkDerivation rec {
     patchShebangs meson/post_install.py
   '';
 
+  preFixup = ''
+    gappsWrapperArgs+=(
+      # this theme is required
+      --prefix XDG_DATA_DIRS : "${elementary-gtk-theme}/share"
+    )
+  '';
+
   meta = with stdenv.lib; {
     description = "The extensible top panel for Pantheon";
     longDescription = ''
       Wingpanel is an empty container that accepts indicators as extensions,
       including the applications menu.
     '';
-    homepage = https://github.com/elementary/wingpanel;
+    homepage = "https://github.com/elementary/wingpanel";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

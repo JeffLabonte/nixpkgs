@@ -34,7 +34,7 @@ buildPythonPackage rec {
   #   pytest
   #   pytest-asyncio
   # ];
-  # 
+  #
   # # Fails with : ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
   # # (even with a local redis instance running)
   # checkPhase = ''
@@ -47,7 +47,7 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/django/channels_redis/;
+    homepage = "https://github.com/django/channels_redis/";
     description = "Redis-backed ASGI channel layer implementation";
     license = licenses.bsd3;
     maintainers = with maintainers; [ mmai ];

@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/klaxalk/i3-layout-manager;
-    description = "Saving, loading and managing layouts for i3wm.";
+    homepage = "https://github.com/klaxalk/i3-layout-manager";
+    description = "Saving, loading and managing layouts for i3wm";
     license = licenses.mit;
     platforms = platforms.linux;
     maintainers = with maintainers; [ ];

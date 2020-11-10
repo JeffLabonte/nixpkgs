@@ -11,12 +11,11 @@ let
     port ${toString cfg.port}
     ${condOption "bind" cfg.bind}
     ${condOption "unixsocket" cfg.unixSocket}
-    daemonize yes
+    daemonize no
     supervised systemd
     loglevel ${cfg.logLevel}
     logfile ${cfg.logfile}
     syslog-enabled ${redisBool cfg.syslog}
-    pidfile /run/redis/redis.pid
     databases ${toString cfg.databases}
     ${concatMapStrings (d: "save ${toString (builtins.elemAt d 0)} ${toString (builtins.elemAt d 1)}\n") cfg.save}
     dbfilename dump.rdb
@@ -88,9 +87,12 @@ in
 
       bind = mkOption {
         type = with types; nullOr str;
-        default = null; # All interfaces
-        description = "The IP interface to bind to.";
-        example = "127.0.0.1";
+        default = "127.0.0.1";
+        description = ''
+          The IP interface to bind to.
+          <literal>null</literal> means "all interfaces".
+        '';
+        example = "192.0.2.1";
       };
 
       unixSocket = mkOption {
@@ -219,6 +221,7 @@ in
       description = "Redis database user";
       isSystemUser = true;
     };
+    users.groups.redis = {};
 
     environment.systemPackages = [ cfg.package ];
 
@@ -241,6 +244,7 @@ in
         StateDirectory = "redis";
         Type = "notify";
         User = "redis";
+        Group = "redis";
       };
     };
   };

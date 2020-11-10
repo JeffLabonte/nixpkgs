@@ -31,13 +31,7 @@ in
 
     services.cgminer = {
 
-      enable = mkOption {
-        default = false;
-        description = ''
-          Whether to enable cgminer, an ASIC/FPGA/GPU miner for bitcoin and
-          litecoin.
-        '';
-      };
+      enable = mkEnableOption "cgminer, an ASIC/FPGA/GPU miner for bitcoin and litecoin";
 
       package = mkOption {
         default = pkgs.cgminer;
@@ -132,12 +126,12 @@ in
         GPU_USE_SYNC_OBJECTS = "1";
       };
 
+      startLimitIntervalSec = 60;  # 1 min
       serviceConfig = {
         ExecStart = "${pkgs.cgminer}/bin/cgminer --syslog --text-only --config ${cgminerConfig}";
         User = cfg.user;
         RestartSec = "30s";
         Restart = "always";
-        StartLimitInterval = "1m";
       };
     };
 

@@ -1,28 +1,29 @@
 { stdenv, lib, fetchFromGitHub, cmake, perl
 , glib, luajit, openssl, pcre, pkgconfig, sqlite, ragel, icu
-, hyperscan, jemalloc, openblas, lua, libsodium
+, hyperscan, jemalloc, blas, lapack, lua, libsodium
 , withBlas ? true
 , withHyperscan ? stdenv.isx86_64
 , withLuaJIT ? stdenv.isx86_64
+, nixosTests
 }:
 
 assert withHyperscan -> stdenv.isx86_64;
 
 stdenv.mkDerivation rec {
   pname = "rspamd";
-  version = "2.4";
+  version = "2.6";
 
   src = fetchFromGitHub {
     owner = "rspamd";
     repo = "rspamd";
     rev = version;
-    sha256 = "15rdxcvnfn3fzjpjz6z2ljrzhlmhn2y4sxz09z2789k442n4m1qv";
+    sha256 = "0vwa7k2s2bkfb8w78z5izkd6ywjbzqysb0grls898y549hm8ii70";
   };
 
   nativeBuildInputs = [ cmake pkgconfig perl ];
   buildInputs = [ glib openssl pcre sqlite ragel icu jemalloc libsodium ]
     ++ lib.optional withHyperscan hyperscan
-    ++ lib.optional withBlas openblas
+    ++ lib.optionals withBlas [ blas lapack ]
     ++ lib.optional withLuaJIT luajit ++ lib.optional (!withLuaJIT) lua;
 
   cmakeFlags = [
@@ -33,6 +34,8 @@ stdenv.mkDerivation rec {
     "-DLOCAL_CONFDIR=/etc/rspamd"
     "-DENABLE_JEMALLOC=ON"
   ] ++ lib.optional withHyperscan "-DENABLE_HYPERSCAN=ON";
+
+  passthru.tests.rspamd = nixosTests.rspamd;
 
   meta = with stdenv.lib; {
     homepage = "https://rspamd.com";

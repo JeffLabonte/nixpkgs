@@ -2,7 +2,7 @@
 , libgpgerror, libassuan, qtbase, wrapQtAppsHook
 , ncurses, gtk2, gcr
 , libcap ? null, libsecret ? null
-, enabledFlavors ? [ "curses" "tty" "gtk2" "qt" "gnome3" "emacs" ]
+, enabledFlavors ? [ "curses" "tty" "gtk2" "qt" "emacs" ] ++ lib.optionals stdenv.isLinux [ "gnome3" ]
 }:
 
 with stdenv.lib;
@@ -90,7 +90,7 @@ pinentryMkDerivation rec {
   passthru = { flavors = enabledFlavors; };
 
   meta = with stdenv.lib; {
-    homepage = http://gnupg.org/aegypten2/;
+    homepage = "http://gnupg.org/aegypten2/";
     description = "GnuPG’s interface to passphrase input";
     license = licenses.gpl2Plus;
     platforms = platforms.all;

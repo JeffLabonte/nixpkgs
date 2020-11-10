@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, skktools }:
+{ stdenv, fetchurl, libiconv, skktools }:
 
 let
   # kana to kanji
@@ -31,7 +31,7 @@ stdenv.mkDerivation {
   pname = "skk-dicts-unstable";
   version = "2017-10-26";
   srcs = [ small medium large edict assoc ];
-  nativeBuildInputs = [ skktools ];
+  nativeBuildInputs = [ skktools ] ++ stdenv.lib.optional stdenv.isDarwin libiconv;
 
   phases = [ "installPhase" ];
   installPhase = ''
@@ -65,9 +65,9 @@ stdenv.mkDerivation {
       This package provides a collection of standard kana-to-kanji
       dictionaries for the SKK Japanese input method.
     '';
-    homepage = https://github.com/skk-dev/dict;
+    homepage = "https://github.com/skk-dev/dict";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = with stdenv.lib.maintainers; [ yuriaisaka ];
-    platforms = with stdenv.lib.platforms; linux;
+    platforms = with stdenv.lib.platforms; linux ++ darwin;
   };
 }

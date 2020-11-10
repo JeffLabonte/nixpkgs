@@ -10,12 +10,12 @@
 
 buildPythonPackage rec {
   pname = "azure-mgmt-containerservice";
-  version = "9.0.0";
+  version = "10.0.0";
 
   src = fetchPypi {
     inherit pname version;
     extension = "zip";
-    sha256 = "6f05948bbd19ceb894f46f037b77c54116183364a671e180c007b5737c8d4590";
+    sha256 = "9b44b2d0b281fc1999324a715fb5cf4f47d392a35bc0a01f24bb8dbc4c123acd";
   };
 
   propagatedBuildInputs = [

@@ -1,6 +1,7 @@
 { config, stdenv
 , mkDerivation
 , fetchFromGitHub
+, addOpenGLRunpath
 , cmake
 , fdk_aac
 , ffmpeg
@@ -19,7 +20,7 @@
 , xorg
 , makeWrapper
 , pkgconfig
-, vlc
+, libvlc
 , mbedtls
 
 , scriptingSupport ? true
@@ -35,49 +36,60 @@
 
 let
   inherit (stdenv.lib) optional optionals;
+
 in mkDerivation rec {
   pname = "obs-studio";
-  version = "25.0.2";
+  version = "26.0.2";
 
   src = fetchFromGitHub {
     owner = "obsproject";
     repo = "obs-studio";
     rev = version;
-    sha256 = "12c2p179fijz5606h3bp4g88479gwgr7d5f8vk6j2n0rlzs76nsn";
+    sha256 = "1d502f80whh686mvq0yn6zpa5nvmnlzxwp5sjz43vpbbvhpbrdqj";
   };
 
-  nativeBuildInputs = [ cmake pkgconfig ];
+  nativeBuildInputs = [ addOpenGLRunpath cmake pkgconfig ];
 
-  buildInputs = [ curl
-                  fdk_aac
-                  ffmpeg
-                  jansson
-                  libjack2
-                  libv4l
-                  libxkbcommon
-                  libpthreadstubs
-                  libXdmcp
-                  qtbase
-                  qtx11extras
-                  qtsvg
-                  speex
-                  x264
-                  vlc
-                  makeWrapper
-                  mbedtls
-                ]
-                ++ optionals scriptingSupport [ luajit swig python3 ]
-                ++ optional alsaSupport alsaLib
-                ++ optional pulseaudioSupport libpulseaudio;
+  buildInputs = [
+    curl
+    fdk_aac
+    ffmpeg
+    jansson
+    libjack2
+    libv4l
+    libxkbcommon
+    libpthreadstubs
+    libXdmcp
+    qtbase
+    qtx11extras
+    qtsvg
+    speex
+    x264
+    libvlc
+    makeWrapper
+    mbedtls
+  ]
+  ++ optionals scriptingSupport [ luajit swig python3 ]
+  ++ optional alsaSupport alsaLib
+  ++ optional pulseaudioSupport libpulseaudio;
 
   # obs attempts to dlopen libobs-opengl, it fails unless we make sure
   # DL_OPENGL is an explicit path. Not sure if there's a better way
   # to handle this.
-  cmakeFlags = [ "-DCMAKE_CXX_FLAGS=-DDL_OPENGL=\\\"$(out)/lib/libobs-opengl.so\\\"" ];
+  cmakeFlags = [
+    "-DCMAKE_CXX_FLAGS=-DDL_OPENGL=\\\"$(out)/lib/libobs-opengl.so\\\""
+    "-DOBS_VERSION_OVERRIDE=${version}"
+    "-Wno-dev" # kill dev warnings that are useless for packaging
+  ];
 
   postInstall = ''
       wrapProgram $out/bin/obs \
-        --prefix "LD_LIBRARY_PATH" : "${xorg.libX11.out}/lib:${vlc}/lib"
+        --prefix "LD_LIBRARY_PATH" : "${xorg.libX11.out}/lib:${libvlc}/lib"
+  '';
+
+  postFixup = stdenv.lib.optionalString stdenv.isLinux ''
+      addOpenGLRunpath $out/lib/lib*.so
+      addOpenGLRunpath $out/lib/obs-plugins/*.so
   '';
 
   meta = with stdenv.lib; {

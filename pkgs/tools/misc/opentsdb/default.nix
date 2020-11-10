@@ -1,8 +1,8 @@
-{ stdenv, autoconf, automake, curl, fetchurl, jdk, jre, makeWrapper, nettools
+{ stdenv, autoconf, automake, curl, fetchurl, jdk8, makeWrapper, nettools
 , python, git
 }:
 
-with stdenv.lib;
+let jdk = jdk8; jre = jdk8.jre; in
 
 stdenv.mkDerivation rec {
   pname = "opentsdb";
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Time series database with millisecond precision";
-    homepage = http://opentsdb.net;
+    homepage = "http://opentsdb.net";
     license = licenses.lgpl21Plus;
     platforms = stdenv.lib.platforms.linux;
     maintainers = [ maintainers.ocharles ];

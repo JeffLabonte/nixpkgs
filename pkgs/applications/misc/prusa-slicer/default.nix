@@ -86,12 +86,12 @@ stdenv.mkDerivation rec {
     comment = "G-code generator for 3D printers";
     desktopName = "PrusaSlicer";
     genericName = "3D printer tool";
-    categories = "Application;Development;";
+    categories = "Development;";
   };
 
   meta = with stdenv.lib; {
     description = "G-code generator for 3D printer";
-    homepage = https://github.com/prusa3d/PrusaSlicer;
+    homepage = "https://github.com/prusa3d/PrusaSlicer";
     license = licenses.agpl3;
     maintainers = with maintainers; [ moredread tweber ];
   };

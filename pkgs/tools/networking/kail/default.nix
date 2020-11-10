@@ -20,11 +20,12 @@ buildGoPackage rec {
   # git checkout <version>
   # dep init
   # dep2nix
+  deleteVendor = true;
   goDeps = ./deps.nix;
 
   meta = with stdenv.lib; {
     description = "Kubernetes log viewer";
-    homepage = https://github.com/boz/kail;
+    homepage = "https://github.com/boz/kail";
     license = licenses.mit;
     maintainers = with maintainers; [ offline vdemeester ];
   };

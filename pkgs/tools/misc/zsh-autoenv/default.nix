@@ -19,7 +19,7 @@ stdenv.mkDerivation {
 
     cat <<SCRIPT > $out/bin/zsh-autoenv-share
     #!${runtimeShell}
-    # Run this script to find the fzf shared folder where all the shell
+    # Run this script to find the zsh-autoenv shared folder where all the shell
     # integration scripts are living.
     echo $out/share/zsh-autoenv
     SCRIPT
@@ -34,7 +34,7 @@ stdenv.mkDerivation {
       It handles "enter" and "leave" events, nesting, and stashing of
       variables (overwriting and restoring).
     '';
-    homepage = https://github.com/Tarrasch/zsh-autoenv;
+    homepage = "https://github.com/Tarrasch/zsh-autoenv";
     platforms = stdenv.lib.platforms.all;
   };
 }

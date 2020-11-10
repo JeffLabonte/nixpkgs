@@ -2,23 +2,23 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "git-trim";
-  version = "0.2.4";
+  version = "0.4.2";
 
   src = fetchFromGitHub {
     owner = "foriequal0";
     repo = pname;
     rev = "v${version}";
-    sha256 = "0gfmv9bwhh6bv0s9kfbxq9wsvrk3zz3ibavbpp9l8cpqc3145pqy";
+    sha256 = "1rb9dhj7b7mjrhsvm9vw5gzjfxj10idnzv488jkfdz7sfhd3fcvz";
   };
 
-  cargoSha256 = "0xklczk4vbh2mqf76r3rsfyclyza9imf6yss7vbkm9w4ir3ar9f3";
+  cargoSha256 = "1q62gqqhf78ljcvzp7yrnr0vk65rif2f7axzjq0b87prbcsr7ij4";
 
   nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [ openssl ] ++ stdenv.lib.optionals stdenv.isDarwin [ libiconv Security ];
 
   postInstall = ''
-    install -Dm644 docs/git-trim.md.1 $out/share/man/man1/git-trim.1
+    install -Dm644 -t $out/share/man/man1/ docs/git-trim.1
   '';
 
   # fails with sandbox

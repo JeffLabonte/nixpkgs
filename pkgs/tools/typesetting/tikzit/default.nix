@@ -2,13 +2,13 @@
 
 mkDerivation {
   pname = "tikzit";
-  version = "2.1.4";
+  version = "2.1.6";
 
   src = fetchFromGitHub {
     owner = "tikzit";
     repo = "tikzit";
-    rev = "v2.1.4";
-    sha256 = "121pgl2cdkksw48mjg6hzk7324ax6iw6fq7q3v1kdgwm8rwxm1fl";
+    rev = "v2.1.6";
+    sha256 = "0ba99pgv54pj1xvhrwn9db2w0v4h07vsjajcnhpa2smy88ypg32h";
   };
 
   nativeBuildInputs = [ qmake qttools flex bison ];
@@ -25,7 +25,7 @@ mkDerivation {
       can be included directly in papers typeset using LaTeX.
       For preview support the texlive package 'preview' has to be installed.
     '';
-    homepage = https://tikzit.github.io/;
+    homepage = "https://tikzit.github.io/";
     license = licenses.gpl3Plus;
     platforms = platforms.all;
     maintainers = [ maintainers.iblech maintainers.mgttlinger ];

@@ -3,11 +3,11 @@
 
 stdenv.mkDerivation rec {
   pname = "file-roller";
-  version = "3.36.0";
+  version = "3.36.3";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/file-roller/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "0y04y58sbggsgqzmxkb6q7300bdzf30w40yp57n87x9nypl4s55r";
+    url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+    sha256 = "1dw1vfnfc44k57b6mip8fv565d2xv5wrigi4js044x3sbl5f2n89";
   };
 
   LANG = "en_US.UTF-8"; # postinstall.py
@@ -32,10 +32,10 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/FileRoller;
+    homepage = "https://wiki.gnome.org/Apps/FileRoller";
     description = "Archive manager for the GNOME desktop environment";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
   };
 }

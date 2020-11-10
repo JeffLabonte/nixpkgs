@@ -4,11 +4,11 @@
 
 stdenv.mkDerivation rec {
   pname = "global";
-  version = "6.6.4";
+  version = "6.6.5";
 
   src = fetchurl {
     url = "mirror://gnu/global/${pname}-${version}.tar.gz";
-    sha256 = "1515642wsjz7x3rsgaqk4sc7n0z2znl7idsk8jz8wgy5aswqqzlq";
+    sha256 = "10vvsgx8v54whb4j9mk5qqyb5h3rdd9da0il3wir8pcpksyk0dww";
   };
 
   nativeBuildInputs = [ libtool makeWrapper ];
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
       independence of any editor.  It runs on a UNIX (POSIX) compatible
       operating system like GNU and BSD.
     '';
-    homepage = https://www.gnu.org/software/global/;
+    homepage = "https://www.gnu.org/software/global/";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ pSub peterhoeg ];
     platforms = platforms.unix;

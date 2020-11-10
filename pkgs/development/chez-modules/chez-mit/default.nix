@@ -13,7 +13,6 @@ stdenv.mkDerivation {
   buildInputs = [ chez chez-srfi ];
 
   buildPhase = ''
-    export CHEZSCHEMELIBDIRS=${chez-srfi}/lib/csv9.5-site
     make PREFIX=$out CHEZ=${chez}/bin/scheme
   '';
 
@@ -25,7 +24,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "This is a MIT/GNU Scheme compatibility library for Chez Scheme";
-    homepage = https://github.com/fedeinthemix/chez-mit/;
+    homepage = "https://github.com/fedeinthemix/chez-mit/";
     maintainers = [ stdenv.lib.maintainers.jitwit ];
     license = stdenv.lib.licenses.free;
   };

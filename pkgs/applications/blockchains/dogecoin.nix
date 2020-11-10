@@ -33,9 +33,9 @@ stdenv.mkDerivation rec {
       internet currency."
       It is named after a famous Internet meme, the "Doge" - a Shiba Inu dog.
     '';
-    homepage = http://www.dogecoin.com/;
+    homepage = "http://www.dogecoin.com/";
     license = licenses.mit;
-    maintainers = with maintainers; [ edwtjo offline AndersonTorres ];
+    maintainers = with maintainers; [ edwtjo offline ];
     platforms = platforms.linux;
   };
 }

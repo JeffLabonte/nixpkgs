@@ -2,11 +2,12 @@
 # version args
 , src, version
 , meta ? {}
+, patches ? null
 }:
 
 python2Packages.buildPythonApplication {
   name = "nixops-${version}";
-  inherit version src;
+  inherit version src patches;
 
   buildInputs = [ libxslt ];
 
@@ -46,7 +47,7 @@ python2Packages.buildPythonApplication {
   '';
 
   meta = {
-    homepage = https://github.com/NixOS/nixops;
+    homepage = "https://github.com/NixOS/nixops";
     description = "NixOS cloud provisioning and deployment tool";
     maintainers = with lib.maintainers; [ aminechikhaoui eelco rob domenkozar ];
     platforms = lib.platforms.unix;

@@ -47,8 +47,8 @@ mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://chessx.sourceforge.net/;
-    description = "ChessX allows you to browse and analyse chess games";
+    homepage = "http://chessx.sourceforge.net/";
+    description = "Browse and analyse chess games";
     license = licenses.gpl2;
     maintainers = [ maintainers.luispedro ];
     platforms = platforms.linux;

@@ -4,14 +4,14 @@
 
 mkDerivation rec {
   pname = "chiaki";
-  version = "1.0.3";
+  version = "1.3.0";
 
   src = fetchFromGitHub {
     rev = "v${version}";
     owner = "thestr4ng3r";
     repo = "chiaki";
     fetchSubmodules = true;
-    sha256 = "09c6izprqqvhn1vbr2897ql05w5c7iqakm6jn795a5faghjm1mah";
+    sha256 = "07w7srxxr8zjp91p5n1sqf4j8lljfrm78lz1m15s2nzlm579015h";
   };
 
   nativeBuildInputs = [
@@ -20,6 +20,7 @@ mkDerivation rec {
   buildInputs = [ ffmpeg libopus qtbase qtmultimedia qtsvg protobuf SDL2 ];
 
   doCheck = true;
+  installCheckPhase = "$out/bin/chiaki --help";
 
   meta = with lib; {
     homepage = "https://github.com/thestr4ng3r/chiaki";

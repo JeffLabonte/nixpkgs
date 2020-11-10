@@ -3,7 +3,6 @@
 , ninja
 , gettext
 , fetchurl
-, fetchpatch
 , pkgconfig
 , gtk3
 , glib
@@ -36,21 +35,12 @@
 
 stdenv.mkDerivation rec {
   pname = "epiphany";
-  version = "3.36.0";
+  version = "3.36.4";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/epiphany/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "1xjn6jk4dx2kl2llalydcyvibnpwjahp9z3210pflyy4k68pfw6l";
+    url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+    sha256 = "1gs2a94fzpciv58rljgbirsc2kqgiaiyc2yg6ff50nlgb2qpb2jq";
   };
-
-  patches = [
-    # Fix downloading files
-    # https://gitlab.gnome.org/GNOME/epiphany/issues/1127
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/epiphany/commit/8682a084bab7e758a9b8efe1deaf0cb8d55fcf44.patch";
-      sha256 = "bep+Q8Wpu84KA13a5T3JCz8nyeC13HT/QkMKvWT6vLk=";
-    })
-  ];
 
   # Tests need an X display
   mesonFlags = [
@@ -68,6 +58,7 @@ stdenv.mkDerivation rec {
     python3
     wrapGAppsHook
     buildPackages.glib
+    buildPackages.gtk3
   ];
 
   buildInputs = [
@@ -111,9 +102,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/Epiphany;
+    homepage = "https://wiki.gnome.org/Apps/Epiphany";
     description = "WebKit based web browser for GNOME";
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

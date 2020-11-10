@@ -2,12 +2,12 @@
 , python, pytest, sortedcontainers }:
 
 buildPythonPackage rec {
-  version = "3.0.2";
+  version = "3.1.0";
   pname = "intervaltree";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "0wz234g6irlm4hivs2qzmnywk0ss06ckagwh15nflkyb3p462kyb";
+    sha256 = "902b1b88936918f9b2a19e0e5eb7ccb430ae45cde4f39ea4b36932920d33952d";
   };
 
   buildInputs = [ pytest ];
@@ -23,7 +23,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "Editable interval tree data structure for Python 2 and 3";
-    homepage =  https://github.com/chaimleib/intervaltree;
+    homepage =  "https://github.com/chaimleib/intervaltree";
     license = [ licenses.asl20 ];
     maintainers =  [ maintainers.bennofs ];
   };

@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, nix-update-script
 , python3
 , meson
 , ninja
@@ -10,23 +11,26 @@
 , gtk3
 , glib
 , gettext
+, gsettings-desktop-schemas
 , gobject-introspection
 , wrapGAppsHook
 }:
 
 stdenv.mkDerivation rec {
   pname = "granite";
-  version = "5.3.1";
+  version = "5.5.0";
+
+  outputs = [ "out" "dev" ];
 
   src = fetchFromGitHub {
     owner = "elementary";
     repo = pname;
     rev = version;
-    sha256 = "12f1n07cjlc7czf642ak6964wl4fsgakc39nnmiba22z5aahfpz9";
+    sha256 = "sha256-ytbjuo9RnYyJ9+LqtWE117dGlNErLl+nmTM22xGGDo8=";
   };
 
   passthru = {
-    updateScript = pantheon.updateScript {
+    updateScript = nix-update-script {
       attrPath = "pantheon.${pname}";
     };
   };
@@ -48,6 +52,10 @@ stdenv.mkDerivation rec {
     libgee
   ];
 
+  propagatedBuildInputs = [
+    gsettings-desktop-schemas # is_clock_format_12h uses "org.gnome.desktop.interface clock-format"
+  ];
+
   postPatch = ''
     chmod +x meson/post_install.py
     patchShebangs meson/post_install.py
@@ -59,7 +67,7 @@ stdenv.mkDerivation rec {
       Granite is a companion library for GTK and GLib. Among other things, it provides complex widgets and convenience functions
       designed for use in apps built for elementary OS.
     '';
-    homepage = https://github.com/elementary/granite;
+    homepage = "https://github.com/elementary/granite";
     license = licenses.lgpl3Plus;
     platforms = platforms.linux;
     maintainers = pantheon.maintainers;

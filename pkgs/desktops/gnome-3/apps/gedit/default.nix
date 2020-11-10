@@ -7,11 +7,11 @@
 
 stdenv.mkDerivation rec {
   pname = "gedit";
-  version = "3.36.0";
+  version = "3.36.2";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gedit/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "0dclapyghbkg15cjcf6nljcyy4980ipjw1m3mbqpmnz9lh9dv0y9";
+    sha256 = "15s1almlhjlgl3m8lxg6jpzln8jhgdxxjr635a3b7cf58d35b1v8";
   };
 
   nativeBuildInputs = [
@@ -45,10 +45,10 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/Gedit;
+    homepage = "https://wiki.gnome.org/Apps/Gedit";
     description = "Official text editor of the GNOME desktop environment";
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     license = licenses.gpl2;
-    platforms = platforms.linux;
+    platforms = platforms.unix;
   };
 }

@@ -41,8 +41,8 @@ self: super: {
   xhtml = null;
 
   # Needs Cabal 3.2.x.
-  cabal-install = super.cabal-install.overrideScope (self: super: { Cabal = self.Cabal_3_2_0_0; });
-  jailbreak-cabal = super.jailbreak-cabal.override { Cabal = self.Cabal_3_2_0_0; };
+  cabal-install = super.cabal-install.overrideScope (self: super: { Cabal = self.Cabal_3_2_1_0; });
+  jailbreak-cabal = super.jailbreak-cabal.override { Cabal = self.Cabal_3_2_1_0; };
 
   # Restricts aeson to <1.4
   # https://github.com/purescript/purescript/pull/3537
@@ -59,7 +59,7 @@ self: super: {
   # https://github.com/jystic/hadoop-tools/issues/31
   hadoop-rpc =
     let patch = pkgs.fetchpatch
-          { url = https://github.com/shlevy/hadoop-tools/commit/f03a46cd15ce3796932c3382e48bcbb04a6ee102.patch;
+          { url = "https://github.com/shlevy/hadoop-tools/commit/f03a46cd15ce3796932c3382e48bcbb04a6ee102.patch";
             sha256 = "09ls54zy6gx84fmzwgvx18ssgm740cwq6ds70p0p125phi54agcp";
             stripLen = 1;
           };
@@ -85,5 +85,8 @@ self: super: {
 
   # The old Haddock cannot process the newer documentation syntax.
   fast-logger = dontHaddock super.fast-logger;
+
+  # ghc versions prior to 8.8.x needs additional dependency to compile successfully.
+  ghc-lib-parser-ex = addBuildDepend super.ghc-lib-parser-ex self.ghc-lib-parser;
 
 }

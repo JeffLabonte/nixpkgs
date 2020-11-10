@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, makeWrapper
+{ stdenv, lib, fetchurl, makeWrapper
 , dpkg, patchelf
 , gtk2, glib, gdk-pixbuf, alsaLib, nss, nspr, GConf, cups, libgcrypt, dbus, systemd
 , libXdamage, expat }:
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
     mkdir -p $out/lib
     ln -s ${stdenv.cc.cc.lib}/lib/libstdc++.so.6 $out/lib/
-    ln -s ${systemd.lib}/lib/libudev.so.1 $out/lib/libudev.so.0
+    ln -s ${lib.getLib systemd}/lib/libudev.so.1 $out/lib/libudev.so.0
 
     for binary in StarUML Brackets-node; do
       ${patchelf}/bin/patchelf \
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A sophisticated software modeler";
-    homepage = http://staruml.io/;
+    homepage = "http://staruml.io/";
     license = licenses.unfree;
     platforms = [ "i686-linux" "x86_64-linux" ];
   };

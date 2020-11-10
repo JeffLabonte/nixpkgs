@@ -1,15 +1,19 @@
 { stdenv, fetchFromGitHub, pkgconfig, zlib }:
 
 stdenv.mkDerivation rec {
-  version = "0.8.0";
+  version = "1.0.0";
   pname = "gpac";
 
   src = fetchFromGitHub {
     owner = "gpac";
     repo = "gpac";
     rev = "v${version}";
-    sha256 = "1w1dyrn6900yi8ngchfzy5hvxr6yc60blvdq8y8mczimmmq8khb5";
+    sha256 = "11jrklaahhdfqhci7f3lzv8wchh9bc91rg6w8ibh6varrk692vsb";
   };
+
+  postPatch = ''
+    substituteInPlace Makefile --replace 'dh_link' 'ln -s'
+  '';
 
   # this is the bare minimum configuration, as I'm only interested in MP4Box
   # For most other functionality, this should probably be extended
@@ -33,7 +37,7 @@ stdenv.mkDerivation rec {
       A multimedia packager, called MP4Box,
       And some server tools included in MP4Box and MP42TS applications.
     '';
-    homepage = https://gpac.wp.imt.fr;
+    homepage = "https://gpac.wp.imt.fr";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ bluescreen303 mgdelacroix ];
     platforms = platforms.linux;

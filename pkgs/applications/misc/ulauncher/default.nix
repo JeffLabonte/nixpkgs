@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, nix-update-script
 , python3Packages
 , gdk-pixbuf
 , glib
@@ -17,18 +18,18 @@
 , librsvg
 }:
 
-python3Packages.buildPythonApplication rec  {
+python3Packages.buildPythonApplication rec {
   pname = "ulauncher";
-  version = "5.6.1";
+  version = "5.8.0";
 
   disabled = python3Packages.isPy27;
 
   src = fetchurl {
     url = "https://github.com/Ulauncher/Ulauncher/releases/download/${version}/ulauncher_${version}.tar.gz";
-    sha256 = "14k68lp58wldldhaq4cf0ffkhi81czv4ps9xa86iw1j5b1gd2vbl";
+    sha256 = "1czxzcxix9iwv1sir1q64j5aavc7lzjjwqpisgdc1kidkwnk05zp";
   };
 
-  nativeBuildInputs = with python3Packages;  [
+  nativeBuildInputs = with python3Packages; [
     distutils_extra
     intltool
     wrapGAppsHook
@@ -71,7 +72,6 @@ python3Packages.buildPythonApplication rec  {
 
   patches = [
     ./fix-path.patch
-    ./fix-permissions.patch # ulauncher PR #523
     ./0001-Adjust-get_data_path-for-NixOS.patch
     ./fix-extensions.patch
   ];
@@ -104,9 +104,16 @@ python3Packages.buildPythonApplication rec  {
     gappsWrapperArgs+=(--prefix PATH : "${stdenv.lib.makeBinPath [ wmctrl ]}")
   '';
 
+  passthru = {
+    updateScript = nix-update-script {
+      attrPath = pname;
+    };
+  };
+
+
   meta = with stdenv.lib; {
     description = "A fast application launcher for Linux, written in Python, using GTK";
-    homepage = https://ulauncher.io/;
+    homepage = "https://ulauncher.io/";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ aaronjanse worldofpeace ];

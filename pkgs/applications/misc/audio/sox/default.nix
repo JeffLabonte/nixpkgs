@@ -8,6 +8,7 @@
 , enableFLAC ? true, flac ? null
 , enablePNG ? true, libpng ? null
 , enableLibsndfile ? true, libsndfile ? null
+, enableWavpack ? true, wavpack ? null
 # amrnb and amrwb are unfree, disabled by default
 , enableAMR ? false, amrnb ? null, amrwb ? null
 , enableLibpulseaudio ? true, libpulseaudio ? null
@@ -36,13 +37,14 @@ stdenv.mkDerivation rec {
     optional enableFLAC flac ++
     optional enablePNG libpng ++
     optional enableLibsndfile libsndfile ++
+    optional enableWavpack wavpack ++
     optionals enableAMR [ amrnb amrwb ] ++
     optional enableLibpulseaudio libpulseaudio ++
     optional (stdenv.isDarwin) CoreAudio;
 
   meta = {
     description = "Sample Rate Converter for audio";
-    homepage = http://sox.sourceforge.net/;
+    homepage = "http://sox.sourceforge.net/";
     maintainers = [ lib.maintainers.marcweber ];
     license = if enableAMR then lib.licenses.unfree else lib.licenses.gpl2Plus;
     platforms = lib.platforms.linux ++ lib.platforms.darwin;

@@ -9,11 +9,11 @@
 with stdenv.lib;
 stdenv.mkDerivation rec {
   pname = "lxc";
-  version = "4.0.0";
+  version = "4.0.5";
 
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/lxc/lxc-${version}.tar.gz";
-    sha256 = "1x63nbfsicqxckq62ga3k0g8fm4qgcpn45ianj6m7rvw4lnaxwxk";
+    sha256 = "1976l9308rx1ria1gazasypk5rmmf5jiqdh54dfrws5bslbdcb5g";
   };
 
   nativeBuildInputs = [
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    homepage = https://linuxcontainers.org/;
+    homepage = "https://linuxcontainers.org/";
     description = "Userspace tools for Linux Containers, a lightweight virtualization system";
     license = licenses.lgpl21Plus;
 

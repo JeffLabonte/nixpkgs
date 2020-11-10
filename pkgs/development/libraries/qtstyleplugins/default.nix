@@ -10,12 +10,14 @@ mkDerivation {
     sha256 = "085wyn85nrmzr8nv5zv7fi2kqf8rp1gnd30h72s30j55xvhmxvmy";
   };
 
+  patches = [ ./fix-build-against-Qt-5.15.patch ];
+
   nativeBuildInputs = [ pkgconfig qmake ];
   buildInputs = [ gtk2 ];
 
   meta = with stdenv.lib; {
     description = "Additional style plugins for Qt5, including BB10, GTK, Cleanlooks, Motif, Plastique";
-    homepage = http://blog.qt.io/blog/2012/10/30/cleaning-up-styles-in-qt5-and-adding-fusion/;
+    homepage = "http://blog.qt.io/blog/2012/10/30/cleaning-up-styles-in-qt5-and-adding-fusion/";
     license = licenses.lgpl21;
     maintainers = [ maintainers.gnidorah ];
     platforms = platforms.linux;

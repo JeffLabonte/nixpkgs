@@ -1,20 +1,30 @@
-{ stdenv, fetchFromGitHub, sassc, autoreconfHook, pkgconfig, gtk3, gnome3
-, gtk-engine-murrine, optipng, inkscape }:
+{ stdenv
+, fetchFromGitHub
+, sassc
+, autoreconfHook
+, pkg-config
+, gtk3
+, gnome3
+, gtk-engine-murrine
+, optipng
+, inkscape
+, cinnamon
+}:
 
 stdenv.mkDerivation rec {
   pname = "arc-theme";
-  version = "20190917";
+  version = "20201013";
 
   src = fetchFromGitHub {
-    owner  = "arc-design";
-    repo   = pname;
-    rev    = version;
-    sha256 = "1qgpk4p2hi5hd4yy0hj93kq1vs0b32wb8qkaj1wi90c8gwddq5wa";
+    owner = "jnsh";
+    repo = pname;
+    rev = version;
+    sha256 = "1x2l1mwjx68dwf3jb1i90c1q8nqsl1wf2zggcn8im6590k5yv39s";
   };
 
   nativeBuildInputs = [
     autoreconfHook
-    pkgconfig
+    pkg-config
     sassc
     optipng
     inkscape
@@ -34,7 +44,8 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--disable-gnome-shell" # 3.36 not supported
+    "--with-cinnamon=${cinnamon.cinnamon-common.version}"
+    "--with-gnome-shell=${gnome3.gnome-shell.version}"
     "--disable-unity"
   ];
 
@@ -44,9 +55,9 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Flat theme with transparent elements for GTK 3, GTK 2 and Gnome Shell";
-    homepage    = https://github.com/arc-design/arc-theme;
-    license     = licenses.gpl3;
+    homepage = "https://github.com/jnsh/arc-theme";
+    license = licenses.gpl3Only;
+    platforms = platforms.linux;
     maintainers = with maintainers; [ simonvandel romildo ];
-    platforms   = platforms.linux;
   };
 }

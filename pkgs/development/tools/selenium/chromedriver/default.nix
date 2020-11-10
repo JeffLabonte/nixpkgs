@@ -1,17 +1,17 @@
 { stdenv, fetchurl, cairo, fontconfig, freetype, gdk-pixbuf, glib
 , glibc, gtk2, libX11, makeWrapper, nspr, nss, pango, unzip, gconf
-, libXi, libXrender, libXext
+, libxcb, libXi, libXrender, libXext
 }:
 let
   allSpecs = {
     x86_64-linux = {
       system = "linux64";
-      sha256 = "0cx6x5akmawyzm5dmd3xvj9a2vg4dnai1qs1v9p4acw9hai559c8";
+      sha256 = "0absr1fp2h87gpyw6jxj2f08sbhkkh3pf13145hfyzdvajj5rfjy";
     };
 
     x86_64-darwin = {
       system = "mac64";
-      sha256 = "1nh7h2wpljpblwqr0km7nzg3ky5xw6cxqmgdmgvw6qia8bryw1lj";
+      sha256 = "1p9k92fgyx0xis6r50vhcpx3iws2gaspq3dnpigglv3bj9yg8zvi";
     };
   };
 
@@ -23,12 +23,12 @@ let
     cairo fontconfig freetype
     gdk-pixbuf glib gtk2 gconf
     libX11 nspr nss pango libXrender
-    gconf libXext libXi
+    gconf libxcb libXext libXi
   ];
 in
 stdenv.mkDerivation rec {
   pname = "chromedriver";
-  version = "80.0.3987.16";
+  version = "85.0.4183.87";
 
   src = fetchurl {
     url = "https://chromedriver.storage.googleapis.com/${version}/chromedriver_${spec.system}.zip";
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://sites.google.com/a/chromium.org/chromedriver;
+    homepage = "https://sites.google.com/a/chromium.org/chromedriver";
     description = "A WebDriver server for running Selenium tests on Chrome";
     license = licenses.bsd3;
     maintainers = [ maintainers.goibhniu maintainers.marsam ];

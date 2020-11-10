@@ -3,49 +3,49 @@
 {
   "kicad" = {
     kicadVersion = {
-      version =			"5.1.5";
+      version =			"5.1.8";
       src = {
-        rev =			"52549c5d09cbfb0e807fcbcb07819bc9f7861544";
-        sha256 =		"15h3rwisjss3fdc9bam9n2wq94slhacc3fbg14bnzf4n5agsnv5b";
+        rev =			"db9833491010954bc27fac92c83d2864bd95c23c";
+        sha256 =		"08ni9j2lw2hjc1csk6rkydcxwdal6da17ch60zkjij5vfsif2hix";
       };
     };
     libVersion = {
-      version =			"5.1.5";
+      version =			"5.1.8";
       libSources = {
-        i18n.rev =		"5122cbec6563fb7c8d6f960a639ac470353af91b";
-        i18n.sha256 =		"1rfpifl8vky1gba2angizlb2n7mwmsiai3r6ip6qma60wdj8sbd3";
-        symbols.rev =		"dd122ec170b49e032179511c9d263126f52f4020";
-        symbols.sha256 =	"048b07ffsaav1ssrchw2p870lvb4rsyb5vnniy670k7q9p16qq6h";
-        templates.rev =		"94761f10d06582b33cd55ea2149d72f269f65580";
-        templates.sha256 =	"0cs3bm3zb5ngw5ldn0lzw5bvqm4kvcidyrn76438alffwiz2b15g";
-        footprints.rev =	"e076f8f271f8db96d5fec45616b7554caebb7ef7";
-        footprints.sha256 =	"1c4whgn14qhz4yqkl46w13p6rpv1k0hsc9s9h9368fxfcz9knb2j";
-        packages3d.rev =	"8d233cdcb109aa1c3b8ba4c934ee31f6a3b6e1f4";
-        packages3d.sha256 =	"0cff2ms1bsw530kqb1fr1m2pjixyxzwa81mxgac3qpbcf8fnpvaz";
+        i18n.rev =		"78adcd19e7ed53f4889d6db65a33dd8ec2d323e9";
+        i18n.sha256 =		"0x0w2m6d3xfm22y4anp5j2j67iwzby149ynj6qjlw2kcsi8kwk1j";
+        symbols.rev =		"bf475af94877e8fd9cf80e667578ff61835e02bb";
+        symbols.sha256 =	"1ii3r813653ng2ycggnknqx4g3ja7dbm4qyxrf9aq48ws0xkvhx3";
+        templates.rev =		"1ccbaf3704e8ff4030d0915f71e051af621ef7d7";
+        templates.sha256 =	"1a8xfcbdbb4ylrb5m7n2jjk9kwvgmlx1pmnn2cwj327a2b3m4jjs";
+        footprints.rev =	"302ac78bac21825532f970fb92714fa5973ad79b";
+        footprints.sha256 =	"0gyqxryda273hjn2rv8dha461j9bjh054y5dlpiw1wiha65lrf9i";
+        packages3d.rev =	"7abe02f30fd79b8f4f66c01589861df7f8f72f04";
+        packages3d.sha256 =	"1szcin52fcsyb55bj7xq7lz6ig187dpz3lk7blwab7b9c4dn3c3y";
       };
     };
   };
   "kicad-unstable" = {
     kicadVersion = {
-      version =			"2020-02-10";
+      version =			"2020-11-07";
       src = {
-        rev =			"1190e60dd426d246661e478db3287f266ec6cda2";
-        sha256 =		"0cgfad07j69cks97llj4hf3kga0d5qf728s89xwxrzcwm06k62bi";
+        rev =			"9454f9df9245aea037d1ad5baf050c2d9101159c";
+        sha256 =		"03bd0dk234ihqnwrv4n40gi856xcjqgxplfwjzlwcq521gwykv30";
       };
     };
     libVersion = {
-      version =			"2020-02-10";
+      version =			"2020-11-07";
       libSources = {
-        i18n.rev =		"26786c4ca804bad7eb072f1ef381f00b5a2ff3ee";
-        i18n.sha256 =		"0iqr1xfw4s677afjy9bn5y41z4isp327f9y90wypkxiwwq3dfkfl";
-        symbols.rev =		"35b7da2d211d7cc036b37ad7f5e40ef03faa1bc7";
-        symbols.sha256 =	"0wbfw1swbfvfp47cn48pxpqlygjs3xh568ydrrs51v3w102x8y64";
-        templates.rev =		"0c0490897f803ab8b7c3dad438b7eb1f80e0417c";
-        templates.sha256 =	"0cs3bm3zb5ngw5ldn0lzw5bvqm4kvcidyrn76438alffwiz2b15g";
-        footprints.rev =	"9357b6f09312966c57fec9f66a516941d79c3038";
-        footprints.sha256 =	"0cgah1q0h012ffwfl220k7qb6hgbs0i91spq2j4v3lgpfr4g638d";
-        packages3d.rev =	"de368eb739abe41dfc3163e0e370477e857f9cc1";
-        packages3d.sha256 =	"0b3p5v8g24h6l7q3sbqz7ns0gnrf9l89glj86m5ybhizvls9vrrs";
+        i18n.rev =		"e89d9a89bec59199c1ade56ee2556591412ab7b0";
+        i18n.sha256 =		"04zaqyhj3qr4ymyd3k5vjpcna64j8klpsygcgjcv29s3rdi8glfl";
+        symbols.rev =		"9c50f4333bafc5a1abf7786436db5ffb6a66758d";
+        symbols.sha256 =	"06ic59svz0256isy93863i5ay4k8wshvp1kspnqrc776wmq03l3k";
+        templates.rev =		"41eae4ccd3ac02fdb969e3aa272c07ab51dcf5af";
+        templates.sha256 =	"0xxfkpsgbnafmpaxpz1747zn7fhqp0kfl32rzjrx4vzxyp25q805";
+        footprints.rev =	"50015af7e603cc499199c7e1c6daa7c85dd732ae";
+        footprints.sha256 =	"16bic67klbj7sgj7cab8ha2fg3ypp9ap82gxkn6ijvpl7dka8bhb";
+        packages3d.rev =	"df0dc0074491bb665b2c3ce569cbd4aa16118ad6";
+        packages3d.sha256 =	"027jlcp9fpryldjkcxhb1b5bpwqna9kl6r0lnkd86x238kj3rd8v";
       };
     };
   };

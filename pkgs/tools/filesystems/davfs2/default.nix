@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     (fetchpatch {
       name = "neon-0.31.patch";
       url = "http://savannah.nongnu.org/bugs/download.php?file_id=48737";
-      sha256 = "EtQfcstWkn8AcbZo93midGt076gq20AvGGJyQ3FO/YQ=";
+      sha256 = "117x9rql6wk230pl1nram3pp8svll9wzfs5nf407z4jnrdr1zm0j";
       extraPrefix = ""; # empty means add 'a/' and 'b/'
     })
   ];
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = {
-    homepage = https://savannah.nongnu.org/projects/davfs2;
+    homepage = "https://savannah.nongnu.org/projects/davfs2";
     description = "Mount WebDAV shares like a typical filesystem";
     license = stdenv.lib.licenses.gpl3Plus;
 

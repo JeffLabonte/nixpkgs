@@ -31,7 +31,7 @@ in {
 
     meta = with stdenv.lib; {
       description = "Request backlog for IRC channels.";
-      homepage = https://github.com/fruitiex/znc-backlog/;
+      homepage = "https://github.com/fruitiex/znc-backlog/";
       license = licenses.asl20;
       maintainers = with maintainers; [ infinisil ];
     };
@@ -39,21 +39,21 @@ in {
 
   clientbuffer = zncDerivation rec {
     name = "znc-clientbuffer-${version}";
-    version = "git-2015-08-27";
+    version = "git-2020-04-24";
     module_name = "clientbuffer";
 
     src = fetchFromGitHub {
-      owner = "jpnurmi";
+      owner = "CyberShadow";
       repo = "znc-clientbuffer";
-      rev = "fe0f368e1fcab2b89d5c94209822d9b616cea840";
-      sha256 = "1s8bqqlwy9kmcpmavil558rd2b0wigjlzp2lpqpcqrd1cg25g4a7";
+      rev = "2e32d508aa975c0a307d09575a0198f8c56c11fa";
+      sha256 = "1jaspnrbv3pzsnbysqygc8s8g3q07zx5nlrdpgwv9j8aryg0pcnh";
     };
 
     meta = with stdenv.lib; {
       description = "ZNC module for client specific buffers";
-      homepage = https://github.com/jpnurmi/znc-clientbuffer;
+      homepage = "https://github.com/CyberShadow/znc-clientbuffer";
       license = licenses.asl20;
-      maintainers = with maintainers; [ hrdinka ];
+      maintainers = with maintainers; [ hrdinka szlend ];
     };
   };
 
@@ -71,7 +71,7 @@ in {
 
     meta = with stdenv.lib; {
       description = "ZNC clientaway module";
-      homepage = https://github.com/kylef/znc-contrib;
+      homepage = "https://github.com/kylef/znc-contrib";
       license = licenses.gpl2;
       maintainers = with maintainers; [ kiwi ];
     };
@@ -92,7 +92,7 @@ in {
 
     meta = {
       description = "ZNC FiSH module";
-      homepage = https://github.com/dctrwatson/znc-fish;
+      homepage = "https://github.com/dctrwatson/znc-fish";
       maintainers = [ stdenv.lib.maintainers.offline ];
     };
   };
@@ -111,7 +111,7 @@ in {
 
     meta = with stdenv.lib; {
       description = "ZNC ignore module";
-      homepage = https://github.com/kylef/znc-contrib;
+      homepage = "https://github.com/kylef/znc-contrib";
       license = licenses.gpl2;
       maintainers = with maintainers; [ kiwi ];
     };
@@ -151,7 +151,7 @@ in {
 
     meta = with stdenv.lib; {
       description = "An advanced playback module for ZNC";
-      homepage = https://github.com/jpnurmi/znc-playback;
+      homepage = "https://github.com/jpnurmi/znc-playback";
       license = licenses.asl20;
       maintainers = with maintainers; [ hrdinka ];
     };
@@ -171,7 +171,7 @@ in {
 
     meta = {
       description = "ZNC privmsg module";
-      homepage = https://github.com/kylef/znc-contrib;
+      homepage = "https://github.com/kylef/znc-contrib";
     };
   };
 
@@ -189,7 +189,7 @@ in {
 
     meta = {
       description = "Push notification service module for ZNC";
-      homepage = https://github.com/jreese/znc-push;
+      homepage = "https://github.com/jreese/znc-push";
       license = stdenv.lib.licenses.mit;
       maintainers = with stdenv.lib.maintainers; [ offline schneefux ];
     };

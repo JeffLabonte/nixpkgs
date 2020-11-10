@@ -17,8 +17,8 @@ buildGoPackage rec {
   };
 
   meta = {
-    description = "Generate Go tests from your source code.";
-    homepage = https://github.com/cweill/gotests;
+    description = "Generate Go tests from your source code";
+    homepage = "https://github.com/cweill/gotests";
     maintainers = with stdenv.lib.maintainers; [ vdemeester ];
     license = stdenv.lib.licenses.asl20;
   };

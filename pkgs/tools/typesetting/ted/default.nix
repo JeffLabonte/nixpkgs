@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ pkgconfig zlib pcre xorg.xlibsWrapper xorg.libXpm libjpeg libtiff libpng gtk2 libpaper makeWrapper ];
 
   meta = with stdenv.lib; {
-    description = "Ted, an easy rich text processor";
+    description = "An easy rich text processor";
     longDescription = ''
       Ted is a text processor running under X Windows on Unix/Linux systems.
       Ted was developed as a standard easy light weight word processor, having
@@ -74,7 +74,7 @@ stdenv.mkDerivation rec {
       MS-Word. Additionally, Ted also is an RTF to PostScript and an RTF to
       Acrobat PDF converter.
     '';
-    homepage    = https://nllgg.nl/Ted/;
+    homepage    = "https://nllgg.nl/Ted/";
     license     = licenses.gpl2;
     platforms   = platforms.all;
     broken      = stdenv.isDarwin;

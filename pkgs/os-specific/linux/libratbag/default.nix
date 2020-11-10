@@ -4,13 +4,13 @@
 
 stdenv.mkDerivation rec {
   pname = "libratbag";
-  version = "0.13";
+  version = "0.15";
 
   src = fetchFromGitHub {
     owner  = "libratbag";
     repo   = "libratbag";
     rev    = "v${version}";
-    sha256 = "18y8mfr63d91278m1kcid0wvrxa1sgjs8na9af1ks2n28ssvciwq";
+    sha256 = "0z6ps5aqwjmbdvahs80fh9cdgcvp4q4w3kfycmzv4kzgzihjki7b";
   };
 
   nativeBuildInputs = [
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Configuration library for gaming mice";
-    homepage    = https://github.com/libratbag/libratbag;
+    homepage    = "https://github.com/libratbag/libratbag";
     license     = licenses.mit;
     maintainers = with maintainers; [ mvnetbiz ];
     platforms   = platforms.linux;

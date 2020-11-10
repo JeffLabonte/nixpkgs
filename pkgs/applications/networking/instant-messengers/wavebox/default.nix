@@ -40,7 +40,7 @@ in stdenv.mkDerivation {
     alsaLib gtk3 nss
   ];
 
-  runtimeDependencies = [ udev.lib libnotify ];
+  runtimeDependencies = [ (getLib udev) libnotify ];
 
   installPhase = ''
     mkdir -p $out/bin $out/opt/wavebox
@@ -59,7 +59,7 @@ in stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Wavebox messaging application";
-    homepage = https://wavebox.io;
+    homepage = "https://wavebox.io";
     license = licenses.mpl20;
     maintainers = with maintainers; [ rawkode ];
     platforms = ["x86_64-linux"];

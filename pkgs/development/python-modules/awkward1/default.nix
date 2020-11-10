@@ -4,17 +4,17 @@
 , cmake
 , numba
 , numpy
-, pytest
+, pytestCheckHook
 , rapidjson
 }:
 
 buildPythonPackage rec {
   pname = "awkward1";
-  version = "0.1.38";
+  version = "0.2.35";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "1c87defa8c1661ffe36f8a785fa9a60ae3b70484984a935e710cd8cb1f763fd7";
+    sha256 = "563868f0f2d0cb398ce3616ee3f9734cc68cee9a612d35cab830ec5c728f1474";
   };
 
   nativeBuildInputs = [ cmake ];
@@ -23,13 +23,11 @@ buildPythonPackage rec {
 
   dontUseCmakeConfigure = true;
 
-  checkInputs = [ pytest numba ];
-  checkPhase = ''
-    py.test
-  '';
+  checkInputs = [ pytestCheckHook numba ];
+  dontUseSetuptoolsCheck = true;
 
   meta = with lib; {
-    description = "Development of awkward 1.0, to replace scikit-hep/awkward-array in 2020";
+    description = "Manipulate JSON-like data with NumPy-like idioms";
     homepage = "https://github.com/scikit-hep/awkward-1.0";
     license = licenses.bsd3;
     maintainers = with maintainers; [ veprbl ];

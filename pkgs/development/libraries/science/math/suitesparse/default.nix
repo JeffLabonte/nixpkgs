@@ -1,7 +1,7 @@
 { stdenv
 , fetchFromGitHub
 , gfortran
-, openblas
+, blas, lapack
 , metis
 , fixDarwinDylibNames
 , gnum4
@@ -11,7 +11,7 @@
 
 stdenv.mkDerivation rec {
   pname = "suitesparse";
-  version = "5.7.1";
+  version = "5.7.2";
 
   outputs = [ "out" "dev" "doc" ];
 
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     owner = "DrTimothyAldenDavis";
     repo = "SuiteSparse";
     rev = "v${version}";
-    sha256 = "SA9SQKRDKUI1GilNMuCXljcvovLUwRKBUi/tiQ4dl5w=";
+    sha256 = "1imndff7yygjrbbrcscsmirdi8w0lkwj5dbhydxmf7lklwn4j3q6";
   };
 
   nativeBuildInputs = [
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   ] ++ stdenv.lib.optional stdenv.isDarwin fixDarwinDylibNames;
 
   buildInputs = [
-    openblas
+    blas lapack
     metis
     gfortran.cc.lib
   ] ++ stdenv.lib.optional enableCuda cudatoolkit;
@@ -41,10 +41,10 @@ stdenv.mkDerivation rec {
     "INSTALL=${placeholder "out"}"
     "INSTALL_INCLUDE=${placeholder "dev"}/include"
     "JOBS=$(NIX_BUILD_CORES)"
-    "BLAS=-lopenblas"
+    "BLAS=-lblas"
+    "LAPACK=-llapack"
     "MY_METIS_LIB=-lmetis"
-    "LAPACK="
-  ] ++ stdenv.lib.optionals openblas.blas64 [
+  ] ++ stdenv.lib.optionals blas.isILP64 [
     "CFLAGS=-DBLAS64"
   ] ++ stdenv.lib.optionals enableCuda [
     "CUDA_PATH=${cudatoolkit}"
@@ -56,29 +56,6 @@ stdenv.mkDerivation rec {
     # Build individual shared libraries, not demos
     "library"
   ];
-
-  # Likely fixed after 5.7.1
-  # https://github.com/DrTimothyAldenDavis/SuiteSparse/commit/f6daae26ee391e475e2295e77c839aa7c1a8b784
-  postInstall = stdenv.lib.optionalString stdenv.isDarwin ''
-    # The fixDarwinDylibNames in nixpkgs can't seem to fix all the libraries.
-    # We manually fix them up here.
-    fixDarwinDylibNames() {
-        local flags=()
-        local old_id
-
-        for fn in "$@"; do
-            flags+=(-change "$PWD/lib/$(basename "$fn")" "$fn")
-        done
-
-        for fn in "$@"; do
-            if [ -L "$fn" ]; then continue; fi
-            echo "$fn: fixing dylib"
-            install_name_tool -id "$fn" "''${flags[@]}" "$fn"
-        done
-    }
-
-    fixDarwinDylibNames $(find "$out" -name "*.dylib")
-  '';
 
   meta = with stdenv.lib; {
     homepage = "http://faculty.cse.tamu.edu/davis/suitesparse.html";

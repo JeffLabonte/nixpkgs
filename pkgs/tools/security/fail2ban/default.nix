@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, python3, gamin }:
+{ stdenv, fetchFromGitHub, python3 }:
 
 let version = "0.11.1"; in
 
@@ -50,7 +50,7 @@ python3.pkgs.buildPythonApplication {
   '';
 
   meta = with stdenv.lib; {
-    homepage    = https://www.fail2ban.org/;
+    homepage    = "https://www.fail2ban.org/";
     description = "A program that scans log files for repeated failing login attempts and bans IP addresses";
     license     = licenses.gpl2Plus;
     maintainers = with maintainers; [ eelco lovek323 fpletz ];

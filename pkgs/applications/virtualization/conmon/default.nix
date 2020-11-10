@@ -4,30 +4,33 @@
 , glib
 , glibc
 , systemd
+, nixosTests
 }:
 
 stdenv.mkDerivation rec {
   pname = "conmon";
-  version = "2.0.15";
+  version = "2.0.21";
 
   src = fetchFromGitHub {
     owner = "containers";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1fshcmnfqzbagzcrh5nxw7pi0dd60xpq47a2lzfghklqhl1h0b5i";
+    sha256 = "13g436s00bcwzs31qsx5rpgkbbyxd4zvx8mbkq10gkrsv4r04q23";
   };
 
   nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ glib systemd ] ++
-    stdenv.lib.optionals (!stdenv.hostPlatform.isMusl) [ glibc glibc.static ];
+  buildInputs = [ glib systemd ]
+  ++ stdenv.lib.optionals (!stdenv.hostPlatform.isMusl) [ glibc glibc.static ];
 
-  installPhase = "install -Dm755 bin/${pname} $out/bin/${pname}";
+  installFlags = [ "PREFIX=$(out)" ];
+
+  passthru.tests = { inherit (nixosTests) cri-o podman; };
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/containers/conmon";
     description = "An OCI container runtime monitor";
     license = licenses.asl20;
-    maintainers = with maintainers; [ vdemeester saschagrunert ];
+    maintainers = with maintainers; [ ] ++ teams.podman.members;
     platforms = platforms.linux;
   };
 }

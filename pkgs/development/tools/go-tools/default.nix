@@ -5,22 +5,22 @@
 
 buildGoModule rec {
   pname = "go-tools";
-  version = "2020.1.3";
-
-  excludedPackages = ''\(simple\|ssa\|ssa/ssautil\|lint\|staticcheck\|stylecheck\|unused\)/testdata'';
+  version = "2020.1.6";
 
   src = fetchFromGitHub {
     owner = "dominikh";
     repo = "go-tools";
     rev = version;
-    sha256 = "0pvi1mzhy6zgx4zfgdypbl4zhvgg11hl5qv7blf2qs0a96j2djhf";
+    sha256 = "1r83gx7k4fiz3wlshhniz1i39xv492nni1nvfxjfqgnmkavb6r4x";
   };
 
-  modSha256 = "03560xjr2531xj87paskfx2zs364fz6y4kpsid8x08s1syq9nq7p";
+  vendorSha256 = "1g04rzirjv90s1i542cqi2abhgh8b74qwhp1hp1cszgb7k8nndmr";
+
+  doCheck = false;
 
   meta = with lib; {
     description = "A collection of tools and libraries for working with Go code, including linters and static analysis";
-    homepage = https://staticcheck.io;
+    homepage = "https://staticcheck.io";
     license = licenses.mit;
     maintainers = with maintainers; [ rvolosatovs kalbasit ];
   };

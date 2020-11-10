@@ -28,8 +28,8 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    description = "libosmocore";
-    homepage = https://github.com/osmocom/libosmocore;
+    description = "Set of Osmocom core libraries";
+    homepage = "https://github.com/osmocom/libosmocore";
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ mog ];

@@ -1,13 +1,13 @@
-{ lib, go, buildGoPackage, fetchFromGitHub, mkYarnPackage }:
+{ lib, go, buildGoPackage, fetchFromGitHub, mkYarnPackage, nixosTests }:
 
 let
-  version = "2.17.1";
+  version = "2.22.1";
 
   src = fetchFromGitHub {
     rev = "v${version}";
     owner = "prometheus";
     repo = "prometheus";
-    sha256 = "0ai9l7gx25x5m07617c0cjzwxknywwq822fn2q5b850hvs48whyv";
+    sha256 = "0wilx675b0a8ww7bj36hzcaip0zqzndkzan04rjsjigz5bw6kba0";
   };
 
   webui = mkYarnPackage {
@@ -54,12 +54,14 @@ in buildGoPackage rec {
   '';
 
   preInstall = ''
-    mkdir -p "$bin/share/doc/prometheus" "$bin/etc/prometheus"
-    cp -a $src/documentation/* $bin/share/doc/prometheus
-    cp -a $src/console_libraries $src/consoles $bin/etc/prometheus
+    mkdir -p "$out/share/doc/prometheus" "$out/etc/prometheus"
+    cp -a $src/documentation/* $out/share/doc/prometheus
+    cp -a $src/console_libraries $src/consoles $out/etc/prometheus
   '';
 
   doCheck = true;
+
+  passthru.tests = { inherit (nixosTests) prometheus; };
 
   meta = with lib; {
     description = "Service monitoring system and time series database";

@@ -1,6 +1,7 @@
 { stdenv, fetchurl, fetchpatch, lib, pkgconfig, utillinux, libcap, libtirpc, libevent
 , sqlite, kerberos, kmod, libuuid, keyutils, lvm2, systemd, coreutils, tcp_wrappers
-, python3, buildPackages, nixosTests
+, python3, buildPackages, nixosTests, rpcsvc-proto
+, enablePython ? true
 }:
 
 let
@@ -9,24 +10,23 @@ in
 
 stdenv.mkDerivation rec {
   pname = "nfs-utils";
-  version = "2.4.1";
+  version = "2.5.1";
 
   src = fetchurl {
     url = "https://kernel.org/pub/linux/utils/nfs-utils/${version}/${pname}-${version}.tar.xz";
-    sha256 = "0dkp11a7i01c378ri68bf6k56z27kz8zzvpqm7mip6s7jkd4l9w5";
+    sha256 = "1i1h3n2m35q9ixs1i2qf1rpjp10cipa3c25zdf1xj1vaw5q8270g";
   };
 
   # libnfsidmap is built together with nfs-utils from the same source,
   # put it in the "lib" output, and the headers in "dev"
   outputs = [ "out" "dev" "lib" "man" ];
 
-  nativeBuildInputs = [ pkgconfig buildPackages.stdenv.cc ];
+  nativeBuildInputs = [ pkgconfig buildPackages.stdenv.cc rpcsvc-proto ];
 
   buildInputs = [
     libtirpc libcap libevent sqlite lvm2
     libuuid keyutils kerberos tcp_wrappers
-    python3
-  ];
+  ] ++ lib.optional enablePython python3;
 
   enableParallelBuilding = true;
 
@@ -45,8 +45,8 @@ stdenv.mkDerivation rec {
       "--with-systemd=${placeholder "out"}/etc/systemd/system"
       "--enable-libmount-mount"
       "--with-pluginpath=${placeholder "lib"}/lib/libnfsidmap" # this installs libnfsidmap
-    ]
-    ++ lib.optional (stdenv ? glibc) "--with-rpcgen=${stdenv.glibc.bin}/bin/rpcgen";
+      "--with-rpcgen=${rpcsvc-proto}/bin/rpcgen"
+    ];
 
   patches = lib.optionals stdenv.hostPlatform.isMusl [
     (fetchpatch {
@@ -96,6 +96,9 @@ stdenv.mkDerivation rec {
         -e "s,/sbin/modprobe,${kmod}/bin/modprobe,g" \
         -e "s,/usr/sbin,$out/bin,g" \
         $out/etc/systemd/system/*
+    '' + lib.optionalString (!enablePython) ''
+      # Remove all scripts that require python (currently mountstats and nfsiostat)
+      grep -l /usr/bin/python $out/bin/* | xargs -I {} rm -v {}
     '';
 
   # One test fails on mips.
@@ -120,7 +123,7 @@ stdenv.mkDerivation rec {
       daemons.
     '';
 
-    homepage = https://linux-nfs.org/;
+    homepage = "https://linux-nfs.org/";
     license = licenses.gpl2;
     platforms = platforms.linux;
     maintainers = with maintainers; [ abbradar ];

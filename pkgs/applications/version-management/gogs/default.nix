@@ -34,13 +34,13 @@ buildGoPackage rec {
     (  optional sqliteSupport "sqlite"
     ++ optional pamSupport "pam");
 
-  outputs = [ "bin" "out" "data" ];
+  outputs = [ "out" "data" ];
 
   postInstall = ''
     mkdir $data
     cp -R $src/{public,templates} $data
 
-    wrapProgram $bin/bin/gogs \
+    wrapProgram $out/bin/gogs \
       --prefix PATH : ${makeBinPath [ bash git gzip openssh ]}
   '';
 
@@ -48,7 +48,7 @@ buildGoPackage rec {
 
   meta = {
     description = "A painless self-hosted Git service";
-    homepage = https://gogs.io;
+    homepage = "https://gogs.io";
     license = licenses.mit;
     maintainers = [ maintainers.schneefux ];
   };

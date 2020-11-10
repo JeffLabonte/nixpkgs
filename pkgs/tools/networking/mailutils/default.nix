@@ -18,9 +18,6 @@ stdenv.mkDerivation rec {
       */Makefile{.in,.am}
     sed -i 's:/usr/lib/mysql:${libmysqlclient}/lib/mysql:' configure.ac
     sed -i 's/0\.18/0.19/' configure.ac
-    sed -i -e 's:mysql/mysql.h:mysql.h:' \
-           -e 's:mysql/errmsg.h:errmsg.h:' \
-      sql/mysql.c
   '';
 
   nativeBuildInputs = [
@@ -112,9 +109,9 @@ stdenv.mkDerivation rec {
 
     maintainers = with maintainers; [ orivej vrthra ];
 
-    homepage = https://www.gnu.org/software/mailutils/;
+    homepage = "https://www.gnu.org/software/mailutils/";
 
     # Some of the dependencies fail to build on {cyg,dar}win.
-    platforms = platforms.gnu ++ platforms.linux;
+    platforms = platforms.gnu ++ platforms.unix;
   };
 }

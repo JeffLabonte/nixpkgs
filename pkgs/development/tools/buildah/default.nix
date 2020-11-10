@@ -1,36 +1,54 @@
-{ stdenv, buildGoPackage, fetchFromGitHub
-, gpgme, libgpgerror, lvm2, btrfs-progs, pkg-config, libselinux, libseccomp
+{ stdenv
+, buildGoModule
+, fetchFromGitHub
+, go-md2man
+, installShellFiles
+, pkg-config
+, gpgme
+, lvm2
+, btrfs-progs
+, libapparmor
+, libselinux
+, libseccomp
 }:
 
-buildGoPackage rec {
+buildGoModule rec {
   pname = "buildah";
-  version = "1.14.6";
+  version = "1.17.0";
 
   src = fetchFromGitHub {
-    owner  = "containers";
-    repo   = "buildah";
-    rev    = "v${version}";
-    sha256 = "1sx4jl34l9djf115zv266qhz4sm1ndv0k0z49fbr3b6m7ll2mmlv";
+    owner = "containers";
+    repo = "buildah";
+    rev = "v${version}";
+    sha256 = "1bghi5m1rg42a781sgh194hqmqiflhwdrnxxn7cbb2b6jfiik08l";
   };
 
-  outputs = [ "bin" "man" "out" ];
+  outputs = [ "out" "man" ];
 
-  goPackagePath = "github.com/containers/buildah";
-  excludedPackages = [ "tests" ];
+  vendorSha256 = null;
 
-  nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ gpgme libgpgerror lvm2 btrfs-progs libselinux libseccomp ];
+  doCheck = false;
 
-  patches = [ ./disable-go-module-mode.patch ];
+  nativeBuildInputs = [ go-md2man installShellFiles pkg-config ];
+
+  buildInputs = [
+    btrfs-progs
+    gpgme
+    libapparmor
+    libseccomp
+    libselinux
+    lvm2
+  ];
 
   buildPhase = ''
-    pushd go/src/${goPackagePath}
-    make GIT_COMMIT="unknown"
-    install -Dm755 buildah $bin/bin/buildah
-    install -Dm444 contrib/completions/bash/buildah $bin/share/bash-completion/completions/buildah
+    patchShebangs .
+    make bin/buildah GIT_COMMIT="unknown"
+    make -C docs GOMD2MAN="${go-md2man}/bin/go-md2man"
   '';
 
-  postBuild = ''
+  installPhase = ''
+    install -Dm755 bin/buildah $out/bin/buildah
+    installShellCompletion --bash contrib/completions/bash/buildah
     make -C docs install PREFIX="$man"
   '';
 
@@ -39,6 +57,7 @@ buildGoPackage rec {
     homepage = "https://buildah.io/";
     changelog = "https://github.com/containers/buildah/releases/tag/v${version}";
     license = licenses.asl20;
-    maintainers = with maintainers; [ Profpatsch vdemeester saschagrunert ];
+    maintainers = with maintainers; [ Profpatsch ] ++ teams.podman.members;
+    platforms = platforms.linux;
   };
 }

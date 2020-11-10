@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   pname = "lilv";
-  version = "0.24.6";
+  version = "0.24.8";
 
   src = fetchurl {
     url = "https://download.drobilla.net/${pname}-${version}.tar.bz2";
-    sha256 = "1p3hafsxgs5d4za7n66lf5nz74qssfqpmk520cm7iq2njvvlqm2z";
+    sha256 = "0063i5zgf3d3accwmyx651hw0wh5ik7kji2hvfkcdbl1qia3dp6a";
   };
 
   patches = [ ./lilv-pkgconfig.patch ];
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ lv2 ];
 
   meta = with stdenv.lib; {
-    homepage = http://drobilla.net/software/lilv;
+    homepage = "http://drobilla.net/software/lilv";
     description = "A C library to make the use of LV2 plugins";
     license = licenses.mit;
     maintainers = [ maintainers.goibhniu ];

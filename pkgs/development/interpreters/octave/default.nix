@@ -1,4 +1,7 @@
 { stdenv
+# Note: either stdenv.mkDerivation or, for octaveFull, the qt-5 mkDerivation
+# with wrapQtAppsHook (comes from libsForQt5.callPackage)
+, mkDerivation
 , fetchurl
 , gfortran
 , ncurses
@@ -21,7 +24,7 @@
 , zlib
 , curl
 , qrupdate
-, openblas
+, blas, lapack
 , arpack
 , libwebp
 , gl2ps
@@ -53,19 +56,9 @@
 , darwin
 }:
 
-let
-  suitesparseOrig = suitesparse;
-  qrupdateOrig = qrupdate;
-in
-# integer width is determined by openblas, so all dependencies must be built
-# with exactly the same openblas
-let
-  suitesparse =
-    if suitesparseOrig != null then suitesparseOrig.override { inherit openblas; } else null;
-  qrupdate = if qrupdateOrig != null then qrupdateOrig.override { inherit openblas; } else null;
-in
+assert (!blas.isILP64) && (!lapack.isILP64);
 
-stdenv.mkDerivation rec {
+mkDerivation rec {
   version = "5.2.0";
   pname = "octave";
 
@@ -85,7 +78,8 @@ stdenv.mkDerivation rec {
     fltk
     zlib
     curl
-    openblas
+    blas
+    lapack
     libsndfile
     fftw
     fftwSinglePrec
@@ -134,15 +128,15 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   # See https://savannah.gnu.org/bugs/?50339
-  F77_INTEGER_8_FLAG = if openblas.blas64 then "-fdefault-integer-8" else "";
+  F77_INTEGER_8_FLAG = if blas.isILP64 then "-fdefault-integer-8" else "";
 
   configureFlags = [
-    "--with-blas=openblas"
-    "--with-lapack=openblas"
+    "--with-blas=blas"
+    "--with-lapack=lapack"
+    (if blas.isILP64 then "--enable-64" else "--disable-64")
   ]
     ++ (if stdenv.isDarwin then [ "--enable-link-all-dependencies" ] else [ ])
     ++ stdenv.lib.optionals enableReadline [ "--enable-readline" ]
-    ++ stdenv.lib.optionals openblas.blas64 [ "--enable-64" ]
     ++ stdenv.lib.optionals stdenv.isDarwin [ "--with-x=no" ]
     ++ stdenv.lib.optionals enableQt [ "--with-qt=5" ]
     ++ stdenv.lib.optionals enableJIT [ "--enable-jit" ]

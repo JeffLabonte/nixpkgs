@@ -7,11 +7,11 @@
 
 mkDerivation rec {
   pname = "skrooge";
-  version = "2.21.1";
+  version = "2.23.0";
 
   src = fetchurl {
     url = "http://download.kde.org/stable/skrooge/${pname}-${version}.tar.xz";
-    sha256 = "0lv953i7cybzbxr5gx6g4libdcjj086jf152mwrwvx1avrpjavb8";
+    sha256 = "10k3j67x5xm5whsvb84k9p70bkn4jbbbvdfan7q49dh2mmpair5a";
   };
 
   nativeBuildInputs = [
@@ -36,6 +36,6 @@ mkDerivation rec {
     description = "A personal finances manager, powered by KDE";
     license = with licenses; [ gpl3 ];
     maintainers = with maintainers; [ joko ];
-    homepage = https://skrooge.org/;
+    homepage = "https://skrooge.org/";
   };
 }

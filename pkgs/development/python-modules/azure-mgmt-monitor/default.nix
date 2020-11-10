@@ -6,23 +6,25 @@
 , msrest
 , msrestazure
 , azure-common
+, azure-mgmt-core
 , azure-mgmt-nspkg
 }:
 
 buildPythonPackage rec {
   pname = "azure-mgmt-monitor";
-  version = "0.8.0";
+  version = "1.0.1";
 
   src = fetchPypi {
     inherit pname version;
     extension = "zip";
-    sha256 = "09bhk6kpf1j1kgsyfdrfmfixrdj0iikx25dr1mh9dc6lci07i1cx";
+    sha256 = "04bd89d74fe47f966b09e3256ffefcfa5c1a51057a6b33c092afe5ae17a1a7b7";
   };
 
   propagatedBuildInputs = [
     msrest
     msrestazure
     azure-common
+    azure-mgmt-core
   ] ++ lib.optionals (!isPy3k) [
     azure-mgmt-nspkg
   ];

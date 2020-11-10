@@ -1,5 +1,6 @@
-{ stdenv, fetchFromGitHub, jdk, maven, makeWrapper, jre_headless, pcsclite }:
+{ stdenv, fetchFromGitHub, jdk8, maven, makeWrapper, jre8_headless, pcsclite }:
 
+let jdk = jdk8; jre_headless = jre8_headless; in
 # TODO: This is quite a bit of duplicated logic with gephi. Factor it out?
 stdenv.mkDerivation rec {
   pname = "global-platform-pro";
@@ -59,7 +60,7 @@ stdenv.mkDerivation rec {
       The executable requires the PC/SC daemon running for correct execution.
       If you run NixOS, it can be enabled with `services.pcscd.enable = true;`.
     '';
-    homepage = https://github.com/martinpaljak/GlobalPlatformPro;
+    homepage = "https://github.com/martinpaljak/GlobalPlatformPro";
     license = with licenses; [ lgpl3 ];
     maintainers = with maintainers; [ ekleog ];
     platforms = platforms.all;

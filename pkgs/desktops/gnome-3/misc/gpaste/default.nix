@@ -5,7 +5,6 @@
 , clutter
 , gjs
 , glib
-, gnome3
 , gobject-introspection
 , gtk3
 , meson
@@ -25,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "Keruspe";
     repo = "GPaste";
     rev = "v${version}";
-    sha256 = "sR7/NdCaidP03xE64nqQc1M+xAIipOuKp5OWBJ4VN9w=";
+    sha256 = "1p1p2ng095lkly5fp9120b23wlvkj1xf4fhivzsd72css0szy7mi";
   };
 
   patches = [
@@ -77,6 +76,6 @@ stdenv.mkDerivation rec {
     description = "Clipboard management system with GNOME 3 integration";
     license = licenses.gpl3;
     platforms = platforms.linux;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
   };
 }

@@ -13,14 +13,14 @@ let
   pythonPackages = python3Packages;
 in
 mkDerivation rec {
-  version = "1.7";
+  version = "1.10";
   pname = "renderdoc";
 
   src = fetchFromGitHub {
     owner = "baldurk";
     repo = "renderdoc";
     rev = "v${version}";
-    sha256 = "0r0y0lx48hkyf39pgippsc9q8hdcf57bdva6gx7f35vlhicx5hlz";
+    sha256 = "1ibf2lv3q69fkzv1nsva2mbdjlayrpxicrd96d9nfcw64f2mv6ds";
   };
 
   buildInputs = [
@@ -65,7 +65,7 @@ mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A single-frame graphics debugger";
-    homepage = https://renderdoc.org/;
+    homepage = "https://renderdoc.org/";
     license = licenses.mit;
     longDescription = ''
       RenderDoc is a free MIT licensed stand-alone graphics debugger that

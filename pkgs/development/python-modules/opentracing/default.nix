@@ -20,13 +20,13 @@ buildPythonPackage rec {
   propagatedBuildInputs = lib.optional isPy27 futures;
 
   checkInputs = [ gevent mock pytest tornado ];
-  
+
   checkPhase = ''
     pytest
   '';
 
   meta = with lib; {
-    homepage = https://github.com/opentracing/opentracing-python;
+    homepage = "https://github.com/opentracing/opentracing-python";
     description = "Platform API for OpenTracing";
     license = licenses.asl20;
     maintainers = with maintainers; [ rakesh4g ];

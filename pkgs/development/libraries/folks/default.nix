@@ -106,9 +106,9 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library that aggregates people from multiple sources to create metacontacts";
-    homepage = https://wiki.gnome.org/Projects/Folks;
+    homepage = "https://wiki.gnome.org/Projects/Folks";
     license = licenses.lgpl2Plus;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     platforms = platforms.gnu ++ platforms.linux;  # arbitrary choice
   };
 }

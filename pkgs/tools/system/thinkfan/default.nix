@@ -3,13 +3,13 @@
 
 stdenv.mkDerivation rec {
   pname = "thinkfan";
-  version = "1.0.2";
+  version = "1.1";
 
   src = fetchFromGitHub {
     owner = "vmatare";
     repo = "thinkfan";
     rev = version;
-    sha256 = "107vw0962hrwva3wra9n3hxlbfzg82ldc10qssv3dspja88g8psr";
+    sha256 = "1fxd1w3z65glw6y04myn7ihgswkx6sqnkky159mik4n96pfrsvr5";
   };
 
   cmakeFlags = [
@@ -35,7 +35,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    description = "A minimalist fan control program. Originally designed
+    description  = "A minimalist fan control program";
+    longDescription = "A minimalist fan control program. Originally designed
 specifically for IBM/Lenovo Thinkpads, it now supports any kind of system via
 the sysfs hwmon interface (/sys/class/hwmon).";
     license = licenses.gpl3;

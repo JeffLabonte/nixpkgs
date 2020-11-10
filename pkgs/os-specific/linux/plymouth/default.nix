@@ -1,5 +1,5 @@
 { stdenv, fetchurl, autoreconfHook, pkgconfig, libxslt, docbook_xsl
-, gtk3, udev, systemd
+, gtk3, udev, systemd, lib
 }:
 
 stdenv.mkDerivation rec {
@@ -44,6 +44,7 @@ stdenv.mkDerivation rec {
     "--enable-pango"
     "--enable-gdm-transition"
     "--enable-gtk"
+    "ac_cv_path_SYSTEMD_ASK_PASSWORD_AGENT=${lib.getBin systemd}/bin/systemd-tty-ask-password-agent"
   ];
 
   configurePlatforms = [ "host" ];
@@ -54,7 +55,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://www.freedesktop.org/wiki/Software/Plymouth;
+    homepage = "http://www.freedesktop.org/wiki/Software/Plymouth";
     description = "A graphical boot animation";
     license = licenses.gpl2;
     maintainers = [ maintainers.goibhniu ];

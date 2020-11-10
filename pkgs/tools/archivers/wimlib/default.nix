@@ -8,7 +8,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "1.13.1";
+  version = "1.13.2";
   pname = "wimlib";
 
   nativeBuildInputs = [ pkgconfig makeWrapper ];
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://wimlib.net/downloads/${pname}-${version}.tar.gz";
-    sha256 = "0pxgrpr3dr81rcf2jh71aiiq3v4anc5sj1nld18f2vhvbijbrx27";
+    sha256 = "0id9ym3hzij4kpdrk0sz3ijxp5r0z1md5jch83pml9hdy1zbx5bj";
   };
 
   preBuild = ''
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://wimlib.net;
+    homepage = "https://wimlib.net";
     description = "A library and program to extract, create, and modify WIM files";
     platforms = platforms.unix;
     maintainers = with maintainers; [ andir ];

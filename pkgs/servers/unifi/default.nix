@@ -30,11 +30,11 @@ let
     '';
 
     meta = with stdenv.lib; {
-      homepage = http://www.ubnt.com/;
+      homepage = "http://www.ubnt.com/";
       description = "Controller for Ubiquiti UniFi access points";
       license = licenses.unfree;
       platforms = platforms.unix;
-      maintainers = with maintainers; [ erictapen globin ];
+      maintainers = with maintainers; [ erictapen globin patryk27 ];
     };
   };
 
@@ -49,7 +49,12 @@ in {
   };
 
   unifiStable = generic {
-    version = "5.12.35";
-    sha256 = "0ln8x7yisanbx1afclhffa0f3fk0sgh7dpj548xyhn5mgpwbj4i2";
+    version = "5.14.23";
+    sha256 = "1aar05yjm3z5a30x505w4kakbyz35i7mk7xyg0wm4ml6h94d84pv";
+  };
+
+  unifiBeta = generic {
+    version = "6.0.28";
+    sha256 = "14q8r4mcqx0v3sh8zwqg4cc3iszqn5201q5r4c20cwqdd4ivf97q";
   };
 }

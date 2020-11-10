@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
+, isPy27
 , requests
 , cryptography
 , suds-jurko
@@ -10,6 +11,7 @@
 buildPythonPackage rec {
   pname = "transip-api";
   version = "2.0.0";
+  disabled = isPy27;
 
   src = fetchFromGitHub {
     owner = "benkonrath";
@@ -32,7 +34,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "TransIP API Connector";
-    homepage = https://github.com/benkonrath/transip-api;
+    homepage = "https://github.com/benkonrath/transip-api";
     license = licenses.mit;
     maintainers = with maintainers; [ flyfloh ];
   };

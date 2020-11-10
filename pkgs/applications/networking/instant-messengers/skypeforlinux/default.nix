@@ -7,7 +7,7 @@ let
 
   # Please keep the version x.y.0.z and do not update to x.y.76.z because the
   # source of the latter disappears much faster.
-  version = "8.58.0.93";
+  version = "8.66.0.74";
 
   rpath = stdenv.lib.makeLibraryPath [
     alsaLib
@@ -62,9 +62,10 @@ let
       fetchurl {
         urls = [
           "https://repo.skype.com/deb/pool/main/s/skypeforlinux/skypeforlinux_${version}_amd64.deb"
+          "https://mirror.cs.uchicago.edu/skype/pool/main/s/skypeforlinux/skypeforlinux_${version}_amd64.deb"
           "https://web.archive.org/web/https://repo.skype.com/deb/pool/main/s/skypeforlinux/skypeforlinux_${version}_amd64.deb"
         ];
-        sha256 = "1nqadil50z896jg0r202gw3xmm3diawn0pnh6n6nxn900f02avl3";
+        sha256 = "11bpzr3j6fa5x62xrx2q2sr1wxjrn0a37053j4prxjcvdrc5in8f";
       }
     else
       throw "Skype for linux is not supported on ${stdenv.hostPlatform.system}";
@@ -111,7 +112,7 @@ in stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "Linux client for skype";
-    homepage = https://www.skype.com;
+    homepage = "https://www.skype.com";
     license = licenses.unfree;
     maintainers = with stdenv.lib.maintainers; [ panaeon jraygauthier ];
     platforms = [ "x86_64-linux" ];

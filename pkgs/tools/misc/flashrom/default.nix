@@ -18,16 +18,15 @@ stdenv.mkDerivation rec {
     sha256 = "0ax4kqnh7kd3z120ypgp73qy1knz47l6qxsqzrfkd97mh5cdky71";
   };
 
+  mesonFlags = lib.optionals stdenv.isAarch64 [ "-Dpciutils=false" ];
   nativeBuildInputs = [ meson pkgconfig ninja ];
   buildInputs = [ libftdi1 libusb1 pciutils ];
 
   meta = with lib; {
-    homepage = http://www.flashrom.org;
+    homepage = "http://www.flashrom.org";
     description = "Utility for reading, writing, erasing and verifying flash ROM chips";
     license = licenses.gpl2;
     maintainers = with maintainers; [ funfunctor fpletz ];
     platforms = platforms.all;
-    # https://github.com/flashrom/flashrom/issues/125
-    badPlatforms = [ "aarch64-linux" ];
   };
 }

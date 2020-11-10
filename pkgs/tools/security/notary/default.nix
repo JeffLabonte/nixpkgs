@@ -26,7 +26,7 @@ buildGoPackage rec {
 
   installPhase = ''
     runHook preInstall
-    install -D bin/notary $bin/bin/notary
+    install -D bin/notary $out/bin/notary
     runHook postInstall
   '';
 
@@ -36,7 +36,7 @@ buildGoPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    description = "Notary is a project that allows anyone to have trust over arbitrary collections of data";
+    description = "A project that allows anyone to have trust over arbitrary collections of data";
     longDescription = ''
       The Notary project comprises a server and a client for running and
       interacting with trusted collections. See the service architecture
@@ -58,7 +58,7 @@ buildGoPackage rec {
       integrity of the received content.
     '';
     license = licenses.asl20;
-    homepage = https://github.com/theupdateframework/notary;
+    homepage = "https://github.com/theupdateframework/notary";
     maintainers = with maintainers; [ vdemeester ];
     platforms = platforms.unix;
   };

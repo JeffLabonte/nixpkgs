@@ -18,9 +18,9 @@ stdenv.mkDerivation rec {
   installPhase = "make prefix=$out SHELL=${stdenv.shell} CXX=${cxx} CC=${cc} install";
 
   meta = with stdenv.lib; {
-    description = "A powerful toolset for genome arithmetic.";
+    description = "A powerful toolset for genome arithmetic";
     license = licenses.gpl2;
-    homepage = https://bedtools.readthedocs.io/en/latest/;
+    homepage = "https://bedtools.readthedocs.io/en/latest/";
     maintainers = with maintainers; [ jbedo ];
     platforms = platforms.unix;
   };

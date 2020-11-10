@@ -9,11 +9,11 @@
 
 buildPythonPackage rec {
   pname = "readthedocs-sphinx-ext";
-  version = "1.0.1";
+  version = "2.1.1";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "c920d8129752ee3f339c8cf3dfeba800a25730249d6ab43dc9b3c384312d1d32";
+    sha256 = "1d8343982cae238da82c809dcbd82d53f9560b50e17b1dd727123f576385139d";
   };
 
   propagatedBuildInputs = [ requests ];
@@ -26,7 +26,7 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Sphinx extension for Read the Docs overrides";
-    homepage = https://github.com/rtfd/readthedocs-sphinx-ext;
+    homepage = "https://github.com/rtfd/readthedocs-sphinx-ext";
     license = licenses.mit;
   };
 }

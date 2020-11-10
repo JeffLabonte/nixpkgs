@@ -2,18 +2,22 @@
 
 buildGoModule rec {
   pname = "go-ethereum";
-  version = "1.9.12";
+  version = "1.9.23";
 
   src = fetchFromGitHub {
     owner = "ethereum";
     repo = pname;
     rev = "v${version}";
-    sha256 = "143imiphyzk3009cfnqj7q013pb1wva13zq63byfj3d204b58cg6";
+    sha256 = "0w65sln5l3sxwzxwjvyaial0m1kxhivhw8xwl5faxxxlk50rs4wm";
   };
 
-  modSha256 = "15a8if5gx361nrqgv201jy8saq1ir1g18rpqzdmavg4ic75si5x1";
+  runVend = true;
+  vendorSha256 = "1qbg44cryiv9kvcak6qjrbmkc9bxyk5fybj62vdkskqfjvv86068";
+
+  doCheck = false;
 
   subPackages = [
+    "cmd/abidump"
     "cmd/abigen"
     "cmd/bootnode"
     "cmd/checkpoint-admin"
@@ -27,7 +31,6 @@ buildGoModule rec {
     "cmd/puppeth"
     "cmd/rlpdump"
     "cmd/utils"
-    "cmd/wnode"
   ];
 
   # Fix for usb-related segmentation faults on darwin
@@ -38,6 +41,6 @@ buildGoModule rec {
     homepage = "https://geth.ethereum.org/";
     description = "Official golang implementation of the Ethereum protocol";
     license = with licenses; [ lgpl3 gpl3 ];
-    maintainers = with maintainers; [ adisbladis asymmetric lionello xrelkd ];
+    maintainers = with maintainers; [ adisbladis lionello xrelkd RaghavSood ];
   };
 }

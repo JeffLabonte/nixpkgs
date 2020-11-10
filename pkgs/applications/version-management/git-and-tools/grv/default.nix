@@ -36,13 +36,13 @@ buildGoPackage {
 
   installPhase = ''
     runHook preInstall
-    install -D grv $bin/bin/grv
+    install -D grv $out/bin/grv
     runHook postInstall
   '';
 
   meta = with stdenv.lib; {
     description = "GRV is a terminal interface for viewing Git repositories";
-    homepage = https://github.com/rgburke/grv;
+    homepage = "https://github.com/rgburke/grv";
     license = licenses.gpl3;
     platforms = platforms.unix;
     maintainers = with maintainers; [ andir ];

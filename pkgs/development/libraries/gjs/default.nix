@@ -17,6 +17,7 @@
 , dbus
 , gdk-pixbuf
 , makeWrapper
+, which
 , xvfb_run
 , nixosTests
 }:
@@ -28,11 +29,11 @@ let
   ];
 in stdenv.mkDerivation rec {
   pname = "gjs";
-  version = "1.64.0";
+  version = "1.64.4";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gjs/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "0vynivp1d10jkxfcgb5vcjkba5dvi7amkm8axmyad7l4dfy4qf36";
+    sha256 = "0k6l2qc2vkws34zrgdhl57qxf0jjkar2iziz6qn4n1w7va73mk53";
   };
 
   outputs = [ "out" "dev" "installedTests" ];
@@ -42,6 +43,7 @@ in stdenv.mkDerivation rec {
     ninja
     pkgconfig
     makeWrapper
+    which # for locale detection
     libxml2 # for xml-stripblanks
   ];
 
@@ -70,38 +72,14 @@ in stdenv.mkDerivation rec {
     # Hard-code various paths
     ./fix-paths.patch
 
-    # Clean-ups to make installing installed tests separately easier.
-    # https://gitlab.gnome.org/GNOME/gjs/merge_requests/403
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/gjs/commit/14bae0e2bc7e817f53f0dcd8ecd032f554d12e6f.patch";
-      sha256 = "4eaNl2ddRMlUfBoOUnRy10+RlQR4f/mDMhjQ2txmRcg=";
-    })
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/gjs/commit/075f015d7980dc94fff48a1c4021cb50691dddb1.patch";
-      sha256 = "Iw0XfGiOUazDbpT5SqFx3UVvBRtNm3Fds1gCsdxKucw=";
-    })
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/gjs/commit/5cfd2c2ffd2d8c002d40f658e1c54027dc5d8506.patch";
-      sha256 = "rJ5Je1zcfthIl7+hRoWw3cwzz/ZkS2rtjvFOQ8znBi8=";
-    })
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/gjs/commit/1a81f40e8783fe97dd00f009eb0d9ad45297e831.patch";
-      sha256 = "+k4Xv3sJ//iDqkVTkO51IA7FPtWsS0P9YUVTWnIym4I=";
-    })
-    (fetchpatch {
-      url = "https://gitlab.gnome.org/GNOME/gjs/commit/361a319789310292787d9c62665cef9e386a9b20.patch";
-      sha256 = "ofOP1OFs9q5nW9rE/2ovbwZR6gTrDDh8cczdYipoWNE=";
-    })
-
     # Allow installing installed tests to a separate output.
     ./installed-tests-path.patch
   ];
 
-  # Gio test is failing
-  # https://github.com/NixOS/nixpkgs/pull/81626#issuecomment-599325843
-  doCheck = false;
+  doCheck = true;
 
   postPatch = ''
+    patchShebangs build/choose-tests-locale.sh
     substituteInPlace installed-tests/debugger-test.sh --subst-var-by gjsConsole $out/bin/gjs-console
   '';
 
@@ -118,7 +96,15 @@ in stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
+    # TODO: make the glib setup hook handle this
+    installedTestsSchemaDatadir="$installedTests/share/gsettings-schemas/${pname}-${version}"
+    mkdir -p "$installedTestsSchemaDatadir"
+    mv "$installedTests/share/glib-2.0" "$installedTestsSchemaDatadir"
+  '';
+
+  postFixup = ''
     wrapProgram "$installedTests/libexec/gjs/installed-tests/minijasmine" \
+      --prefix XDG_DATA_DIRS : "$installedTestsSchemaDatadir" \
       --prefix GI_TYPELIB_PATH : "${stdenv.lib.makeSearchPath "lib/girepository-1.0" testDeps}"
   '';
 
@@ -145,7 +131,7 @@ in stdenv.mkDerivation rec {
     description = "JavaScript bindings for GNOME";
     homepage = "https://gitlab.gnome.org/GNOME/gjs/blob/master/doc/Home.md";
     license = licenses.lgpl2Plus;
-    maintainers = gnome3.maintainers;
+    maintainers = teams.gnome.members;
     platforms = platforms.linux;
   };
 }

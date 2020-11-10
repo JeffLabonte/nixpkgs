@@ -37,14 +37,12 @@ stdenv.mkDerivation rec {
 
   passthru = {
     isClang = true;
-  } // stdenv.lib.optionalAttrs (stdenv.targetPlatform.isLinux || (stdenv.cc.isGNU && stdenv.cc.cc ? gcc)) {
-    gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
   };
 
   meta = with stdenv.lib; {
     description =
       "Accelerate Complex C++ Applications on Heterogeneous Compute Systems using Open Standards";
-    homepage = https://www.codeplay.com/products/computesuite/computecpp;
+    homepage = "https://www.codeplay.com/products/computesuite/computecpp";
     license = licenses.unfree;
     maintainers = with maintainers; [ davidtwco ];
     platforms = [ "x86_64-linux" ];

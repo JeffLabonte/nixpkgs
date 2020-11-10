@@ -16,21 +16,21 @@ with rustPlatform;
 
 buildRustPackage rec {
   pname = "ffsend";
-  version = "0.2.59";
+  version = "0.2.68";
 
   src = fetchFromGitLab {
     owner = "timvisee";
     repo = "ffsend";
     rev = "v${version}";
-    sha256 = "14a7mb1a1s74hi124v4jscc72m09zq2bd8xrhq5agz9z27plqm2c";
+    sha256 = "0ga1v4s8ks2v632mim8ljya0gi2j8bbwj98yfm3g00p0z1i526qk";
   };
 
-  cargoSha256 = "1945s3ajpy55fzh5wbl7fchqck0fh69shl18lxni9hvg04smq39i";
+  cargoSha256 = "1n9pf29xid6jcas5yx94k4cpmqgx0kpqq7gwf83jisjywxzygh6w";
 
   nativeBuildInputs = [ cmake pkgconfig installShellFiles ];
-  buildInputs = [ openssl ]
-  ++ stdenv.lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices Security AppKit ])
-  ;
+  buildInputs =
+    if stdenv.isDarwin then (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices Security AppKit ])
+    else [ openssl ];
 
   preBuild = stdenv.lib.optionalString (x11Support && usesX11) (
     if preferXsel && xsel != null then ''
@@ -53,7 +53,7 @@ buildRustPackage rec {
       may be up to 2GB. Others are able to download these files with this tool, or through their
       web browser.
     '';
-    homepage = https://gitlab.com/timvisee/ffsend;
+    homepage = "https://gitlab.com/timvisee/ffsend";
     license = licenses.gpl3;
     maintainers = with maintainers; [ lilyball equirosa ];
     platforms = platforms.unix;
