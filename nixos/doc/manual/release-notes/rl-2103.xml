@@ -23,6 +23,9 @@
      Support is planned until the end of October 2021, handing over to 21.09.
     </para>
    </listitem>
+   <listitem>
+    <para>GNOME desktop environment was upgraded to 3.38, see its <link xlink:href="https://help.gnome.org/misc/release-notes/3.38/">release notes</link>.</para>
+   </listitem>
   </itemizedlist>
  </section>
 
@@ -141,6 +144,20 @@
      <package>mutt</package> has been updated to a new major version (2.x), which comes with
      some backward incompatible changes that are described in the
      <link xlink:href="http://www.mutt.org/relnotes/2.0/">release notes for Mutt 2.0</link>.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+      <literal>vim</literal> switched to Python 3, dropping all Python 2 support.
+    </para>
+   </listitem>
+   <listitem>
+     <para>
+      <link linkend="opt-boot.zfs.forceImportAll">boot.zfs.forceImportAll</link>
+      previously did nothing, but has been fixed. However its default has been
+      changed to <literal>false</literal> to preserve the existing default
+      behaviour. If you have this explicitly set to <literal>true</literal>,
+      please note that your non-root pools will now be forcibly imported.
     </para>
    </listitem>
   </itemizedlist>

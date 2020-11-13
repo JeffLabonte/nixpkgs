@@ -315,6 +315,7 @@ in
   samba = handleTest ./samba.nix {};
   sanoid = handleTest ./sanoid.nix {};
   sbt = handleTest ./sbt.nix {};
+  sbt-extras = handleTest ./sbt-extras.nix {};
   scala = handleTest ./scala.nix {};
   sddm = handleTest ./sddm.nix {};
   service-runner = handleTest ./service-runner.nix {};
@@ -347,6 +348,7 @@ in
   systemd-binfmt = handleTestOn ["x86_64-linux"] ./systemd-binfmt.nix {};
   systemd-boot = handleTest ./systemd-boot.nix {};
   systemd-confinement = handleTest ./systemd-confinement.nix {};
+  systemd-journal = handleTest ./systemd-journal.nix {};
   systemd-timesyncd = handleTest ./systemd-timesyncd.nix {};
   systemd-networkd-vrf = handleTest ./systemd-networkd-vrf.nix {};
   systemd-networkd = handleTest ./systemd-networkd.nix {};

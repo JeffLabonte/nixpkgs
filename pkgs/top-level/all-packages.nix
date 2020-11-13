@@ -192,6 +192,8 @@ in
 
   comedilib = callPackage ../development/libraries/comedilib {  };
 
+  cp437 = callPackage ../tools/misc/cp437 { };
+
   cpu-x = callPackage ../applications/misc/cpu-x { };
 
   dhallToNix = callPackage ../build-support/dhall-to-nix.nix {
@@ -1063,6 +1065,8 @@ in
   claws = callPackage ../tools/misc/claws { };
 
   cloud-custodian = python3Packages.callPackage ../tools/networking/cloud-custodian  { };
+
+  coconut = with python3Packages; toPythonApplication coconut;
 
   cod = callPackage ../tools/misc/cod { };
 
@@ -2528,6 +2532,8 @@ in
 
   socklog = callPackage ../tools/system/socklog { };
 
+  ssmsh = callPackage ../tools/admin/ssmsh { };
+
   stagit = callPackage ../development/tools/stagit { };
 
   starboard = callPackage ../applications/networking/cluster/starboard { };
@@ -2992,6 +2998,8 @@ in
     kkc = callPackage ../tools/inputmethods/ibus-engines/ibus-kkc { };
 
     libpinyin = callPackage ../tools/inputmethods/ibus-engines/ibus-libpinyin { };
+
+    libthai = callPackage ../tools/inputmethods/ibus-engines/ibus-libthai { };
 
     m17n = callPackage ../tools/inputmethods/ibus-engines/ibus-m17n { };
 
@@ -4134,6 +4142,8 @@ in
   gitlab-runner = callPackage ../development/tools/continuous-integration/gitlab-runner { };
 
   gitlab-shell = callPackage ../applications/version-management/gitlab/gitlab-shell { };
+
+  gitlab-triage = callPackage ../applications/version-management/gitlab-triage { };
 
   gitlab-workhorse = callPackage ../applications/version-management/gitlab/gitlab-workhorse { };
 
@@ -5324,6 +5334,9 @@ in
   libgaminggear = callPackage ../development/libraries/libgaminggear { };
 
   libhandy = callPackage ../development/libraries/libhandy { };
+
+  # Needed for apps that still depend on the unstable verison of the library (not libhandy-1)
+  libhandy_0 = callPackage ../development/libraries/libhandy/0.x.nix { };
 
   libgumath = callPackage ../development/libraries/libgumath { };
 
@@ -7564,6 +7577,8 @@ in
 
   timetable = callPackage ../applications/office/timetable { };
 
+  timekeeper = callPackage ../applications/office/timekeeper { };
+
   timezonemap = callPackage ../development/libraries/timezonemap { };
 
   tzupdate = callPackage ../applications/misc/tzupdate { };
@@ -8569,6 +8584,8 @@ in
 
   ### DEVELOPMENT / COMPILERS
 
+  _4th = callPackage ../development/compilers/4th { };
+
   abcl = callPackage ../development/compilers/abcl {
     jre = jre8; # TODO: remove override https://github.com/NixOS/nixpkgs/pull/89731
     jdk = jdk8; # TODO: remove override https://github.com/NixOS/nixpkgs/pull/89731
@@ -8640,6 +8657,8 @@ in
   aliceml = callPackage ../development/compilers/aliceml { };
 
   arachne-pnr = callPackage ../development/compilers/arachne-pnr { };
+
+  asciigraph = callPackage ../tools/text/asciigraph { };
 
   asn1c = callPackage ../development/compilers/asn1c { };
 
@@ -10895,6 +10914,8 @@ in
     };
   });
 
+  bisoncpp = callPackage ../development/tools/parsing/bisonc++ { };
+
   black = with python3Packages; toPythonApplication black;
 
   blackfire = callPackage ../development/tools/misc/blackfire { };
@@ -11941,7 +11962,9 @@ in
 
   travis = callPackage ../development/tools/misc/travis { };
 
-  tree-sitter = callPackage ../development/tools/parsing/tree-sitter { };
+  tree-sitter = callPackage ../development/tools/parsing/tree-sitter {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
 
   trellis = callPackage ../development/tools/trellis { };
 
@@ -13183,7 +13206,10 @@ in
 
   herqq = libsForQt514.callPackage ../development/libraries/herqq { };
 
-  hidapi = callPackage ../development/libraries/hidapi { };
+  hidapi = callPackage ../development/libraries/hidapi {
+    # TODO: remove once `udev` is `systemdMinimal` everywhere.
+    udev = systemdMinimal;
+  };
 
   highfive = callPackage ../development/libraries/highfive { };
 
@@ -13657,6 +13683,8 @@ in
 
   libdap = callPackage ../development/libraries/libdap { };
 
+  libdatrie = callPackage ../development/libraries/libdatrie { };
+
   libdazzle = callPackage ../development/libraries/libdazzle { };
 
   libdbi = callPackage ../development/libraries/libdbi { };
@@ -13758,7 +13786,9 @@ in
 
   libfakekey = callPackage ../development/libraries/libfakekey { };
 
-  libfido2 = callPackage ../development/libraries/libfido2 { };
+  libfido2 = callPackage ../development/libraries/libfido2 {
+    udev = systemdMinimal;
+  };
 
   libfilezilla = callPackage ../development/libraries/libfilezilla {
     inherit (darwin.apple_sdk.frameworks) ApplicationServices;
@@ -14373,6 +14403,8 @@ in
 
   libtcod = callPackage ../development/libraries/libtcod { };
 
+  libthai = callPackage ../development/libraries/libthai { };
+
   libtheora = callPackage ../development/libraries/libtheora { };
 
   libthreadar = callPackage ../development/libraries/libthreadar { };
@@ -14447,6 +14479,8 @@ in
   libusb1 = callPackage ../development/libraries/libusb1 {
     inherit (darwin) libobjc;
     inherit (darwin.apple_sdk.frameworks) IOKit;
+    # TODO: remove once `udev` is `systemdMinimal` everywhere.
+    udev = systemdMinimal;
   };
 
   libusbmuxd = callPackage ../development/libraries/libusbmuxd { };
@@ -15772,6 +15806,8 @@ in
 
   spice-up = callPackage ../applications/office/spice-up { };
 
+  spicetify-cli = callPackage ../applications/misc/spicetify-cli { };
+
   spirv-cross = callPackage ../tools/graphics/spirv-cross { };
 
   sratom = callPackage ../development/libraries/audio/sratom { };
@@ -16846,6 +16882,8 @@ in
 
   labelImg = callPackage ../applications/science/machine-learning/labelimg { };
 
+  mackerel-agent = callPackage ../servers/monitoring/mackerel-agent { };
+
   mailman = callPackage ../servers/mail/mailman/wrapped.nix { };
 
   mailman-rss = callPackage ../development/python-modules/mailman-rss { };
@@ -17010,6 +17048,12 @@ in
   system-sendmail = lowPrio (callPackage ../servers/mail/system-sendmail { });
 
   # PulseAudio daemons
+
+  hsphfpd = callPackage ../servers/pulseaudio/hsphfpd.nix { };
+
+  pulseaudio-hsphfpd = callPackage ../servers/pulseaudio/pali.nix {
+    inherit (darwin.apple_sdk.frameworks) CoreServices AudioUnit Cocoa;
+  };
 
   pulseaudio = callPackage ../servers/pulseaudio {
     inherit (darwin.apple_sdk.frameworks) CoreServices AudioUnit Cocoa;
@@ -17943,18 +17987,11 @@ in
 
   linux_mptcp = linux_mptcp_95;
 
-  linux_mptcp_94 = callPackage ../os-specific/linux/kernel/linux-mptcp-94.nix {
-    kernelPatches =
-      [ kernelPatches.bridge_stp_helper
-        kernelPatches.request_key_helper
-        kernelPatches.cpu-cgroup-v2."4.11"
-        kernelPatches.modinst_arg_list_too_long
-      ]
-      ++ lib.optionals ((stdenv.hostPlatform.platform.kernelArch or null) == "mips")
-      [ kernelPatches.mips_fpureg_emu
-        kernelPatches.mips_fpu_sigill
-        kernelPatches.mips_ext3_n32
-      ];
+  linux_mptcp_5_9 = linux_5_9.override {
+    structuredExtraConfig = with lib.kernel; {
+      MPTCP      = yes;
+      MPTCP_IPV6 = yes;
+    };
   };
 
   linux_mptcp_95 = callPackage ../os-specific/linux/kernel/linux-mptcp-95.nix {
@@ -18829,6 +18866,8 @@ in
 
   sysprof = callPackage ../development/tools/profiling/sysprof { };
 
+  libsysprof-capture = callPackage ../development/tools/profiling/sysprof/capture.nix { };
+
   sysklogd = callPackage ../os-specific/linux/sysklogd { };
 
   syslinux = callPackage ../os-specific/linux/syslinux { };
@@ -18856,17 +18895,34 @@ in
   };
   systemdMinimal = systemd.override {
     pname = "systemd-minimal";
-    withResolved = false;
-    withLogind = false;
-    withHostnamed = false;
-    withLocaled = false;
-    withTimedated = false;
-    withHwdb = false;
-    withEfi = false;
-    withImportd = false;
+    withAnalyze = false;
+    withApparmor = false;
+    withCompression = false;
+    withCoredump = false;
     withCryptsetup = false;
-    cryptsetup = null;
+    withDocumentation = false;
+    withEfi = false;
+    withHostnamed = false;
+    withHwdb = false;
+    withImportd = false;
+    withLocaled = false;
+    withLogind = false;
+    withMachined = false;
+    withNetworkd = false;
+    withNss = false;
+    withPCRE2 = false;
+    withPolkit = false;
+    withRemote = false;
+    withResolved = false;
+    withShellCompletions = false;
+    withTimedated = false;
+    withTimesyncd = false;
+    withUserDb = false;
+    glib = null;
+    libgcrypt = null;
     lvm2 = null;
+    libfido2 = null;
+    p11-kit = null;
   };
 
 
@@ -21140,7 +21196,6 @@ in
   xrdp = callPackage ../applications/networking/remote/xrdp { };
 
   freerdp = callPackage ../applications/networking/remote/freerdp {
-    inherit libpulseaudio;
     inherit (gst_all_1) gstreamer gst-plugins-base gst-plugins-good;
   };
 
@@ -22762,8 +22817,6 @@ in
     inherit (gnome2) libglade;
   };
 
-  obs-linuxbrowser = callPackage ../applications/video/obs-studio/linuxbrowser.nix { };
-
   obs-studio = libsForQt514.callPackage ../applications/video/obs-studio { };
 
   obs-wlrobs = callPackage ../applications/video/obs-studio/wlrobs.nix { };
@@ -23244,6 +23297,8 @@ in
   quirc = callPackage ../tools/graphics/quirc {};
 
   quilter = callPackage ../applications/editors/quilter { };
+
+  quisk = python38Packages.callPackage ../applications/radio/quisk { };
 
   quiterss = libsForQt514.callPackage ../applications/networking/newsreaders/quiterss {};
 
@@ -24210,7 +24265,7 @@ in
     onlyLibVLC = true;
   };
 
-  vmpk = callPackage ../applications/audio/vmpk { };
+  vmpk = libsForQt5.callPackage ../applications/audio/vmpk { };
 
   vmware-horizon-client = callPackage ../applications/networking/remote/vmware-horizon-client { };
 
@@ -24937,6 +24992,8 @@ in
   sumokoin = callPackage ../applications/blockchains/sumokoin.nix { boost = boost165; };
 
   tessera = callPackage ../applications/blockchains/tessera.nix { };
+
+  turbo-geth = callPackage ../applications/blockchains/turbo-geth.nix { };
 
   vertcoin  = libsForQt514.callPackage ../applications/blockchains/vertcoin.nix { boost = boost165; withGui = true; };
   vertcoind = callPackage ../applications/blockchains/vertcoin.nix { boost = boost165; withGui = false; };
@@ -25987,6 +26044,8 @@ in
     nohotcorner = throw "gnomeExtensions.nohotcorner removed since 2019-10-09: Since 3.34, it is a part of GNOME Shell configurable through GNOME Tweaks.";
     mediaplayer = throw "gnomeExtensions.mediaplayer deprecated since 2019-09-23: retired upstream https://github.com/JasonLG1979/gnome-shell-extensions-mediaplayer/blob/master/README.md";
   };
+
+  gnome-connections = callPackage ../desktops/gnome-3/apps/gnome-connections { };
 
   gnome-tour = callPackage ../desktops/gnome-3/core/gnome-tour { };
 
