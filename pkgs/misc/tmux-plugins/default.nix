@@ -246,6 +246,17 @@ in rec {
     };
   };
 
+  onedark-theme = mkDerivation {
+    pluginName = "onedark-theme";
+    version = "unstable-2020-06-07";
+    src = fetchFromGitHub {
+      owner = "odedlaz";
+      repo = "tmux-onedark-theme";
+      rev = "3607ef889a47dd3b4b31f66cda7f36da6f81b85c";
+      sha256 = "19jljshwp2p83b634cd1mw69091x42jj0dg40ipw61qy6642h2m5";
+    };
+  };
+
   pain-control = mkDerivation {
     pluginName = "pain-control";
     version = "unstable-2020-02-18";
@@ -390,6 +401,25 @@ in rec {
       sed -i -e '14,20{s|urlview|${pkgs.urlview}/bin/urlview|g}' $target/urlview.tmux
     '';
     dependencies = [ pkgs.urlview ];
+  };
+
+  vim-tmux-focus-events = mkDerivation {
+    pluginName = "vim-tmux-focus-events";
+    version = "unstable-2020-10-05";
+    src = fetchFromGitHub {
+      owner = "tmux-plugins";
+      repo = "vim-tmux-focus-events";
+      rev = "a568192ca0de4ca0bd7b3cd0249aad491625c941";
+      sha256 = "130l73v18md95djkc4s9d0fr018f8f183sjcgy7dgldwdaxlqdi1";
+    };
+
+    meta = with stdenv.lib; {
+      homepage = "https://github.com/tmux-plugins/vim-tmux-focus-events";
+      description = "Makes FocusGained and FocusLost autocommand events work in vim when using tmux";
+      license = licenses.mit;
+      platforms = platforms.unix;
+      maintainers = with maintainers; [ ronanmacf ];
+    };
   };
 
   vim-tmux-navigator = mkDerivation {

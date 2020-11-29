@@ -28,7 +28,9 @@ in
   atd = handleTest ./atd.nix {};
   avahi = handleTest ./avahi.nix {};
   avahi-with-resolved = handleTest ./avahi.nix { networkd = true; };
+  awscli = handleTest ./awscli.nix { };
   babeld = handleTest ./babeld.nix {};
+  bat = handleTest ./bat.nix {};
   bazarr = handleTest ./bazarr.nix {};
   bcachefs = handleTestOn ["x86_64-linux"] ./bcachefs.nix {}; # linux-4.18.2018.10.12 is unsupported on aarch64
   beanstalkd = handleTest ./beanstalkd.nix {};
@@ -103,6 +105,7 @@ in
   etcd = handleTestOn ["x86_64-linux"] ./etcd.nix {};
   etcd-cluster = handleTestOn ["x86_64-linux"] ./etcd-cluster.nix {};
   fancontrol = handleTest ./fancontrol.nix {};
+  fcitx = handleTest ./fcitx {};
   ferm = handleTest ./ferm.nix {};
   firefox = handleTest ./firefox.nix {};
   firefox-esr = handleTest ./firefox.nix { esr = true; };
@@ -169,6 +172,7 @@ in
   jenkins = handleTest ./jenkins.nix {};
   jirafeau = handleTest ./jirafeau.nix {};
   jitsi-meet = handleTest ./jitsi-meet.nix {};
+  jq = handleTest ./jq.nix {};
   k3s = handleTest ./k3s.nix {};
   kafka = handleTest ./kafka.nix {};
   keepalived = handleTest ./keepalived.nix {};
@@ -192,6 +196,7 @@ in
   limesurvey = handleTest ./limesurvey.nix {};
   login = handleTest ./login.nix {};
   loki = handleTest ./loki.nix {};
+  lsd = handleTest ./lsd.nix {};
   lxd = handleTest ./lxd.nix {};
   lxd-nftables = handleTest ./lxd-nftables.nix {};
   #logstash = handleTest ./logstash.nix {};
@@ -206,6 +211,8 @@ in
   mediawiki = handleTest ./mediawiki.nix {};
   memcached = handleTest ./memcached.nix {};
   metabase = handleTest ./metabase.nix {};
+  minecraft = handleTest ./minecraft.nix {};
+  minecraft-server = handleTest ./minecraft-server.nix {};
   miniflux = handleTest ./miniflux.nix {};
   minio = handleTest ./minio.nix {};
   minidlna = handleTest ./minidlna.nix {};
@@ -314,6 +321,7 @@ in
   runInMachine = handleTest ./run-in-machine.nix {};
   rxe = handleTest ./rxe.nix {};
   samba = handleTest ./samba.nix {};
+  samba-wsdd = handleTest ./samba-wsdd.nix {};
   sanoid = handleTest ./sanoid.nix {};
   sbt = handleTest ./sbt.nix {};
   sbt-extras = handleTest ./sbt-extras.nix {};

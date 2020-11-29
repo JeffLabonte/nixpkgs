@@ -1,7 +1,7 @@
 { lib, stdenv
 , python, cmake, meson, vim, ruby
 , which, fetchFromGitHub, fetchgit, fetchurl, fetchzip, fetchpatch
-, llvmPackages, rustPlatform
+, llvmPackages, rustPlatform, buildGoModule
 , pkgconfig, curl, openssl, libgit2, libiconv
 , xkb-switch, fzf, skim, stylish-haskell
 , python3, boost, icu, ncurses
@@ -595,6 +595,20 @@ self: super: {
       '';
   });
 
+  vim-hexokinase = super.vim-hexokinase.overrideAttrs(old: {
+    preFixup = let
+      hexokinase = buildGoModule {
+        name = "hexokinase";
+        src = old.src + "/hexokinase";
+        vendorSha256 = "pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo=";
+      };
+    in ''
+      ln -s ${hexokinase}/bin/hexokinase $target/hexokinase/hexokinase
+    '';
+
+    meta.platforms = stdenv.lib.platforms.all;
+  });
+
   vim-clap = super.vim-clap.overrideAttrs(old: {
     preFixup = let
       maple-bin = rustPlatform.buildRustPackage {
@@ -634,12 +648,12 @@ self: super: {
 } // (
   let
     nodePackageNames = [
-      "coc-go"
       "coc-css"
       "coc-diagnostic"
       "coc-emmet"
       "coc-eslint"
       "coc-git"
+      "coc-go"
       "coc-highlight"
       "coc-html"
       "coc-imselect"
@@ -647,6 +661,7 @@ self: super: {
       "coc-jest"
       "coc-json"
       "coc-lists"
+      "coc-markdownlint"
       "coc-metals"
       "coc-pairs"
       "coc-prettier"
@@ -663,6 +678,7 @@ self: super: {
       "coc-tslint-plugin"
       "coc-tsserver"
       "coc-vetur"
+      "coc-vimlsp"
       "coc-vimtex"
       "coc-wxml"
       "coc-yaml"
