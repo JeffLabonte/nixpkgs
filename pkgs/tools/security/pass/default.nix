@@ -1,6 +1,6 @@
 { stdenv, lib, pkgs, fetchurl, buildEnv
-, coreutils, gnused, getopt, git, tree, gnupg, openssl, which, procps
-, qrencode , makeWrapper, pass, symlinkJoin
+, coreutils, findutils, gnugrep, gnused, getopt, git, tree, gnupg, openssl
+, which, procps , qrencode , makeWrapper, pass, symlinkJoin
 
 , xclip ? null, xdotool ? null, dmenu ? null
 , x11Support ? !stdenv.isDarwin , dmenuSupport ? x11Support
@@ -34,11 +34,15 @@ let
 
       postBuild = ''
         files=$(find $out/bin/ -type f -exec readlink -f {} \;)
-        rm $out/bin
-        mkdir $out/bin
+        if [ -L $out/bin ]; then
+          rm $out/bin
+          mkdir $out/bin
+        fi
 
         for i in $files; do
-          ln -sf $i $out/bin/$(basename $i)
+          if ! [ "$(readlink -f "$out/bin/$(basename $i)")" = "$i" ]; then
+            ln -sf $i $out/bin/$(basename $i)
+          fi
         done
 
         wrapProgram $out/bin/pass \
@@ -80,8 +84,10 @@ stdenv.mkDerivation rec {
 
   wrapperPath = with stdenv.lib; makeBinPath ([
     coreutils
+    findutils
     getopt
     git
+    gnugrep
     gnupg
     gnused
     tree

@@ -141,8 +141,7 @@ in stdenv.mkDerivation {
 
     siteVersionDir=`ls $out/share/emacs | grep -v site-lisp | head -n 1`
 
-    rm -rf $out/var
-    rm -rf $siteVersionDir
+    rm -r $out/share/emacs/$siteVersionDir/site-lisp
   '' + lib.optionalString withCsrc ''
     for srcdir in src lisp lwlib ; do
       dstdir=$out/share/emacs/$siteVersionDir/$srcdir
@@ -154,6 +153,8 @@ in stdenv.mkDerivation {
   '' + lib.optionalString withNS ''
     mkdir -p $out/Applications
     mv nextstep/Emacs.app $out/Applications
+  '' + lib.optionalString (nativeComp && withNS) ''
+    ln -snf $out/lib/emacs/*/native-lisp $out/Applications/Emacs.app/Contents/native-lisp
   '';
 
   postFixup = lib.concatStringsSep "\n" [

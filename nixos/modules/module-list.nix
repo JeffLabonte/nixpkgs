@@ -397,6 +397,7 @@
   ./services/logging/rsyslogd.nix
   ./services/logging/syslog-ng.nix
   ./services/logging/syslogd.nix
+  ./services/logging/vector.nix
   ./services/mail/clamsmtp.nix
   ./services/mail/davmail.nix
   ./services/mail/dkimproxy-out.nix
@@ -481,6 +482,7 @@
   ./services/misc/mediatomb.nix
   ./services/misc/metabase.nix
   ./services/misc/mwlib.nix
+  ./services/misc/n8n.nix
   ./services/misc/nix-daemon.nix
   ./services/misc/nix-gc.nix
   ./services/misc/nix-optimise.nix
@@ -858,7 +860,6 @@
   ./services/web-apps/documize.nix
   ./services/web-apps/dokuwiki.nix
   ./services/web-apps/engelsystem.nix
-  ./services/web-apps/frab.nix
   ./services/web-apps/gerrit.nix
   ./services/web-apps/gotify-server.nix
   ./services/web-apps/grocy.nix

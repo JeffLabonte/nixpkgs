@@ -118,6 +118,7 @@ buildStdenv.mkDerivation ({
 
   patches = [
     ./env_var_for_system_dir.patch
+    ./no-buildconfig-ffx76.patch
   ] ++
 
   # there are two flavors of pipewire support
@@ -386,4 +387,6 @@ buildStdenv.mkDerivation ({
 
   # on aarch64 this is also required
   dontUpdateAutotoolsGnuConfigScripts = true;
+
+  requiredSystemFeatures = [ "big-parallel" ];
 })

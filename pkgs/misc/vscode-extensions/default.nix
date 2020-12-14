@@ -1,4 +1,4 @@
-{ stdenv, config, lib, callPackage, vscode-utils, llvmPackages_8, llvmPackages_latest }:
+{ stdenv, config, lib, callPackage, vscode-utils, nodePackages,llvmPackages_8, llvmPackages_latest }:
 
 let
   inherit (vscode-utils) buildVscodeMarketplaceExtension;
@@ -12,6 +12,17 @@ let
   #
   baseExtensions = self: stdenv.lib.mapAttrs (_n: stdenv.lib.recurseIntoAttrs)
     {
+      a5huynh.vscode-ron = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "vscode-ron";
+          publisher = "a5huynh";
+          version = "0.9.0";
+          sha256 = "0d3p50mhqp550fmj662d3xklj14gvzvhszm2hlqvx4h28v222z97";
+        };
+        meta = {
+          license = stdenv.lib.licenses.mit;
+        };
+      };
 
       alanz.vscode-hie-server = buildVscodeMarketplaceExtension {
         mktplcRef = {
@@ -22,6 +33,21 @@ let
         };
         meta = {
           license = stdenv.lib.licenses.mit;
+        };
+      };
+
+      ms-python.vscode-pylance = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "vscode-pylance";
+          publisher = "MS-python";
+          version = "2020.11.2";
+          sha256 = "0n2dm21vgzir3hx1m3pmx7jq4zy3hdxfsandd2wv5da4fs9b5g50";
+        };
+
+        buildInputs = [ nodePackages.pyright ];
+
+        meta = {
+          license = stdenv.lib.licenses.unfree;
         };
       };
 
@@ -129,6 +155,18 @@ let
         };
       };
 
+      mskelton.one-dark-theme = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "one-dark-theme";
+          publisher = "mskelton";
+          version = "1.7.2";
+          sha256 = "1ks6z8wsxmlfhiwa51f7d6digvw11dlxc7mja3hankgxcf5dyj31";
+        };
+        meta = {
+          license = stdenv.lib.licenses.mit;
+        };
+      };
+
       ms-azuretools.vscode-docker = buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "vscode-docker";
@@ -161,12 +199,24 @@ let
         extractNuGet = callPackage ./python/extract-nuget.nix { };
       };
 
+      naumovs.color-highlight = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "color-highlight";
+          publisher = "naumovs";
+          version = "2.3.0";
+          sha256 = "1syzf43ws343z911fnhrlbzbx70gdn930q67yqkf6g0mj8lf2za2";
+        };
+        meta = {
+          license = stdenv.lib.licenses.mit;
+        };
+      };
+
       redhat.vscode-yaml = buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "vscode-yaml";
           publisher = "redhat";
-          version = "0.5.3";
-          sha256 = "03swlsp906rqlrx6jf3ibh7pk36sm0zdr8jfy6sr3w5lqjg27gka";
+          version = "0.13.0";
+          sha256 = "046kdk73a5xbrwq16ff0l64271c6q6ygjvxaph58z29gyiszfkig";
         };
         meta = {
           license = stdenv.lib.licenses.mit;
@@ -174,6 +224,18 @@ let
       };
 
       matklad.rust-analyzer = callPackage ./rust-analyzer {};
+
+      pkief.material-icon-theme = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "material-icon-theme";
+          publisher = "pkief";
+          version = "4.4.0";
+          sha256 = "1m9mis59j9xnf1zvh67p5rhayaa9qxjiw9iw847nyl9vsy73w8ya";
+        };
+        meta = {
+          license = stdenv.lib.licenses.mit;
+        };
+      };
 
       scala-lang.scala = buildVscodeMarketplaceExtension {
         mktplcRef = {
@@ -199,6 +261,18 @@ let
         };
       };
 
+      serayuzgur.crates = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "crates";
+          publisher = "serayuzgur";
+          version = "0.5.3";
+          sha256 = "1xk7ayv590hsm3scqpyh6962kvgdlinnpkx0vapr7vs4y08dx72f";
+        };
+        meta = {
+          license = stdenv.lib.licenses.mit;
+        };
+      };
+
       skyapps.fish-vscode = buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "fish-vscode";
@@ -208,6 +282,18 @@ let
         };
         meta = with stdenv.lib; {
           license = licenses.mit;
+        };
+      };
+
+      tamasfe.even-better-toml = buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          name = "even-better-toml";
+          publisher = "tamasfe";
+          version = "0.9.3";
+          sha256 = "16x2y58hkankazpwm93j8lqdn3mala7iayck548kki9zx4qrhhck";
+        };
+        meta = {
+          license = stdenv.lib.licenses.mit;
         };
       };
 

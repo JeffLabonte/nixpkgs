@@ -16,11 +16,11 @@
 
 buildPythonPackage rec {
   pname = "oauthenticator";
-  version = "0.12.1";
+  version = "0.12.3";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "f4a048e329766a6023768c9fefd77c859a9726bdf2029c62ec78de410ec876cd";
+    sha256 = "f86e18e954ae37796ee149fe01ab0be0707d9e0415d62336ba3447e7b4383461";
   };
 
   checkPhase = ''

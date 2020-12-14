@@ -19,15 +19,7 @@
 }:
 
 let
-  version = "4.0.5";
-
-  # electrum is not compatible with dnspython 2.0.0 yet
-  # use the latest 1.x release instead
-  py = python3.override {
-    packageOverrides = self: super: {
-      dnspython = super.dnspython_1;
-    };
-  };
+  version = "4.0.7";
 
   libsecp256k1_name =
     if stdenv.isLinux then "libsecp256k1.so.0"
@@ -43,7 +35,7 @@ let
     owner = "spesmilo";
     repo = "electrum";
     rev = version;
-    sha256 = "0fdsgxzgsxvx6hhjag894nzzdfq989bx1d4anljzcz2ppy4ivpxg";
+    sha256 = "06vcbj9p96d8v4xjlygzr74lqllb9adn8k0racajzq61ijb0imi2";
 
     extraPostFetch = ''
       mv $out ./all
@@ -52,13 +44,13 @@ let
   };
 in
 
-py.pkgs.buildPythonApplication {
+python3.pkgs.buildPythonApplication {
   pname = "electrum";
   inherit version;
 
   src = fetchurl {
     url = "https://download.electrum.org/${version}/Electrum-${version}.tar.gz";
-    sha256 = "06ml9lwa5k2dp56sm5s7dsl6qirqmgim7rn853cqcq9n45z41437";
+    sha256 = "0k5xf97ga3ixd02g1y6v84hbxd8yhvpj5iz2rhxs8wfnkfwibzh4";
   };
 
   postUnpack = ''
@@ -68,19 +60,18 @@ py.pkgs.buildPythonApplication {
 
   nativeBuildInputs = stdenv.lib.optionals enableQt [ wrapQtAppsHook ];
 
-  propagatedBuildInputs = with py.pkgs; [
+  propagatedBuildInputs = with python3.pkgs; [
     aiohttp
     aiohttp-socks
     aiorpcx
     attrs
     bitstring
+    cryptography
     dnspython
-    ecdsa
     jsonrpclib-pelix
     matplotlib
     pbkdf2
     protobuf
-    pycryptodomex
     pysocks
     qrcode
     requests
@@ -121,10 +112,15 @@ py.pkgs.buildPythonApplication {
     wrapQtApp $out/bin/electrum
   '';
 
-  checkInputs = with py.pkgs; [ pytest ];
+  checkInputs = with python3.pkgs; [ pytestCheckHook pycryptodomex ];
 
-  checkPhase = ''
-    py.test electrum/tests
+  pytestFlagsArray = [ "electrum/tests" ];
+
+  disabledTests = [
+    "test_loop"  # test tries to bind 127.0.0.1 causing permission error
+  ];
+
+  postCheck = ''
     $out/bin/electrum help >/dev/null
   '';
 

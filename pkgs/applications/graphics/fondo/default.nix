@@ -21,13 +21,13 @@
 
 stdenv.mkDerivation rec {
   pname = "fondo";
-  version = "1.3.10";
+  version = "1.5.0";
 
   src = fetchFromGitHub {
     owner = "calo001";
     repo = pname;
     rev = version;
-    sha256 = "0yrbcngmwhn5gl5if9w2cx8shh33zk5fd6iqwnapsq8y0lzq6ppr";
+    sha256 = "1zmrpk0b5z6m956j923njn6dpqdm2p8653a325hgjjjq0sgwbhj2";
   };
 
   nativeBuildInputs = [

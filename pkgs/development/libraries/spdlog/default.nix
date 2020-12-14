@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, cmake }:
+{ stdenv, fetchFromGitHub, cmake, fmt }:
 
 let
   generic = { version, sha256 }:
@@ -14,8 +14,15 @@ let
       };
 
       nativeBuildInputs = [ cmake ];
+      buildInputs = [ fmt ];
 
-      cmakeFlags = [ "-DSPDLOG_BUILD_EXAMPLE=OFF" "-DSPDLOG_BUILD_BENCH=OFF" ];
+      cmakeFlags = [
+        "-DSPDLOG_BUILD_SHARED=ON"
+        "-DSPDLOG_BUILD_EXAMPLE=OFF"
+        "-DSPDLOG_BUILD_BENCH=OFF"
+        "-DSPDLOG_BUILD_TESTS=ON"
+        "-DSPDLOG_FMT_EXTERNAL=ON"
+      ];
 
       outputs = [ "out" "doc" ];
 
@@ -23,6 +30,9 @@ let
         mkdir -p $out/share/doc/spdlog
         cp -rv ../example $out/share/doc/spdlog
       '';
+
+      doCheck = true;
+      preCheck = "export LD_LIBRARY_PATH=$(pwd):$LD_LIBRARY_PATH";
 
       meta = with stdenv.lib; {
         description    = "Very fast, header only, C++ logging library";

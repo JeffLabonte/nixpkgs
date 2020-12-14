@@ -112,7 +112,7 @@ let
 in buildPythonPackage rec {
   pname = "pytorch";
   # Don't forget to update pytorch-bin to the same version.
-  version = "1.7.0";
+  version = "1.7.1";
 
   disabled = !isPy3k;
 
@@ -127,7 +127,7 @@ in buildPythonPackage rec {
     repo   = "pytorch";
     rev    = "v${version}";
     fetchSubmodules = true;
-    sha256 = "0hb11m5kvs4nsi5bc9ijnv6k07593p9dw40rcn33s9vspinrcjd4";
+    sha256 = "sha256-udpbSL8xnzf20A1pYYNlYjdp8ME8AVaAkMMiw53K6CU=";
   };
 
   patches = lib.optionals stdenv.isDarwin [
@@ -254,6 +254,15 @@ in buildPythonPackage rec {
     cp -r $out/${python.sitePackages}/torch/include $dev/include
     cp -r $out/${python.sitePackages}/torch/share   $dev/share
 
+    # Fix up library paths for split outputs
+    substituteInPlace \
+      $dev/share/cmake/Torch/TorchConfig.cmake \
+      --replace \''${TORCH_INSTALL_PREFIX}/lib "$lib/lib"
+
+    substituteInPlace \
+      $dev/share/cmake/Caffe2/Caffe2Targets-release.cmake \
+      --replace \''${_IMPORT_PREFIX}/lib "$lib/lib"
+
     mkdir $lib
     cp -r $out/${python.sitePackages}/torch/lib     $lib/lib
   '';
@@ -288,6 +297,6 @@ in buildPythonPackage rec {
     homepage    = "https://pytorch.org/";
     license     = lib.licenses.bsd3;
     platforms   = with lib.platforms; linux ++ lib.optionals (!cudaSupport) darwin;
-    maintainers = with lib.maintainers; [ teh thoughtpolice tscholak ]; # tscholak esp. for darwin-related builds
+    maintainers = with lib.maintainers; [ danieldk teh thoughtpolice tscholak ]; # tscholak esp. for darwin-related builds
   };
 }

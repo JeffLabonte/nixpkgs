@@ -62,7 +62,7 @@ let
   extraBuildInputs = extraPackages py.pkgs;
 
   # Don't forget to run parse-requirements.py after updating
-  hassVersion = "0.118.4";
+  hassVersion = "0.118.5";
 
 in with py.pkgs; buildPythonApplication rec {
   pname = "homeassistant";
@@ -78,7 +78,7 @@ in with py.pkgs; buildPythonApplication rec {
     owner = "home-assistant";
     repo = "core";
     rev = version;
-    sha256 = "0b289ijxpay6yb2ahkfm7n9k423f8xlbwg8z903iwakiqg54ghip";
+    sha256 = "1711qhcvrzl599cryd9wzamacn1vv37w67vprqgibnbw58kcpilj";
   };
 
   # leave this in, so users don't have to constantly update their downstream patch handling
@@ -87,8 +87,10 @@ in with py.pkgs; buildPythonApplication rec {
   postPatch = ''
     substituteInPlace setup.py \
       --replace "aiohttp==3.7.1" "aiohttp>=3.6.3" \
+      --replace "attrs==19.3.0" "attrs>=19.3.0" \
       --replace "bcrypt==3.1.7" "bcrypt>=3.1.7" \
       --replace "cryptography==3.2" "cryptography" \
+      --replace "pip>=8.0.3,<20.3" "pip" \
       --replace "requests==2.25.0" "requests>=2.24.0" \
       --replace "ruamel.yaml==0.15.100" "ruamel.yaml>=0.15.100"
     substituteInPlace tests/test_config.py --replace '"/usr"' '"/build/media"'
@@ -172,6 +174,8 @@ in with py.pkgs; buildPythonApplication rec {
     "test_device_tracker_not_home"
     # Racy https://github.com/home-assistant/core/issues/41425
     "test_cached_event_message"
+    # ValueError: count must be a positive integer (got 0)
+    "test_media_view"
   ];
 
   preCheck = ''

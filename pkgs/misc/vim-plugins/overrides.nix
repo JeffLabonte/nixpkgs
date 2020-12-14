@@ -273,6 +273,10 @@ self: super: {
     dependencies = with super; [ ultisnips ];
   });
 
+  nvim-lsputils = super.nvim-lsputils.overrideAttrs(old: {
+    dependencies = with super; [ popfix ];
+  });
+
   fzf-vim = super.fzf-vim.overrideAttrs(old: {
     dependencies = [ self.fzfWrapper ];
   });
@@ -452,6 +456,18 @@ self: super: {
     patches = [
       (substituteAll {
         src = ./patches/vim-grammarous/set_default_languagetool.patch;
+        inherit languagetool;
+      })
+    ];
+  });
+
+  lens-vim = super.lens-vim.overrideAttrs(old: {
+    # remove duplicate g:lens#animate in doc/lens.txt
+    # https://github.com/NixOS/nixpkgs/pull/105810#issuecomment-740007985
+    # https://github.com/camspiers/lens.vim/pull/40/files
+    patches = [
+      (substituteAll {
+        src = ./patches/lens-vim/remove_duplicate_g_lens_animate.patch;
         inherit languagetool;
       })
     ];

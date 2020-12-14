@@ -598,10 +598,10 @@ let
 
   Appcpm = buildPerlModule {
     pname = "App-cpm";
-    version = "0.994";
+    version = "0.996";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/S/SK/SKAJI/App-cpm-0.994.tar.gz";
-      sha256 = "4242ecb64aaae09034eddb1b338e005567ace29f2ac2d1bca4d4bcf4e15d21c4";
+      url = "mirror://cpan/authors/id/S/SK/SKAJI/App-cpm-0.996.tar.gz";
+      sha256 = "5684535511e5abc0aa8eb6105b13f5759b5d03b6808f30149508358b0a11f595";
     };
     buildInputs = [ ModuleBuildTiny ];
     propagatedBuildInputs = [ CPANCommonIndex CPANDistnameInfo ClassTiny CommandRunner ExtUtilsInstallPaths FileCopyRecursive Filepushd HTTPTinyish MenloLegacy ModuleCPANfile ParallelPipes locallib ];
@@ -1484,6 +1484,20 @@ let
     };
   };
 
+  BytesRandomSecureTiny = buildPerlPackage {
+    pname = "Bytes-Random-Secure-Tiny";
+    version = "1.011";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/D/DA/DAVIDO/Bytes-Random-Secure-Tiny-1.011.tar.gz";
+      sha256 = "03d967b5f82846909137d5ab9984ac570ac10a4401e0c602f3d2208c465ac982";
+    };
+    meta = {
+      description = "A tiny Perl extension to generate cryptographically-secure random bytes";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
   CacheCache = buildPerlPackage {
     pname = "Cache-Cache";
     version = "1.08";
@@ -1596,6 +1610,20 @@ let
       license = stdenv.lib.licenses.lgpl21Plus;
     };
     propagatedBuildInputs = [ Cairo Glib ];
+  };
+
+  CallContext = buildPerlPackage {
+    pname = "Call-Context";
+    version = "0.03";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/F/FE/FELIPE/Call-Context-0.03.tar.gz";
+      sha256 = "0ee6bf46bc72755adb7a6b08e79d12e207de5f7809707b3c353b58cb2f0b5a26";
+    };
+    meta = {
+      description = "Sanity-check calling context";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
   };
 
   cam_pdf = buildPerlModule {
@@ -3999,6 +4027,21 @@ let
     perlPreHook = stdenv.lib.optionalString (stdenv.isi686 || stdenv.isDarwin) "export LD=$CC";
   };
 
+  CryptFormat = buildPerlPackage {
+    pname = "Crypt-Format";
+    version = "0.10";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/F/FE/FELIPE/Crypt-Format-0.10.tar.gz";
+      sha256 = "89ddc010a6c91d5be7a1874a528eed6eda39f2c401c18e63d80ddfbf7127e2dd";
+    };
+    buildInputs = [ TestException TestFailWarnings ];
+    meta = {
+      description = "Conversion utilities for encryption applications";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
   CryptIDEA = buildPerlPackage {
     pname = "Crypt-IDEA";
     version = "1.10";
@@ -4359,6 +4402,23 @@ let
     meta = {
       homepage = "https://metacpan.org/release/Crypt-PBKDF2";
       description = "The PBKDF2 password hash algorithm";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
+  CryptPerl = buildPerlPackage {
+    pname = "Crypt-Perl";
+    version = "0.34";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/F/FE/FELIPE/Crypt-Perl-0.34.tar.gz";
+      sha256 = "0e1cb223df0041f6d9b010f11e6f97a97ab55a118a273938eb4fe85d403f1b11";
+    };
+    checkInputs = [ pkgs.openssl MathBigIntGMP ];
+    buildInputs = [ CallContext FileSlurp FileWhich TestClass TestDeep TestException TestFailWarnings TestNoWarnings ];
+    propagatedBuildInputs = [ BytesRandomSecureTiny ClassAccessor ConvertASN1 CryptFormat MathProvablePrime SymbolGet TryTiny ];
+    meta = {
+      description = "Cryptography in pure Perl";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
       maintainers = [ maintainers.sgo ];
     };
@@ -8206,6 +8266,22 @@ let
     };
   };
 
+  FileUtilTempdir = buildPerlPackage {
+    pname = "File-Util-Tempdir";
+    version = "0.034";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/P/PE/PERLANCAR/File-Util-Tempdir-0.034.tar.gz";
+      sha256 = "076wdwbvqsg64wr5np8j6pnmmhs9li64g9mw2h33zbbgbv7f47fi";
+    };
+    buildInputs = [ Perlosnames TestException ];
+    meta = {
+      homepage = "https://metacpan.org/release/File-Util-Tempdir";
+      description = "Cross-platform way to get system-wide & user private temporary directory";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
   FileWhich = buildPerlPackage {
     pname = "File-Which";
     version = "1.23";
@@ -8369,10 +8445,10 @@ let
 
   FutureAsyncAwait = buildPerlModule rec {
     pname = "Future-AsyncAwait";
-    version = "0.46";
+    version = "0.47";
     src = fetchurl {
       url = "mirror://cpan/authors/id/P/PE/PEVANS/Future-AsyncAwait-${version}.tar.gz";
-      sha256 = "1iqbs7n8923xjkai51hiczn5an8cskddl7qrfi30axjl1d56h6r0";
+      sha256 = "1ja85hzzl36sjikcyavjqy4m41f2yyrsr1ipypzi5mlw7clhmdi3";
     };
     buildInputs = [ TestRefcount ];
     propagatedBuildInputs = [ Future XSParseSublike ];
@@ -9822,6 +9898,22 @@ let
        license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
        homepage = "https://github.com/miyagawa/HTTP-Server-Simple-PSGI";
      };
+  };
+
+  HTTPTinyCache = buildPerlPackage {
+    pname = "HTTP-Tiny-Cache";
+    version = "0.002";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/P/PE/PERLANCAR/HTTP-Tiny-Cache-0.002.tar.gz";
+      sha256 = "08c6274x7fxl9r7cw1yiq21wv2mjgxw7db0wv5r80dyw377vfzbk";
+    };
+    propagatedBuildInputs = [ FileUtilTempdir Logger ];
+    meta = {
+      homepage = "https://metacpan.org/release/HTTP-Tiny-Cache";
+      description = "Cache HTTP::Tiny responses";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
   };
 
   HTTPTinyish = buildPerlPackage {
@@ -11471,6 +11563,21 @@ let
     buildInputs = [ PathTiny TestWarn ];
   };
 
+  Logger = buildPerlPackage {
+    pname = "Log-ger";
+    version = "0.037";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/P/PE/PERLANCAR/Log-ger-0.037.tar.gz";
+      sha256 = "0f5078g8lkyw09ijpz7dna5xw6yvpd0m283fdrw3s152xmr43qn2";
+    };
+    meta = {
+      homepage = "https://metacpan.org/release/Log-ger";
+      description = "A lightweight, flexible logging framework";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
   LogHandler = buildPerlModule {
     pname = "Log-Handler";
     version = "0.90";
@@ -12229,6 +12336,22 @@ let
     meta = {
       homepage = "https://github.com/danaj/Math-Prime-Util-GMP";
       description = "Utilities related to prime numbers, using GMP";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
+  MathProvablePrime = buildPerlPackage {
+    pname = "Math-ProvablePrime";
+    version = "0.045";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/F/FE/FELIPE/Math-ProvablePrime-0.045.tar.gz";
+      sha256 = "32dce42861ce065a875a91ec14c6557e89af07df10cc450d1c4ded13dcbe3dd5";
+    };
+    buildInputs = [ FileWhich TestClass TestDeep TestException TestNoWarnings ];
+    propagatedBuildInputs = [ BytesRandomSecureTiny ];
+    meta = {
+      description = "Generate a provable prime number, in pure Perl";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
       maintainers = [ maintainers.sgo ];
     };
@@ -13236,10 +13359,10 @@ let
 
   Mojolicious = buildPerlPackage {
     pname = "Mojolicious";
-    version = "8.63";
+    version = "8.67";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/S/SR/SRI/Mojolicious-8.63.tar.gz";
-      sha256 = "1nw500wi6kdyawc2aq37lnx6zfkpby3sczflh5pjz623i8nw4b66";
+      url = "mirror://cpan/authors/id/S/SR/SRI/Mojolicious-8.67.tar.gz";
+      sha256 = "0b1ajsfvpzcmy7qp1rjr2n1z263yk5bkzmal0kx72ajg1l1dd85v";
     };
     meta = {
       homepage = "https://mojolicious.org";
@@ -15629,18 +15752,31 @@ let
 
   NetZooKeeper = buildPerlPackage {
     pname = "Net-ZooKeeper";
-    version = "0.41";
-    src = fetchurl {
-      url = "mirror://cpan/authors/id/M/MA/MAF/Net-ZooKeeper-0.41.tar.gz";
-      sha256 = "91c177f30f82302eaf3173356eef05c21bc82163df752acb469177bd14a72db9";
+    version = "0.42pre";
+    src = fetchFromGitHub {
+      owner = "mark-5";
+      repo = "p5-net-zookeeper";
+      rev = "66e1a360aff9c39af728c36092b540a4b6045f70";
+      sha256 = "0xl8lcv9gfv0nn8vrrxa4az359whqdhmzw4r51nn3add8pn3s9ip";
     };
     buildInputs = [ pkgs.zookeeper_mt ];
+    nativeBuildInputs = [ pkgs.gnused ];
     # fix "error: format not a string literal and no format arguments [-Werror=format-security]"
     hardeningDisable = [ "format" ];
-    NIX_CFLAGS_COMPILE = "-I${pkgs.zookeeper_mt}/include";
+    # Make the async API accessible
+    NIX_CFLAGS_COMPILE = "-DTHREADED";
     NIX_CFLAGS_LINK = "-L${pkgs.zookeeper_mt.out}/lib -lzookeeper_mt";
+    # Most tests are skipped as no server is available in the sandbox.
+    # `t/35_log.t` seems to suffer from a race condition; remove it.  See
+    # https://github.com/NixOS/nixpkgs/pull/104889#issuecomment-737144513
+    preCheck = ''
+      rm t/35_log.t
+    '' + stdenv.lib.optionalString stdenv.isDarwin ''
+      rm t/30_connect.t
+      rm t/45_class.t
+    '';
     meta = {
-      maintainers = [ maintainers.limeytexan ];
+      maintainers = with maintainers; [ limeytexan ztzg ];
       homepage = "https://github.com/mark-5/p5-net-zookeeper";
       license = stdenv.lib.licenses.asl20;
     };
@@ -18841,6 +18977,22 @@ let
     doCheck = false;                             # FIXME: 2/293 test failures
   };
 
+  SymbolGet = buildPerlPackage {
+    pname = "Symbol-Get";
+    version = "0.10";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/F/FE/FELIPE/Symbol-Get-0.10.tar.gz";
+      sha256 = "0ee5568c5ae3573ca874e09e4d0524466cfc1ad9a2c24d0bc91d4c7b06f21d9c";
+    };
+    buildInputs = [ TestDeep TestException ];
+    propagatedBuildInputs = [ CallContext ];
+    meta = {
+      description = "Read Perl's symbol table programmatically";
+      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+      maintainers = [ maintainers.sgo ];
+    };
+  };
+
   SymbolGlobalName = buildPerlPackage {
     pname = "Symbol-Global-Name";
     version = "0.05";
@@ -21138,10 +21290,10 @@ let
 
   TextFormat = buildPerlModule {
     pname = "Text-Format";
-    version = "0.61";
+    version = "0.62";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/S/SH/SHLOMIF/Text-Format-0.61.tar.gz";
-      sha256 = "bb8a3b8ff515c85101baf553a769337f944a05cde81f111ae78aff416bf4ae2b";
+      url = "mirror://cpan/authors/id/S/SH/SHLOMIF/Text-Format-0.62.tar.gz";
+      sha256 = "0104z7jjv46kqh77rnx8kvmsbr5dy0s56xm01dckq4ly65br0hkx";
     };
     meta = {
       homepage = "https://metacpan.org/release/Text-Format";

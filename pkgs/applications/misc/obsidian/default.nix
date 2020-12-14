@@ -30,12 +30,12 @@ let
 
 in stdenv.mkDerivation rec {
   pname = "obsidian";
-  version = "0.9.15";
+  version = "0.9.20";
 
   src = fetchurl {
     url =
       "https://github.com/obsidianmd/obsidian-releases/releases/download/v${version}/obsidian-${version}.asar.gz";
-    sha256 = "0cfzci2l1bbjc5mqs3hjyy3grz5jk3qbna57vfcvxz36kcd5djv5";
+    sha256 = "19yhmqaz5mynl879q38g338q4w8mwx75fnl25bhwrvy7yy3aa23l";
   };
 
   nativeBuildInputs = [ makeWrapper graphicsmagick ];
