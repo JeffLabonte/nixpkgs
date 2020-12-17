@@ -100,6 +100,12 @@
     githubId = 178750;
     name = "Andreas Baldeau";
   };
+  abathur = {
+    email = "travis.a.everett+nixpkgs@gmail.com";
+    github = "abathur";
+    githubId = 2548365;
+    name = "Travis A. Everett";
+  };
   abbe = {
     email = "ashish.is@lostca.se";
     github = "wahjava";
@@ -183,7 +189,7 @@
     name = "Adrien Devresse";
   };
   adisbladis = {
-    email = "adis@blad.is";
+    email = "adisbladis@gmail.com";
     github = "adisbladis";
     githubId = 63286;
     name = "Adam Hose";
@@ -9074,6 +9080,12 @@
     github = "troydm";
     githubId = 483735;
     name = "Dmitry Geurkov";
+  };
+  truh = {
+    email = "jakob-nixos@truh.in";
+    github = "truh";
+    githubId = 1183303;
+    name = "Jakob Klepp";
   };
   tscholak = {
     email = "torsten.scholak@googlemail.com";

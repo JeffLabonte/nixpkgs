@@ -265,6 +265,28 @@
       located in <literal>/run/rspamd</literal> instead of <literal>/run</literal>.
     </para>
    </listitem>
+   <listitem>
+    <para>
+      Enabling the Tor client no longer silently also enables and
+      configures Privoxy, and the
+      <varname>services.tor.client.privoxy.enable</varname> option has
+      been removed.  To enable Privoxy, and to configure it to use
+      Tor's faster port, use the following configuration:
+    </para>
+    <programlisting>
+      <xref linkend="opt-services.privoxy.enable" /> = true;
+      <xref linkend="opt-services.privoxy.enableTor" /> = true;
+    </programlisting>
+   </listitem>
+   <listitem>
+     <para>
+       The options <literal>services.slurm.dbdserver.storagePass</literal>
+       and <literal>services.slurm.dbdserver.configFile</literal> have been removed.
+       Use <literal>services.slurm.dbdserver.storagePassFile</literal> instead to provide the database password.
+       Extra config options can be given via the option <literal>services.slurm.dbdserver.extraConfig</literal>. The actual configuration file is created on the fly on startup of the service.
+       This avoids that the password gets exposed in the nix store.
+     </para>
+   </listitem>
   </itemizedlist>
  </section>
 
@@ -368,6 +390,13 @@
      on the file system. We are using the path <literal>/etc/unbound/unbound.conf</literal> as that is the
      default in the CLI tooling which in turn enables us to use
      <literal>unbound-control</literal> without passing a custom configuration location.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     The <literal>services.dnscrypt-proxy2</literal> module now takes the upstream's example configuration and updates it with the user's settings.
+
+     An option has been added to restore the old behaviour if you prefer to declare the configuration from scratch.
     </para>
    </listitem>
    <listitem>

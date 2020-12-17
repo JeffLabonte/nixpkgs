@@ -4789,6 +4789,8 @@ in {
 
   pre-commit = callPackage ../development/python-modules/pre-commit { };
 
+  pre-commit-hooks = callPackage ../development/python-modules/pre-commit-hooks { };
+
   preggy = callPackage ../development/python-modules/preggy { };
 
   premailer = callPackage ../development/python-modules/premailer { };
@@ -7200,7 +7202,9 @@ in {
 
   telegram = callPackage ../development/python-modules/telegram { };
 
-  telethon = callPackage ../development/python-modules/telethon { };
+  telethon = callPackage ../development/python-modules/telethon {
+    inherit (pkgs) openssl;
+  };
 
   telethon-session-sqlalchemy = callPackage ../development/python-modules/telethon-session-sqlalchemy { };
 
