@@ -504,7 +504,7 @@ in {
 
   awesome-slugify = callPackage ../development/python-modules/awesome-slugify { };
 
-  awkward = callPackage ../development/python-modules/awkward { };
+  awkward0 = callPackage ../development/python-modules/awkward0 { };
   awkward1 = callPackage ../development/python-modules/awkward1 { };
 
   aws-adfs = callPackage ../development/python-modules/aws-adfs { };
@@ -4789,6 +4789,8 @@ in {
 
   pre-commit = callPackage ../development/python-modules/pre-commit { };
 
+  pre-commit-hooks = callPackage ../development/python-modules/pre-commit-hooks { };
+
   preggy = callPackage ../development/python-modules/preggy { };
 
   premailer = callPackage ../development/python-modules/premailer { };
@@ -7200,7 +7202,9 @@ in {
 
   telegram = callPackage ../development/python-modules/telegram { };
 
-  telethon = callPackage ../development/python-modules/telethon { };
+  telethon = callPackage ../development/python-modules/telethon {
+    inherit (pkgs) openssl;
+  };
 
   telethon-session-sqlalchemy = callPackage ../development/python-modules/telethon-session-sqlalchemy { };
 
@@ -7624,9 +7628,9 @@ in {
 
   update-dotdee = callPackage ../development/python-modules/update-dotdee { };
 
-  uproot = callPackage ../development/python-modules/uproot { };
+  uproot3 = callPackage ../development/python-modules/uproot3 { };
 
-  uproot-methods = callPackage ../development/python-modules/uproot-methods { };
+  uproot3-methods = callPackage ../development/python-modules/uproot3-methods { };
 
   uptime = callPackage ../development/python-modules/uptime { };
 
