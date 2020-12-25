@@ -2,7 +2,7 @@
 # Do not edit!
 
 {
-  version = "2020.12.0";
+  version = "2020.12.1";
   components = {
     "abode" = ps: with ps; [ abodepy ];
     "accuweather" = ps: with ps; [ accuweather ];
@@ -113,7 +113,7 @@
     "channels" = ps: with ps; [ ]; # missing inputs: pychannels
     "circuit" = ps: with ps; [ ]; # missing inputs: circuit-webhook
     "cisco_ios" = ps: with ps; [ pexpect ];
-    "cisco_mobility_express" = ps: with ps; [ ]; # missing inputs: ciscomobilityexpress
+    "cisco_mobility_express" = ps: with ps; [ ciscomobilityexpress ];
     "cisco_webex_teams" = ps: with ps; [ ]; # missing inputs: webexteamssdk
     "citybikes" = ps: with ps; [ ];
     "clementine" = ps: with ps; [ ]; # missing inputs: python-clementine-remote

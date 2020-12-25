@@ -1347,6 +1347,8 @@ in
 
   wiimms-iso-tools = callPackage ../tools/filesystems/wiimms-iso-tools { };
 
+  waypoint = callPackage ../applications/networking/cluster/waypoint { };
+
   xcodeenv = callPackage ../development/mobile/xcodeenv { };
 
   ssh-agents = callPackage ../tools/networking/ssh-agents { };
@@ -1746,6 +1748,8 @@ in
   ceres-solver = callPackage ../development/libraries/ceres-solver {
     gflags = null; # only required for examples/tests
   };
+
+  craftos-pc = callPackage ../misc/emulators/craftos-pc { };
 
   gcdemu = callPackage ../misc/emulators/cdemu/gui.nix { };
 
@@ -2959,9 +2963,7 @@ in
 
   cmt = callPackage ../applications/audio/cmt {};
 
-  codimd = callPackage ../servers/web-apps/codimd {
-    nodejs = nodejs-12_x;
-  };
+  hedgedoc = callPackage ../servers/web-apps/hedgedoc { };
 
   colord = callPackage ../tools/misc/colord { };
 
@@ -3331,13 +3333,13 @@ in
 
   ddrutility = callPackage ../tools/system/ddrutility { };
 
-  deluge-2_x = callPackage ../applications/networking/p2p/deluge/2 {
+  deluge-2_x = callPackage ../applications/networking/p2p/deluge {
     pythonPackages = python3Packages;
-    libtorrentRasterbar = libtorrentRasterbar.override { python = python3; };
+    libtorrent-rasterbar = libtorrent-rasterbar-1_2_x.override { python = python3; };
   };
-  deluge-1_x = callPackage ../applications/networking/p2p/deluge/1 {
+  deluge-1_x = callPackage ../applications/networking/p2p/deluge/1.nix {
     pythonPackages = python2Packages;
-    libtorrentRasterbar = libtorrentRasterbar-1_1_x;
+    libtorrent-rasterbar = libtorrent-rasterbar-1_1_x;
   };
   deluge = deluge-2_x;
 
@@ -3884,6 +3886,8 @@ in
   featherpad = qt5.callPackage ../applications/editors/featherpad {};
 
   feedreader = callPackage ../applications/networking/feedreaders/feedreader {};
+
+  feeds = callPackage ../applications/networking/feedreaders/feeds {};
 
   fend = callPackage ../tools/misc/fend { };
 
@@ -4775,6 +4779,8 @@ in
 
   icecast = callPackage ../servers/icecast { };
 
+  icemon = libsForQt5.callPackage ../applications/networking/icemon { };
+
   icepeak = haskell.lib.justStaticExecutables haskellPackages.icepeak;
 
   iceshelf = callPackage ../tools/backup/iceshelf { };
@@ -5087,6 +5093,8 @@ in
 
   keyfuzz = callPackage ../tools/inputmethods/keyfuzz { };
 
+  keystore-explorer = callPackage ../applications/misc/keystore-explorer { };
+
   kibana6 = callPackage ../development/tools/misc/kibana/6.x.nix { };
   kibana6-oss = callPackage ../development/tools/misc/kibana/6.x.nix {
     enableUnfree = false;
@@ -5134,7 +5142,7 @@ in
 
   ksmoothdock = libsForQt514.callPackage ../applications/misc/ksmoothdock { };
 
-  kstars = libsForQt514.callPackage ../applications/science/astronomy/kstars { };
+  kstars = libsForQt5.callPackage ../applications/science/astronomy/kstars { };
 
   kytea = callPackage ../tools/text/kytea { };
 
@@ -5169,6 +5177,8 @@ in
   libcoap = callPackage ../applications/networking/libcoap {};
 
   libcryptui = callPackage ../development/libraries/libcryptui { };
+
+  libsmartcols = callPackage ../development/libraries/libsmartcols { };
 
   libsmi = callPackage ../development/libraries/libsmi { };
 
@@ -5733,6 +5743,8 @@ in
 
   mgba = libsForQt5.callPackage ../misc/emulators/mgba { };
 
+  microdnf = callPackage ../tools/package-management/microdnf { };
+
   microserver = callPackage ../servers/microserver { };
 
   midisheetmusic = callPackage ../applications/audio/midisheetmusic { };
@@ -6046,6 +6058,9 @@ in
   nomad_0_12 = callPackage ../applications/networking/cluster/nomad/0.12.nix {
     buildGoPackage = buildGo114Package;
   };
+  nomad_1_0 = callPackage ../applications/networking/cluster/nomad/1.0.nix {
+    buildGoPackage = buildGo115Package;
+  };
 
   notable = callPackage ../applications/misc/notable { };
 
@@ -6156,6 +6171,8 @@ in
   nuttcp = callPackage ../tools/networking/nuttcp { };
 
   nssmdns = callPackage ../tools/networking/nss-mdns { };
+
+  nvimpager = callPackage ../tools/misc/nvimpager { };
 
   nwdiag = with python3Packages; toPythonApplication nwdiag;
 
@@ -6838,7 +6855,7 @@ in
 
   qshowdiff = callPackage ../tools/text/qshowdiff { };
 
-  qr-filetransfer = callPackage ../tools/networking/qr-filetransfer { };
+  qrcp = callPackage ../tools/networking/qrcp { };
 
   qtikz = libsForQt5.callPackage ../applications/graphics/ktikz { };
 
@@ -7880,6 +7897,8 @@ in
 
   tty-clock = callPackage ../tools/misc/tty-clock { };
 
+  tty-share = callPackage ../applications/misc/tty-share { };
+
   ttyplot = callPackage ../tools/misc/ttyplot { };
 
   ttyrec = callPackage ../tools/misc/ttyrec { };
@@ -8675,8 +8694,8 @@ in
   any-nix-shell = callPackage ../shells/any-nix-shell { };
 
   bash = lowPrio (callPackage ../shells/bash/4.4.nix { });
-  bash_5 = lowPrio (callPackage ../shells/bash/5.0.nix { });
-  bashInteractive_5 = lowPrio (callPackage ../shells/bash/5.0.nix {
+  bash_5 = lowPrio (callPackage ../shells/bash/5.1.nix { });
+  bashInteractive_5 = lowPrio (callPackage ../shells/bash/5.1.nix {
     interactive = true;
     withDocs = true;
   });
@@ -9028,6 +9047,8 @@ in
   fasm-bin = callPackage ../development/compilers/fasm/bin.nix { };
 
   fasmg = callPackage ../development/compilers/fasmg { };
+
+  flasm = callPackage ../development/compilers/flasm { };
 
   flyctl = callPackage ../development/web/flyctl { };
 
@@ -9733,7 +9754,6 @@ in
 
   knightos-kimg = callPackage ../development/tools/knightos/kimg {
     asciidoc = asciidoc-full;
-    imagemagick = imagemagick7Big;
   };
 
   knightos-kpack = callPackage ../development/tools/knightos/kpack { };
@@ -10049,11 +10069,9 @@ in
   # So this commit doesn't remove the 1.45.2 release.
   rust_1_45 = callPackage ../development/compilers/rust/1_45.nix {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Security;
-    llvmPackages = if stdenv.cc.isClang then llvmPackages_5 else llvmPackages_10;
   };
   rust_1_48 = callPackage ../development/compilers/rust/1_48.nix {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Security;
-    llvmPackages = if stdenv.cc.isClang then llvmPackages_5 else llvmPackages_11;
   };
   rust = rust_1_48;
 
@@ -10067,7 +10085,6 @@ in
 
   buildRustCrate = callPackage ../build-support/rust/build-rust-crate { };
   buildRustCrateHelpers = callPackage ../build-support/rust/build-rust-crate/helpers.nix { };
-  buildRustCrateTests = recurseIntoAttrs (callPackage ../build-support/rust/build-rust-crate/test { });
   cratesIO = callPackage ../build-support/rust/crates-io.nix { };
 
   cargo-web = callPackage ../development/tools/cargo-web {
@@ -10553,19 +10570,16 @@ in
   octave = callPackage ../development/interpreters/octave {
     python = python3;
     mkDerivation = stdenv.mkDerivation;
-    jdk = jdk8; # TODO: remove override https://github.com/NixOS/nixpkgs/pull/89731
   };
   octave-jit = callPackage ../development/interpreters/octave {
     python = python3;
     enableJIT = true;
     mkDerivation = stdenv.mkDerivation;
-    jdk = jdk8; # TODO: remove override https://github.com/NixOS/nixpkgs/pull/89731
   };
   octaveFull = libsForQt5.callPackage ../development/interpreters/octave {
     python = python3;
     enableQt = true;
     overridePlatforms = ["x86_64-linux" "x86_64-darwin"];
-    jdk = jdk8; # TODO: remove override https://github.com/NixOS/nixpkgs/pull/89731
   };
 
   ocropus = callPackage ../applications/misc/ocropus { };
@@ -10973,15 +10987,6 @@ in
   ant = apacheAnt;
 
   apacheKafka = apacheKafka_2_5;
-  apacheKafka_0_9 = callPackage ../servers/apache-kafka { majorVersion = "0.9"; };
-  apacheKafka_0_10 = callPackage ../servers/apache-kafka { majorVersion = "0.10"; };
-  apacheKafka_0_11 = callPackage ../servers/apache-kafka { majorVersion = "0.11"; };
-  apacheKafka_1_0 = callPackage ../servers/apache-kafka { majorVersion = "1.0"; };
-  apacheKafka_1_1 = callPackage ../servers/apache-kafka { majorVersion = "1.1"; };
-  apacheKafka_2_0 = callPackage ../servers/apache-kafka { majorVersion = "2.0"; };
-  apacheKafka_2_1 = callPackage ../servers/apache-kafka { majorVersion = "2.1"; };
-  apacheKafka_2_2 = callPackage ../servers/apache-kafka { majorVersion = "2.2"; };
-  apacheKafka_2_3 = callPackage ../servers/apache-kafka { majorVersion = "2.3"; };
   apacheKafka_2_4 = callPackage ../servers/apache-kafka { majorVersion = "2.4"; };
   apacheKafka_2_5 = callPackage ../servers/apache-kafka { majorVersion = "2.5"; };
 
@@ -12219,6 +12224,8 @@ in
 
   universal-ctags = callPackage ../development/tools/misc/universal-ctags { };
 
+  unused = callPackage ../development/tools/misc/unused { };
+
   vagrant = callPackage ../development/tools/vagrant {};
 
   vala-language-server = callPackage ../development/tools/vala-language-server {};
@@ -12739,6 +12746,8 @@ in
   doctest = callPackage ../development/libraries/doctest { };
 
   docopt_cpp = callPackage ../development/libraries/docopt_cpp { };
+
+  docopts = callPackage ../development/tools/misc/docopts { };
 
   dotconf = callPackage ../development/libraries/dotconf { };
 
@@ -13970,6 +13979,8 @@ in
 
   libdnet = callPackage ../development/libraries/libdnet { };
 
+  libdnf = callPackage ../tools/package-management/libdnf { };
+
   libdrm = callPackage ../development/libraries/libdrm { };
 
   libdv = callPackage ../development/libraries/libdv { };
@@ -14671,13 +14682,18 @@ in
 
   libtomcrypt = callPackage ../development/libraries/libtomcrypt { };
 
-  libtorrentRasterbar-1_2_x = callPackage ../development/libraries/libtorrent-rasterbar/1.2 {
+  libtorrent-rasterbar-2_0_x = callPackage ../development/libraries/libtorrent-rasterbar {
+    inherit (darwin.apple_sdk.frameworks) SystemConfiguration;
+    python = python3;
+  };
+
+  libtorrent-rasterbar-1_2_x = callPackage ../development/libraries/libtorrent-rasterbar/1.2.nix {
     inherit (darwin.apple_sdk.frameworks) SystemConfiguration;
   };
 
-  libtorrentRasterbar-1_1_x = callPackage ../development/libraries/libtorrent-rasterbar/1.1 { };
+  libtorrent-rasterbar-1_1_x = callPackage ../development/libraries/libtorrent-rasterbar/1.1.nix { };
 
-  libtorrentRasterbar = libtorrentRasterbar-1_2_x;
+  libtorrent-rasterbar = libtorrent-rasterbar-2_0_x;
 
   # this is still the new version of the old API
   libtoxcore-new = callPackage ../development/libraries/libtoxcore/new-api.nix { };
@@ -15459,7 +15475,7 @@ in
 
   qjson = callPackage ../development/libraries/qjson { };
 
-  qolibri = libsForQt514.callPackage ../applications/misc/qolibri { };
+  qolibri = libsForQt5.callPackage ../applications/misc/qolibri { };
 
   qt3 = callPackage ../development/libraries/qt-3 {
     libpng = libpng12;
@@ -15579,7 +15595,7 @@ in
       kwin kwrited milou oxygen plasma-browser-integration plasma-desktop
       plasma-integration plasma-nm plasma-pa plasma-thunderbolt plasma-vault plasma-workspace
       plasma-workspace-wallpapers polkit-kde-agent powerdevil sddm-kcm
-      systemsettings user-manager xdg-desktop-portal-kde
+      systemsettings xdg-desktop-portal-kde
     ;
 
     inherit ((plasma5.override { libsForQt5 = self; }).thirdParty)
@@ -16012,6 +16028,8 @@ in
 
   soapyairspy = callPackage ../applications/radio/soapyairspy { };
 
+  soapyaudio = callPackage ../applications/radio/soapyaudio { };
+
   soapybladerf = callPackage ../applications/radio/soapybladerf { };
 
   soapyhackrf = callPackage ../applications/radio/soapyhackrf { };
@@ -16024,6 +16042,7 @@ in
     extraPackages = [
       limesuite
       soapyairspy
+      soapyaudio
       soapybladerf
       soapyhackrf
       soapyremote
@@ -16176,10 +16195,6 @@ in
   };
 
   sundials = callPackage ../development/libraries/sundials {
-    python = python3;
-  };
-
-  sundials_2 = callPackage ../development/libraries/sundials/2.x.nix {
     python = python3;
   };
 
@@ -16427,7 +16442,7 @@ in
   vulkan-tools-lunarg = callPackage ../tools/graphics/vulkan-tools-lunarg { };
   vulkan-validation-layers = callPackage ../development/tools/vulkan-validation-layers { };
 
-  vtkWithQt5 = vtk.override { qtLib = qt514; };
+  vtkWithQt5 = vtk.override { qtLib = qt515; };
 
   vxl = callPackage ../development/libraries/vxl {
     libpng = libpng12;
@@ -16627,8 +16642,10 @@ in
 
   zmqpp = callPackage ../development/libraries/zmqpp { };
 
+  libzra = callPackage ../development/libraries/libzra { };
+
   zig = callPackage ../development/compilers/zig {
-    llvmPackages = llvmPackages_10;
+    llvmPackages = llvmPackages_11;
   };
 
   zimlib = callPackage ../development/libraries/zimlib { };
@@ -16814,17 +16831,13 @@ in
 
   perlcritic = perlPackages.PerlCritic;
 
-  sqitchMysql = callPackage ../development/tools/misc/sqitch {
-    name = "sqitch-mysql";
-    databaseModule = perlPackages.DBDmysql;
-    sqitchModule = perlPackages.AppSqitch;
-  };
+  sqitchMysql = (callPackage ../development/tools/misc/sqitch {
+    mysqlSupport = true;
+  }).overrideAttrs (oldAttrs: { pname = "sqitch-mysql"; });
 
-  sqitchPg = callPackage ../development/tools/misc/sqitch {
-    name = "sqitch-pg";
-    databaseModule = perlPackages.DBDPg;
-    sqitchModule = perlPackages.AppSqitch;
-  };
+  sqitchPg = (callPackage ../development/tools/misc/sqitch {
+    postgresqlSupport = true;
+  }).overrideAttrs (oldAttrs: { pname = "sqitch-pg"; });
 
   ### DEVELOPMENT / R MODULES
 
@@ -17011,6 +17024,8 @@ in
 
   diod = callPackage ../servers/diod { lua = lua5_1; };
 
+  directx-shader-compiler = callPackage ../tools/graphics/directx-shader-compiler {};
+
   dkimproxy = callPackage ../servers/mail/dkimproxy { };
 
   do-agent = callPackage ../servers/monitoring/do-agent { };
@@ -17122,6 +17137,8 @@ in
   https-dns-proxy = callPackage ../servers/dns/https-dns-proxy { };
 
   hydron = callPackage ../servers/hydron { };
+
+  icecream = callPackage ../servers/icecream { };
 
   icingaweb2 = callPackage ../servers/icingaweb2 { };
   icingaweb2Modules = {
@@ -21639,6 +21656,7 @@ in
   };
 
   jetbrains = (recurseIntoAttrs (callPackages ../applications/editors/jetbrains {
+    vmopts = config.jetbrains.vmopts or null;
     jdk = jetbrains.jdk;
   }) // {
     jdk = callPackage ../development/compilers/jetbrains-jdk {  };
@@ -22659,6 +22677,8 @@ in
 
   mda_lv2 = callPackage ../applications/audio/mda-lv2 { };
 
+  mediaelch = libsForQt5.callPackage ../applications/misc/mediaelch { };
+
   mediainfo = callPackage ../applications/misc/mediainfo { };
 
   mediainfo-gui = callPackage ../applications/misc/mediainfo-gui { };
@@ -22930,7 +22950,7 @@ in
     if stdenv.isDarwin then
       callPackage ../applications/audio/musescore/darwin.nix { }
     else
-      libsForQt5.callPackage ../applications/audio/musescore { };
+      libsForQt514.callPackage ../applications/audio/musescore { };
 
   mmh = callPackage ../applications/networking/mailreaders/mmh { };
   mutt = callPackage ../applications/networking/mailreaders/mutt { };
@@ -24751,6 +24771,14 @@ in
   way-cooler = throw ("way-cooler is abandoned by its author: " +
     "https://way-cooler.org/blog/2020/01/09/way-cooler-post-mortem.html");
 
+  wayfireApplications = wayfireApplications-unwrapped.withPlugins (plugins: [ plugins.wf-shell ]);
+  inherit (wayfireApplications) wayfire wcm;
+  wayfireApplications-unwrapped = callPackage ../applications/window-managers/wayfire/applications.nix { };
+  wayfirePlugins = callPackage ../applications/window-managers/wayfire/plugins.nix {
+    inherit (wayfireApplications-unwrapped) wayfire;
+  };
+  wf-config = callPackage ../applications/window-managers/wayfire/wf-config.nix { };
+
   waypipe = callPackage ../applications/networking/remote/waypipe { };
 
   wayv = callPackage ../tools/X11/wayv {};
@@ -25847,6 +25875,8 @@ in
 
   mari0 = callPackage ../games/mari0 { };
 
+  manaplus = callPackage ../games/manaplus { };
+
   mars = callPackage ../games/mars { };
 
   megaglest = callPackage ../games/megaglest {};
@@ -26028,6 +26058,8 @@ in
   quake3e = callPackage ../games/quake3/quake3e { };
 
   quantumminigolf = callPackage ../games/quantumminigolf {};
+
+  r2mod_cli = callPackage ../games/r2mod_cli { };
 
   racer = callPackage ../games/racer { };
 
@@ -26471,10 +26503,8 @@ in
   lumina = recurseIntoAttrs (callPackage ../desktops/lumina { });
 
   lxqt = recurseIntoAttrs (import ../desktops/lxqt {
-    # TODO: Update these to qt515 at some point. When doing it, please remove
-    # the choice of libsForQt5*.sddm in sddm's module.
-    qt5 = qt514;
-    libsForQt5 = libsForQt514;
+    inherit qt5;
+    inherit libsForQt5;
     inherit pkgs;
     inherit (lib) makeScope;
   });
@@ -27313,7 +27343,7 @@ in
     ecl = null;
   };
   maxima-ecl = maxima.override {
-    ecl = ecl_16_1_2;
+    inherit ecl;
     ecl-fasl = true;
     sbcl = null;
   };
