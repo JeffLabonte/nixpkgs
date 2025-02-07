@@ -4625,6 +4625,11 @@
     githubId = 87764;
     name = "Ben Ford";
   };
+  commiterate = {
+    github = "commiterate";
+    githubId = 111539270;
+    name = "commiterate";
+  };
   CompEng0001 = {
     email = "sb1501@canterbury.ac.uk";
     github = "CompEng0001";
@@ -10848,6 +10853,12 @@
     github = "jglukasik";
     githubId = 6445082;
     name = "Joseph Lukasik";
+  };
+  jhahn = {
+    email = "mail.jhahn@gmail.com";
+    github = "jrhahn";
+    githubId = 56772267;
+    name = "Jürgen Hahn";
   };
   jhh = {
     email = "jeff@j3ff.io";
@@ -23719,6 +23730,12 @@
     github = "hmuehlhans";
     githubId = 9870613;
     name = "Hubert Mühlhans";
+  };
+  tris203 = {
+    email = "admin@snappeh.com";
+    github = "tris203";
+    githubId = 18444302;
+    name = " Tristan Knight";
   };
   trishtzy = {
     github = "trishtzy";
