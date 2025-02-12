@@ -8,21 +8,18 @@
   pytestCheckHook,
   langgraph-sdk,
   poetry-core,
-  pythonOlder,
 }:
 
 buildPythonPackage rec {
   pname = "langgraph-checkpoint-sqlite";
-  version = "2.0.13";
+  version = "2.0.3";
   pyproject = true;
-
-  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "langchain-ai";
     repo = "langgraph";
-    tag = "checkpointpostgres==${version}";
-    hash = "sha256-Vz2ZoikEZuMvt3j9tvBIcXCwWSrCV8MI7x9PIHodl8Y=";
+    tag = "checkpointsqlite==${version}";
+    hash = "sha256-u3tKh63bOu+Ko2YynEfxQ/nGElEfwwTQ6Z1RhqF51Qs=";
   };
 
   sourceRoot = "${src.name}/libs/checkpoint-sqlite";
@@ -45,11 +42,12 @@ buildPythonPackage rec {
   ];
 
   passthru = {
-    updateScript = langgraph-sdk.updateScript;
+    inherit (langgraph-sdk) updateScript;
+    skipBulkUpdate = true; # Broken, see https://github.com/NixOS/nixpkgs/issues/379898
   };
 
   meta = {
-    changelog = "https://github.com/langchain-ai/langgraph/releases/tag/checkpointsqlite==${src.tag}";
+    changelog = "https://github.com/langchain-ai/langgraph/releases/tag/checkpointsqlite==${version}";
     description = "Library with a SQLite implementation of LangGraph checkpoint saver";
     homepage = "https://github.com/langchain-ai/langgraph/tree/main/libs/checkpoint-sqlite";
     license = lib.licenses.mit;

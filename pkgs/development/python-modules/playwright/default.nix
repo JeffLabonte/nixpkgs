@@ -13,6 +13,9 @@
   setuptools-scm,
   playwright-driver,
   nixosTests,
+  writeText,
+  runCommand,
+  pythonPackages,
   nodejs,
 }:
 
@@ -22,15 +25,15 @@ in
 buildPythonPackage rec {
   pname = "playwright";
   # run ./pkgs/development/python-modules/playwright/update.sh to update
-  version = "1.49.1";
+  version = "1.50.0";
   pyproject = true;
-  disabled = pythonOlder "3.7";
+  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "microsoft";
     repo = "playwright-python";
     tag = "v${version}";
-    hash = "sha256-RwUjFofC/scwVClKncYWp3RbIUeKsWokVjcGibdrrtc=";
+    hash = "sha256-g32QwEA4Ofzh7gVEsC++uA/XqT1eIrUH+fQi15SRxko=";
   };
 
   patches = [
@@ -52,13 +55,12 @@ buildPythonPackage rec {
     git commit -m "workaround setuptools-scm"
 
     substituteInPlace pyproject.toml \
-      --replace 'requires = ["setuptools==75.5.0", "setuptools-scm==8.1.0", "wheel==0.45.0", "auditwheel==6.1.0"]' \
-                'requires = ["setuptools", "setuptools-scm", "wheel"]'
+      --replace-fail 'requires = ["setuptools==75.6.0", "setuptools-scm==8.1.0", "wheel==0.45.1", "auditwheel==6.2.0"]' \
+                     'requires = ["setuptools", "setuptools-scm", "wheel"]'
 
-    # Skip trying to download and extract the driver.
+    # setup.py downloads and extracts the driver.
     # This is done manually in postInstall instead.
-    substituteInPlace setup.py \
-      --replace "self._download_and_extract_local_driver(base_wheel_bundles)" ""
+    rm setup.py
 
     # Set the correct driver path with the help of a patch in patches
     substituteInPlace playwright/_impl/_driver.py \
@@ -82,6 +84,16 @@ buildPythonPackage rec {
     pyee
   ];
 
+  setupHook = writeText "setupHook.sh" ''
+    addBrowsersPath () {
+      if [[ ! -v PLAYWRIGHT_BROWSERS_PATH ]] ; then
+        export PLAYWRIGHT_BROWSERS_PATH="${playwright-driver.browsers}"
+      fi
+    }
+
+    addEnvHooks "$targetOffset" addBrowsersPath
+  '';
+
   postInstall = ''
     ln -s ${driver} $out/${python.sitePackages}/playwright/driver
   '';
@@ -97,10 +109,16 @@ buildPythonPackage rec {
       {
         driver = playwright-driver;
         browsers = playwright-driver.browsers;
+        env = runCommand "playwright-env-test" {
+          buildInputs = [ pythonPackages.playwright ];
+        } "python ${./test.py}";
       }
       // lib.optionalAttrs stdenv.hostPlatform.isLinux {
         inherit (nixosTests) playwright-python;
       };
+    # Package and playwright driver versions are tightly coupled.
+    # Use the update script to ensure synchronized updates.
+    skipBulkUpdate = true;
     updateScript = ./update.sh;
   };
 

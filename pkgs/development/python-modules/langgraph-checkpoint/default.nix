@@ -10,21 +10,18 @@
   pytest-asyncio,
   pytest-mock,
   pytestCheckHook,
-  pythonOlder,
 }:
 
 buildPythonPackage rec {
   pname = "langgraph-checkpoint";
-  version = "2.0.13";
+  version = "2.0.10";
   pyproject = true;
-
-  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "langchain-ai";
     repo = "langgraph";
-    tag = "checkpointpostgres==${version}";
-    hash = "sha256-Vz2ZoikEZuMvt3j9tvBIcXCwWSrCV8MI7x9PIHodl8Y=";
+    tag = "checkpoint==${version}";
+    hash = "sha256-Bs8XWSyI/6a756iWXT40vvNIe/XZ/vnMsZbXjTW3770=";
   };
 
   sourceRoot = "${src.name}/libs/checkpoint";
@@ -53,10 +50,11 @@ buildPythonPackage rec {
 
   passthru = {
     updateScript = langgraph-sdk.updateScript;
+    skipBulkUpdate = true; # Broken, see https://github.com/NixOS/nixpkgs/issues/379898
   };
 
   meta = {
-    changelog = "https://github.com/langchain-ai/langgraph/releases/tag/checkpoint==${src.tag}";
+    changelog = "https://github.com/langchain-ai/langgraph/releases/tag/checkpoint==${version}";
     description = "Library with base interfaces for LangGraph checkpoint savers";
     homepage = "https://github.com/langchain-ai/langgraph/tree/main/libs/checkpoint";
     license = lib.licenses.mit;

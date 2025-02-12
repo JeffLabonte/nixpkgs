@@ -11,6 +11,7 @@
   pydantic,
   tabulate,
   pyyaml,
+  semchunk,
   typing-extensions,
   transformers,
   typer,
@@ -22,14 +23,14 @@
 
 buildPythonPackage rec {
   pname = "docling-core";
-  version = "2.16.1";
+  version = "2.17.2";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "DS4SD";
     repo = "docling-core";
     tag = "v${version}";
-    hash = "sha256-oW/jX9IHCpztc0FDm8/3OzDmOxM92jrkFq/JeAcI9ZA=";
+    hash = "sha256-JO6WI2juehO825QOO0FkD58OigEoLGOZAnPBOD4b1tI=";
   };
 
   build-system = [
@@ -46,25 +47,29 @@ buildPythonPackage rec {
     pyyaml
     typing-extensions
     transformers
-    # semchunk
+    semchunk
     typer
     latex2mathml
   ];
 
   pythonRelaxDeps = [
     "pillow"
+    "typer"
   ];
 
   pythonImportsCheck = [
     "docling_core"
   ];
 
-  doCheck = false;
-
   nativeCheckInputs = [
     jsondiff
     pytestCheckHook
     requests
+  ];
+
+  disabledTestPaths = [
+    # attempts to download models
+    "test/test_hybrid_chunker.py"
   ];
 
   meta = {
