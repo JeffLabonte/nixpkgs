@@ -64,7 +64,7 @@ let
   srcs = {
     x86_64-linux = fetchzip {
       url = "https://release.axocdn.com/linux/GitKraken-v${version}.tar.gz";
-      hash = "sha256-v+Ryab0kG6MBJ6bXpC3AqVis93VKKBUjUmckmVsvBwQ=";
+      hash = "sha256-fNx3mZnoMkEd1RlvcEmnncX0cLJhRjbf2t4CfB5eRl4=";
     };
 
     x86_64-darwin = fetchzip {
