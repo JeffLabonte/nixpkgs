@@ -17,20 +17,20 @@
 
 buildNpmPackage rec {
   pname = "bruno";
-  version = "1.38.1";
+  version = "1.39.1";
 
   src = fetchFromGitHub {
     owner = "usebruno";
     repo = "bruno";
     tag = "v${version}";
-    hash = "sha256-VZRVmOJkNjZLpIG5oBIbDVJl8EZhOtBMywwJKdfD9Hc=";
+    hash = "sha256-WPbiQWfGE4rFxb/Xazxm+nu+RINLTQk7PnrLuY6giX0=";
 
     postFetch = ''
       ${lib.getExe npm-lockfile-fix} $out/package-lock.json
     '';
   };
 
-  npmDepsHash = "sha256-qgg/dpkBAbOgBeGC0BiKQTyLsOOKwfsJD3fhs/cXYHo=";
+  npmDepsHash = "sha256-SIx2qIWqR1K9K2eUHo5tADdz4vk5ySdSWDBAjBFIVVc=";
   npmFlags = [ "--legacy-peer-deps" ];
 
   nativeBuildInputs =
@@ -66,7 +66,7 @@ buildNpmPackage rec {
 
     # disable telemetry
     substituteInPlace packages/bruno-app/src/providers/App/index.js \
-      --replace-fail "useTelemetry();" ""
+      --replace-fail "useTelemetry({ version });" ""
   '';
 
   postConfigure = ''
@@ -153,7 +153,6 @@ buildNpmPackage rec {
 
           makeWrapper ${lib.getExe electron} $out/bin/bruno \
             --add-flags $out/opt/bruno/resources/app.asar \
-            --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
             --set-default ELECTRON_IS_DEV 0 \
             --inherit-argv0
 

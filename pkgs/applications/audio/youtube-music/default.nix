@@ -13,18 +13,18 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "youtube-music";
-  version = "3.7.2";
+  version = "3.7.4";
 
   src = fetchFromGitHub {
     owner = "th-ch";
     repo = "youtube-music";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-gZ3EvIjPa/THRwMigglGp+Wtv+wEN7V11KOu1QsyJpE=";
+    hash = "sha256-qzvfYxM5mxxujWE0SDUapmN+Px9NkP58e1UeLEtZ7bc=";
   };
 
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-4yeLfolBquKFjKB4iYj8rMPvclfpjwHhV6/Xb/YNQWo=";
+    hash = "sha256-guD1yWFd+uO9H/egHS0PJ9HIIlF+wFS/98YtvjIzZW8=";
   };
 
   nativeBuildInputs = [
@@ -77,7 +77,6 @@ stdenv.mkDerivation (finalAttrs: {
   postFixup = lib.optionalString (!stdenv.hostPlatform.isDarwin) ''
     makeWrapper ${electron}/bin/electron $out/bin/youtube-music \
       --add-flags $out/share/lib/youtube-music/resources/app.asar \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
       --set-default ELECTRON_FORCE_IS_PACKAGED 1 \
       --set-default ELECTRON_IS_DEV 0 \
       --inherit-argv0

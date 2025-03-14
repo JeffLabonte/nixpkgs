@@ -9,7 +9,7 @@
 }:
 let
   mainProgram = "proton-mail";
-  version = "1.6.1";
+  version = "1.7.1";
 
 in
 stdenv.mkDerivation {
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://proton.me/download/mail/linux/${version}/ProtonMail-desktop-beta.deb";
-    sha256 = "sha256-ajN7f3SmqUfgJGksPVRuc1qR2FjEQaY+y/rpn7Hs71I=";
+    sha256 = "sha256-h5OQBZrG8whhsilS7qQU8txFKzjpl+Q27fcUOBYUzbQ=";
   };
 
   dontConfigure = true;
@@ -53,7 +53,6 @@ stdenv.mkDerivation {
   preFixup = lib.optionalString stdenv.hostPlatform.isLinux ''
     makeWrapper ${lib.getExe electron} $out/bin/${mainProgram} \
       --add-flags $out/share/proton-mail/app.asar \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
       --set-default ELECTRON_FORCE_IS_PACKAGED 1 \
       --set-default ELECTRON_IS_DEV 0 \
       --inherit-argv0

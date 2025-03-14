@@ -1,16 +1,13 @@
 {
   lib,
   buildNpmPackage,
-  electron_31,
+  electron,
   fetchFromGitHub,
   writers,
   makeWrapper,
   withGui ? false,
 }:
 
-let
-  electron = electron_31;
-in
 buildNpmPackage rec {
   pname = "zap-chip";
   version = "2024.09.27";
@@ -79,7 +76,6 @@ buildNpmPackage rec {
       rm $out/bin/zap
       makeWrapper '${lib.getExe electron}' "$out/bin/zap" \
         --add-flags $out/opt/zap-chip/resources/app.asar \
-        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}" \
         --set-default ELECTRON_IS_DEV 0 \
         --inherit-argv0
     '';
