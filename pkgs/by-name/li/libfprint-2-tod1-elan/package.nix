@@ -6,7 +6,7 @@
   openssl,
   gusb,
   glib,
-  nss
+  nss,
   autoPatchelfHook,
 }:
 
