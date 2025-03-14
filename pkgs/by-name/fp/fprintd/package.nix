@@ -51,6 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
     dbus
     docbook-xsl-nons
     docbook_xml_dtd_412
+    nss
   ];
 
   buildInputs = [

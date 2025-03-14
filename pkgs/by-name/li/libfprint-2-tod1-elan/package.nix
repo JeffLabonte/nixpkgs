@@ -7,6 +7,7 @@
   gusb,
   glib,
   nss,
+  cmake,
   autoPatchelfHook,
 }:
 
@@ -35,6 +36,7 @@ stdenvNoCC.mkDerivation {
     gusb
     glib
     nss
+    cmake
   ];
 
   installPhase = ''
