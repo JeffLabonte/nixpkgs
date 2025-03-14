@@ -6,6 +6,7 @@
   openssl,
   gusb,
   glib,
+  nss
   autoPatchelfHook,
 }:
 
@@ -24,13 +25,16 @@ stdenvNoCC.mkDerivation {
     '';
   };
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [
+    autoPatchelfHook
+  ];
 
   buildInputs = [
     libfprint-tod
     openssl
     gusb
     glib
+    nss
   ];
 
   installPhase = ''
